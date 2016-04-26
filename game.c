@@ -137,7 +137,7 @@ void Game_launch( Level* level ) {
 		if( key[ KEY_SPACE ] )
 			level->dt = level->fast_dt;
 		else
-			level->dt = level->fast_dt;
+			level->dt = level->slow_dt;
 
 		Game_update( level );
 
