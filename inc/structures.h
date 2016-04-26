@@ -4,7 +4,7 @@
 #include <allegro.h>
 
 #ifdef __WIN32
-#define SLEEP( ms ) Sleep( ms )
+#define SLEEP( ms ) rest( ms )
 #else
 #define SLEEP( ms ) usleep( ms * 1000 )
 #endif
