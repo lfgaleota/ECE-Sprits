@@ -1,14 +1,14 @@
 #include "inc/memory.h"
 
 /*
- * Allocation de Object
+ * Allocation d'un objet
  */
 Object* Object_allocate() {
 	return ( (Object*) malloc( sizeof( Object ) ) );
 }
 
 /*
- * Libération de Object
+ * Libération d'un objet
  */
 void Object_free( Object* obj ) {
 	// On libère l'objet
@@ -16,7 +16,7 @@ void Object_free( Object* obj ) {
 }
 
 /*
- * Allocation d'un maillon Object
+ * Allocation d'un maillon objet
  */
 ObjectM* ObjectM_allocate() {
 	ObjectM* ObjectM = malloc( sizeof( ObjectM ) );
@@ -33,7 +33,7 @@ ObjectM* ObjectM_allocate() {
 }
 
 /*
- * Libération d'un maillon Object
+ * Libération d'un maillon objet
  */
 void ObjectM_free( ObjectM* maillon, int free_object ) {
 	// Si le maillon est correct
@@ -48,7 +48,7 @@ void ObjectM_free( ObjectM* maillon, int free_object ) {
 }
 
 /*
- * Libération de tous les maillons Object
+ * Libération de tous les maillons objet
  */
 void ObjectM_freeAll( ObjectM* first, int free_object ) {
 	// Déclaration des variables utiles
