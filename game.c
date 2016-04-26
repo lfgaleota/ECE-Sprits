@@ -34,7 +34,8 @@ void Game_showBackground( Level* level ) {
 }
 
 void Game_showForeground( Level* level ) {
-	//masked_blit( level->fore, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
+	if( level->bmps.fore )
+		masked_blit( level->bmps.fore, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
 }
 
 void Game_show( Level* level ) {
