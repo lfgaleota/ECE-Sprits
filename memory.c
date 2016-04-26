@@ -99,11 +99,11 @@ MaterialM* MaterialM_allocate() {
 /*
  * Libération d'un maillon matériau
  */
-void MaterialM_free( MaterialM* maillon, int free_matect ) {
+void MaterialM_free( MaterialM* maillon, int free_mat ) {
 	// Si le maillon est correct
 	if( maillon != NULL ) {
 		// S'il le faut, on libère le matériau du maillon
-		if( free_matect )
+		if( free_mat )
 			Material_free( maillon->mat );
 
 		// On libère l'espace du maillon
@@ -114,7 +114,7 @@ void MaterialM_free( MaterialM* maillon, int free_matect ) {
 /*
  * Libération de tous les maillons de matériaux
  */
-void MaterialM_freeAll( MaterialM* first, int free_matect ) {
+void MaterialM_freeAll( MaterialM* first, int free_mat ) {
 	// Déclaration des variables utiles
 	MaterialM *maillon, *next;
 
@@ -124,6 +124,6 @@ void MaterialM_freeAll( MaterialM* first, int free_matect ) {
 		next = maillon->next;
 
 		// On libère le maillon
-		MaterialM_free( maillon, free_matect );
+		MaterialM_free( maillon, free_mat );
 	}
 }
