@@ -1,5 +1,33 @@
 #include "inc/game.h"
 
+void Game_addStickmen( Level* level ) {
+	Object* obj;
+
+	if( level->nb_stickmen_added < level->nb_stickmen_max ) {
+		level->counter_stickmen_arrival++;
+
+		if( level->counter_stickmen_arrival > level->counter_stickmen_arrival_max ) {
+			obj = Object_allocate();
+
+			if( obj ) {
+				Object_init( obj );
+				Physic_computeDelta( obj );
+
+				level->stickmen = Object_add( level->stickmen, obj, 1 );
+
+				if( level->stickmen == NULL ) {
+					allegro_message( "Erreur d'allocation du stickman" );
+				} else {
+					level->nb_stickmen_added++;
+					level->counter_stickmen_arrival = 0;
+				}
+			} else {
+				allegro_message( "Erreur d'allocation du stickman" );
+			}
+		}
+	}
+}
+
 void Game_showBackground( Level* level ) {
 	blit( level->bmps.back, level->bmps.page, 0, 0, 0, 0, level->bmps.back->w, level->bmps.back->h );
 	masked_blit( level->bmps.col, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
@@ -69,6 +97,8 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 }
 
 void Game_update( Level* level ) {
+	Game_addStickmen( level );
+
 	ObjectM *maillon, *next;
 
 	// On parcours les maillons
@@ -94,17 +124,12 @@ void Game_update( Level* level ) {
 }
 
 void Game_launch( Level* level ) {
-	ObjectM *maillon;
-
 	level->dt = level->slow_dt;
 
-	// On parcours les maillons
-	for( maillon = level->stickmen; maillon != NULL; maillon = maillon->next ) {
-		if( maillon->obj ) {
-			Object_init( maillon->obj );
-			Physic_computeDelta( maillon->obj );
-		}
-	}
+	level->counter_stickmen_arrival = 0;
+	level->nb_stickmen_added = 0;
+	level->nb_stickmen_arrived = 0;
+	level->nb_stickmen_dead = 0;
 
 	while( !key[ KEY_ESC ] ) {
 

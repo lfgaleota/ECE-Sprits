@@ -30,9 +30,6 @@ BITMAP** Level_loadBitmaps( char* path, unsigned short count ) {
 }
 
 int main() {
-	int i;
-	Object* obj;
-
 	Init();
 
 	Level level;
@@ -66,21 +63,9 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	level.stickmen = ObjectM_allocate();
-
-	for( i = 0; i < 1; i++ ) {
-		obj = Object_allocate();
-
-		if( obj ) {
-			level.stickmen = Object_add( level.stickmen, obj, 1 );
-
-			if( level.stickmen == NULL ) {
-				allegro_message( "Erreur d'allocation du stickman" );
-			}
-		} else {
-			allegro_message( "Erreur d'allocation du stickman" );
-		}
-	}
+	level.stickmen = NULL;
+	level.nb_stickmen_max = 10;
+	level.counter_stickmen_arrival_max = 50;
 
 	level.bmps.stickmen_walking.bmps = Level_loadBitmaps( "images/sticks/stickMan", 20 );
 	level.bmps.stickmen_walking.count = 20;
