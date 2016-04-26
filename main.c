@@ -67,11 +67,11 @@ int main() {
 		if( obj ) {
 			if( !Object_add( level.stickmen, obj, 1 ) ) {
 				allegro_message( "CATASTROPHE" );
-				return 0;
+				return EXIT_FAILURE;
 			}
 		} else {
 			allegro_message( "CATASTROPHE" );
-			return 0;
+			return EXIT_FAILURE;
 		}
 	}
 
@@ -83,7 +83,7 @@ int main() {
 
 	if( !level.bmps.stickmen_walking.bmps || !level.bmps.stickmen_falling.bmps ) {
 		allegro_message( "CATASTROPHE" );
-		return 0;
+		return EXIT_FAILURE;
 	}
 
 	level.fast_dt = 2;
