@@ -117,7 +117,8 @@ struct Level {
 	unsigned short nb_stickmen_max;
 	unsigned short nb_stickmen_arrived;
 	unsigned short nb_stickmen_dead;
-	unsigned short nb_stickmen_counter;
+	unsigned short counter_stickmen_arrival;
+	unsigned short counter_stickmen_arrival_max;
 };
 
 #endif //_ECE_SPRITS_STRUCTURES_H_
