@@ -3,10 +3,10 @@
 char Collision_callback( Object* obj, BITMAP* col, int x, int y, char side, unsigned char status, int progression_y ) {
 	char ret = 0;
 
-	putpixel( screen, x, y, makecol(0,255,255));
+	//putpixel( screen, x, y, makecol(0,255,255));
 
 	if( getpixel( col, x, y ) == COLOR_WALL ) {
-		putpixel( screen, x, y, makecol(255,0,0));
+		//putpixel( screen, x, y, makecol(255,0,0));
 		/*Vector2 normal;
 
 		if( getpixel( col, x - 1, y - 1 ) == makecol( 255, 255, 255 ) && getpixel( col, x + 1, y + 1 ) == makecol( 255, 255, 255 )  ) {
@@ -209,7 +209,7 @@ void Collision_detect( Object *obj, BITMAP *bmp ) {
 }
 
 int Collision_collisionCallback( Object *obj, BITMAP *col, int x, int y ) {
-	putpixel( screen, x, y, makecol( 0, 0, 255 ) );
+	//putpixel( screen, x, y, makecol( 0, 0, 255 ) );
 	//printf( "->Test %d,%d\n", x, y );
 
 	if( getpixel( col, x, y ) == COLOR_WALL ) {
