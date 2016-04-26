@@ -45,12 +45,6 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	/*level.col = load_png( "images/Ncolli(1024).png", NULL );
-	if( !level.col ) {
-		allegro_message( "Erreur chargement Ncolli(1024).png" );
-		return EXIT_FAILURE;
-	}*/
-
 	level.bmps.col = load_png( "images/Ncolli(1024).png", NULL );
 	if( !level.bmps.col ) {
 		allegro_message( "Erreur chargement Ncolli(1024).png" );

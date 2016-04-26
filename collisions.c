@@ -235,5 +235,4 @@ void Collision_continuous( Object *obj, BITMAP *col ) {
 	TrackLine( obj, col, floorf( obj->oldcp.x ), floorf( obj->oldcp.y ), floorf( obj->cp.x ), floorf( obj->cp.y ) + ( obj->size.y - 2 ), Collision_collisionCallback );
 	//TrackLine( obj, col, floorf( obj->p[ P_UP_LEFT ].x + 2 ), floorf( obj->p[ P_UP_LEFT ].y + 2 ), floorf( obj->p[ P_DOWN_RIGHT ].x - 2 ), floorf( obj->p[ P_DOWN_RIGHT ].y - 2 ), Collision_collisionCallback );
 	//printf( "-> End: %d, %d\n", (int) floorf( obj->cp.x ), (int) floorf( obj->cp.y ) );
-	//readkey();
 }
