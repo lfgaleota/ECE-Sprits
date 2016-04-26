@@ -114,9 +114,10 @@ struct Level {
 	float fast_dt;
 	Vector2 gravity;
 	Vector2 movement;
-	unsigned short nb_max;
-	unsigned short nb_arrived;
-	unsigned short nb_dead;
+	unsigned short nb_stickmen_max;
+	unsigned short nb_stickmen_arrived;
+	unsigned short nb_stickmen_dead;
+	unsigned short nb_stickmen_counter;
 };
 
 #endif //_ECE_SPRITS_STRUCTURES_H_
