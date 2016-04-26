@@ -42,6 +42,12 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
+	level.bmps.stick_col = create_bitmap( 1024, 768 );
+	if( !level.bmps.stick_col ) {
+		allegro_message( "Erreur creation bitmap" );
+		return EXIT_FAILURE;
+	}
+
 	/*level.col = load_png( "images/Ncolli(1024).png", NULL );
 	if( !level.col ) {
 		allegro_message( "Erreur chargement Ncolli(1024).png" );

@@ -12,6 +12,8 @@ void Game_showForeground( Level* level ) {
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
+	clear_bitmap( level->bmps.stick_col );
+
 	set_trans_blender( 255, 0, 255, 0 );
 
 	Game_showBackground( level );
@@ -27,6 +29,8 @@ void Game_show( Level* level ) {
 				draw_trans_sprite( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y );
 			else
 				draw_sprite_h_flip( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y );
+
+			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
 		}
 	}
 
