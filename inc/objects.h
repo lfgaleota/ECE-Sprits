@@ -12,7 +12,7 @@ void Object_computeMomentOfInertia( Object* obj );
 
 int Object_getUID( ObjectM* first );
 ObjectM* Object_findMaillon( ObjectM* first, int id );
-int Object_add( ObjectM* first, Object* object, int add_uid );
+ObjectM* Object_add( ObjectM* first, Object* object, int add_uid );
 ObjectM* Object_remove( ObjectM* first, Object* object );
 
 #endif //_ECE_SPRITS_OBJECTS_H_

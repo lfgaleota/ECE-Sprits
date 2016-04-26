@@ -70,14 +70,15 @@ int main() {
 
 	for( i = 0; i < 1; i++ ) {
 		obj = Object_allocate();
+
 		if( obj ) {
-			if( !Object_add( level.stickmen, obj, 1 ) ) {
-				allegro_message( "CATASTROPHE" );
-				return EXIT_FAILURE;
+			level.stickmen = Object_add( level.stickmen, obj, 1 );
+
+			if( level.stickmen == NULL ) {
+				allegro_message( "Erreur d'allocation du stickman" );
 			}
 		} else {
-			allegro_message( "CATASTROPHE" );
-			return EXIT_FAILURE;
+			allegro_message( "Erreur d'allocation du stickman" );
 		}
 	}
 
