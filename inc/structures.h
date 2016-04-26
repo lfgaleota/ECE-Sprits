@@ -115,6 +115,7 @@ struct Level {
 	Vector2 gravity;
 	Vector2 movement;
 	unsigned short nb_stickmen_max;
+	unsigned short nb_stickmen_added;
 	unsigned short nb_stickmen_arrived;
 	unsigned short nb_stickmen_dead;
 	unsigned short counter_stickmen_arrival;
