@@ -98,6 +98,7 @@ typedef struct Bitmaps Bitmaps;
 struct Bitmaps {
 	BITMAP* page;
 	BITMAP* col;
+	BITMAP* stick_col;
 	BITMAP* back;
 	BITMAP* fore;
 	Frames stickmen_walking;
