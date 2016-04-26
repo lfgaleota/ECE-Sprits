@@ -12,6 +12,8 @@ void Game_showForeground( Level* level ) {
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
+	clear_bitmap( level->bmps.page );
+
 	clear_bitmap( level->bmps.stick_col );
 
 	set_trans_blender( 255, 0, 255, 0 );
