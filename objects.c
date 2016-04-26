@@ -75,49 +75,56 @@ ObjectM* Object_findMaillon( ObjectM* first, int id ) {
 /*
  * Ajout d'un objet à une liste de maillons ObjectM
  */
-int Object_add( ObjectM* first, Object* object, int add_uid ) {
+ObjectM* Object_add( ObjectM* first, Object* object, int add_uid ) {
 	// Déclaration des variables utiles
 	ObjectM *new, *last;
 
-	// Si on a bien un maillon correct
-	if( first != NULL ) {
-		// S'il le faut, on génère un UID pour le rendez-vous
-		if( add_uid )
-			object->id = Object_getUID( first );
+	// Si on a un maillon incorrect
+	if( first == NULL ) {
+		// On l'alloue
+		first = ObjectM_allocate();
 
-		// Si le maillon est vide
-		if( first->obj == NULL ) {
-			// On l'utilise
-			new = first;
-		} else {
-			// Sinon, on alloue un nouveau maillon
-			new = ObjectM_allocate();
-		}
-
-		// Si l'allocation n'a pas échouée, ou que le 1er maillon est correct
-		if( new != NULL ) {
-			// On parcours les objet jusqu'à trouver le dernier
-			last = first;
-
-			if( last->next != NULL ) {
-				do {
-					last = last->next;
-				} while( last->next != NULL );
-			}
-
-			if( first != new ) {
-				last->next = new;
-				new->prev = last;
-			}
-
-			new->obj = object;
-
-			return 1;
+		// S'il est toujours incorrect (erreur d'allocation)
+		if( first == NULL ) {
+			// Echec, on retourne NULL
+			return NULL;
 		}
 	}
 
-	// Echec, on retourne 0
-	return 0;
+	// S'il le faut, on génère un UID pour le rendez-vous
+	if( add_uid )
+		object->id = Object_getUID( first );
+
+	// Si le maillon est vide
+	if( first->obj == NULL ) {
+		// On l'utilise
+		new = first;
+	} else {
+		// Sinon, on alloue un nouveau maillon
+		new = ObjectM_allocate();
+	}
+
+	// Si l'allocation n'a pas échouée, ou que le 1er maillon est correct
+	if( new != NULL ) {
+		// On parcours les objet jusqu'à trouver le dernier
+		last = first;
+
+		if( last->next != NULL ) {
+			do {
+				last = last->next;
+			} while( last->next != NULL );
+		}
+
+		if( first != new ) {
+			last->next = new;
+			new->prev = last;
+		}
+
+		new->obj = object;
+
+	}
+
+	return first;
 }
 
 /*
