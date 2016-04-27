@@ -100,11 +100,12 @@ void Game_addStickmen( Level* level ) {
 					allegro_message( "Erreur d'allocation du stickman" );
 				} else {
 					level->nb_stickmen_added++;
-					level->counter_stickmen_arrival = 0;
 				}
 			} else {
 				allegro_message( "Erreur d'allocation du stickman" );
 			}
+
+			level->counter_stickmen_arrival = 0;
 		}
 	}
 }
