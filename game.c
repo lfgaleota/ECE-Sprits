@@ -217,15 +217,19 @@ char Game_createMenus( Level* level ) {
 		capacities[ i ].bg_sel_color = makecol( 200, 200, 200 );
 		capacities[ i ].text_color = makecol( 0, 0, 0 );
 		capacities[ i ].callback = Capacities_set;
+		capacities[ i ].tooltip = malloc( sizeof( char ) * 40 );
+
+		if( !capacities[ i ].tooltip )
+			return 0;
 	}
 	capacities[ CAPACITY_BUILD ].icon = level->bmps.capacity_build;
-	capacities[ CAPACITY_BUILD ].tooltip = "Construire";
+	sprintf( capacities[ CAPACITY_BUILD ].tooltip, "Construire (reste %d)", level->capacities.building );
 	capacities[ CAPACITY_DIG ].icon = level->bmps.capacity_dig;
-	capacities[ CAPACITY_DIG ].tooltip = "Creuser";
+	sprintf( capacities[ CAPACITY_DIG ].tooltip, "Creuser (reste %d)", level->capacities.building );
 	capacities[ CAPACITY_BLOW ].icon = level->bmps.capacity_blow;
-	capacities[ CAPACITY_BLOW ].tooltip = "Souffler";
+	sprintf( capacities[ CAPACITY_BLOW ].tooltip, "Souffler (reste %d)", level->capacities.building );
 	capacities[ 3 ].icon = level->bmps.arrow[ 8 ];
-	capacities[ 3 ].tooltip = "Retour";
+	strcpy( capacities[ 3 ].tooltip, "Retour" );
 
 	for( i = 0; i < 9; i++ ) {
 		directions[ i ].icon = level->bmps.arrow[ i ];
@@ -233,9 +237,10 @@ char Game_createMenus( Level* level ) {
 		directions[ i ].bg_sel_color = makecol( 200, 200, 200 );
 		directions[ i ].text_color = makecol( 0, 0, 0 );
 		directions[ i ].callback = Capacities_setDirectionCallback;
-		directions[ i ].tooltip = "";
+		directions[ i ].tooltip = malloc( sizeof( char ) * 40 );
+		strcpy( directions[ i ].tooltip, "" );
 	}
-	directions[ 8 ].tooltip = "Retour";
+	strcpy( directions[ 8 ].tooltip, "Retour" );
 
 	level->capacities_menu = CircularMenu_create( 0, 0, 40, 40, capacities, 4 );
 	level->directions_menu = CircularMenu_create( 0, 0, 40, 40, directions, 8 );
