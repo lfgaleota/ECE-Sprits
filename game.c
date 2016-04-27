@@ -1,43 +1,5 @@
 #include "inc/game.h"
 
-void Game_addStickmen( Level* level ) {
-	Object* obj;
-
-	if( level->nb_stickmen_added < level->nb_stickmen_max ) {
-		level->counter_stickmen_arrival++;
-
-		if( level->counter_stickmen_arrival > level->counter_stickmen_arrival_max ) {
-			obj = Object_allocate();
-
-			if( obj ) {
-				Object_init( obj );
-				Physic_computeDelta( obj );
-
-				level->stickmen = Object_add( level->stickmen, obj, 1 );
-
-				if( level->stickmen == NULL ) {
-					allegro_message( "Erreur d'allocation du stickman" );
-				} else {
-					level->nb_stickmen_added++;
-					level->counter_stickmen_arrival = 0;
-				}
-			} else {
-				allegro_message( "Erreur d'allocation du stickman" );
-			}
-		}
-	}
-}
-
-void Game_showBackground( Level* level ) {
-	blit( level->bmps.back, level->bmps.page, 0, 0, 0, 0, level->bmps.back->w, level->bmps.back->h );
-	masked_blit( level->bmps.col, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
-}
-
-void Game_showForeground( Level* level ) {
-	if( level->bmps.fore )
-		masked_blit( level->bmps.fore, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
-}
-
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
@@ -66,6 +28,28 @@ void Game_show( Level* level ) {
 	}
 
 	blit( level->bmps.page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
+}
+
+void Game_showBackground( Level* level ) {
+	blit( level->bmps.back, level->bmps.page, 0, 0, 0, 0, level->bmps.back->w, level->bmps.back->h );
+	masked_blit( level->bmps.col, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
+}
+
+void Game_showForeground( Level* level ) {
+	if( level->bmps.fore )
+		masked_blit( level->bmps.fore, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
+}
+
+void Game_updateLevelProperties( Level* level ) {
+	Game_addStickmen( level );
+
+	Game_checkWin( level );
+}
+
+void Game_checkWin( Level* level ) {
+	if( level->nb_stickmen_arrived >= level->nb_stickmen_should_arrive ) {
+		level->win = 1;
+	}
 }
 
 void Game_updateObjectProperties( Level* level, Object* obj ) {
@@ -97,16 +81,32 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 	obj->size.y = obj->bmp->w;
 }
 
-void Game_checkWin( Level* level ) {
-	if( level->nb_stickmen_arrived >= level->nb_stickmen_should_arrive ) {
-		level->win = 1;
+void Game_addStickmen( Level* level ) {
+	Object* obj;
+
+	if( level->nb_stickmen_added < level->nb_stickmen_max ) {
+		level->counter_stickmen_arrival++;
+
+		if( level->counter_stickmen_arrival > level->counter_stickmen_arrival_max ) {
+			obj = Object_allocate();
+
+			if( obj ) {
+				Object_init( obj );
+				Physic_computeDelta( obj );
+
+				level->stickmen = Object_add( level->stickmen, obj, 1 );
+
+				if( level->stickmen == NULL ) {
+					allegro_message( "Erreur d'allocation du stickman" );
+				} else {
+					level->nb_stickmen_added++;
+					level->counter_stickmen_arrival = 0;
+				}
+			} else {
+				allegro_message( "Erreur d'allocation du stickman" );
+			}
+		}
 	}
-}
-
-void Game_updateLevelProperties( Level* level ) {
-	Game_addStickmen( level );
-
-	Game_checkWin( level );
 }
 
 void Game_update( Level* level ) {
