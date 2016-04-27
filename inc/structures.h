@@ -103,25 +103,10 @@ struct Bitmaps {
 	Frames stickmen_falling;
 };
 
-typedef struct Material Material;
-struct Material {
-	int id;
-	char* type;
-	char should_block;
-};
-
-typedef struct MaterialM MaterialM;
-struct MaterialM {
-	MaterialM* prev;
-	Material* mat;
-	MaterialM* next;
-};
-
 typedef struct Level Level;
 struct Level {
 	Bitmaps bmps;
 	ObjectM* stickmen;
-	MaterialM* materials;
 	float dt;
 	float slow_dt;
 	float fast_dt;
