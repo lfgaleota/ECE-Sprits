@@ -31,8 +31,8 @@ void Physic_updatePosition( Object* obj ) {
 	 *  +---+----
 	 *  p1 p4
 	 */
-	float diagonal = Vector_norm( obj->size );
-	float diagonal_2 = diagonal / 2;
+	obj->diagonal = Vector_norm( obj->size );
+	float diagonal_2 = obj->diagonal / 2;
 	float inner_angle = atanf( obj->size.x / obj->size.y );
 
 	Vector2 CPtoP1 = { - diagonal_2 * cosf( obj->angle - inner_angle ), diagonal_2 * sinf( obj->angle - inner_angle ) };
@@ -56,12 +56,39 @@ void Physic_updatePosition( Object* obj ) {
 void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 	Physic_updatePosition( obj );
 
-	obj->force.x = gravity.x;
-	obj->force.y = gravity.y;
+	switch( obj->state ) {
+		case STATE_DYING:
+		case STATE_FALLDYING:
+		case STATE_EXITING:
+		case STATE_BLOWING:
+		case STATE_DEAD:
+			obj->force.x = 0;
+			obj->force.y = 0;
+			obj->v.x = 0;
+			obj->v.y = 0;
+			allegro_message("obj should not move");
+			break;
 
-	if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
-		obj->v.x = ( obj->direction ? 1 : -1 ) * movement.x;
-		obj->v.y = ( obj->direction ? 1 : -1 ) * movement.y;
+		case STATE_DIGGING:
+		case STATE_BUILDING:
+			obj->force.x = gravity.x;
+			obj->force.y = gravity.y;
+
+			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
+				obj->v.x = ( obj->direction ? 1 : -1 ) * movement.x / 2.0;
+				obj->v.y = ( obj->direction ? 1 : -1 ) * movement.y / 2.0;
+			}
+			break;
+
+		default:
+			obj->force.x = gravity.x;
+			obj->force.y = gravity.y;
+
+			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
+				obj->v.x = ( obj->direction ? 1 : -1 ) * movement.x;
+				obj->v.y = ( obj->direction ? 1 : -1 ) * movement.y;
+			}
+			break;
 	}
 }
 

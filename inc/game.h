@@ -7,6 +7,7 @@
 #include "objects.h"
 #include "physics.h"
 #include "collisions.h"
+#include "capacities.h"
 
 void Game_showBackground( Level* level );
 void Game_showForeground( Level* level );

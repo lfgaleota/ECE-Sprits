@@ -42,7 +42,7 @@
 	}
 }*/
 
-void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*callback) ( Object*, BITMAP*, int, int ) ) {
+void TrackLine( Level* level, Object* obj, int x1, int y1, int x2, int y2, int (*callback) ( Level*, Object*, int, int ) ) {
 	int dx = x2 - x1;
 	int dy = y2 - y1;
 	int i1, i2;
@@ -54,22 +54,22 @@ void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*
 	int xmax, xmin, ymax, ymin;
 	int done = 0, accept = 0;
 
-#define TOP     0x8
-#define BOTTOM  0x4
-#define LEFT    0x2
-#define RIGHT   0x1
+#define LTOP     0x8
+#define LBOTTOM  0x4
+#define LLEFT    0x2
+#define LRIGHT   0x1
 
 #define COMPCLIP(code, x, y)  \
       {                             \
 	 code = 0;                  \
 	 if (y < ymin)              \
-	    code |= TOP;            \
+	    code |= LTOP;            \
 	 else if (y > ymax)         \
-	    code |= BOTTOM;         \
+	    code |= LBOTTOM;         \
 	 if (x < xmin)              \
-	    code |= LEFT;           \
+	    code |= LLEFT;           \
 	 else if (x > xmax)         \
-	    code |= RIGHT;          \
+	    code |= LRIGHT;          \
       }
 
 	xmin = 0;
@@ -94,21 +94,21 @@ void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*
 			// Didn't reject or accept, so do some calculations.
 			outcode = code0 ? code0 : code1;  // pick one endpoint
 
-			if (outcode & TOP) {
+			if (outcode & LTOP) {
 				if (y2 == y1)
 					x = x1;
 				else
 					x = x1 + (x2 - x1) * (ymin - y1) / (y2 - y1);
 				y = ymin;
 			}
-			else if (outcode & BOTTOM) {
+			else if (outcode & LBOTTOM) {
 				if (y2 == y1)
 					x = x1;
 				else
 					x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1);
 				y = ymax;
 			}
-			else if (outcode & LEFT) {
+			else if (outcode & LLEFT) {
 				if (x2 == x1)
 					y = y1;
 				else
@@ -137,10 +137,10 @@ void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*
 	} while (!done);
 
 #undef COMPCLIP
-#undef TOP
-#undef BOTTOM
-#undef LEFT
-#undef RIGHT
+#undef LTOP
+#undef LBOTTOM
+#undef LLEFT
+#undef LRIGHT
 
 	if (!accept)
 		return;
@@ -156,7 +156,7 @@ void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*
 			x = x1;                                                             \
 			y = y1;                                                             \
 			while( pri_c pri_cond pri_c##2 ) {                                  \
-				if( callback( obj, col, x, y ) )                                \
+				if( callback( level, obj, x, y ) )                              \
 					return;                                                     \
 																				\
 				if( dd sec_cond 0 ) {                                           \

@@ -3,6 +3,7 @@
 void Init() {
 	allegro_init();
 
+	jpgalleg_init();
 	register_png_file_type();
 	install_keyboard();
 	install_mouse();

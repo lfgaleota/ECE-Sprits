@@ -3,6 +3,7 @@
 
 #include <allegro.h>
 #include <loadpng.h>
+#include <jpgalleg.h>
 
 void Init();
 

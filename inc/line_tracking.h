@@ -4,6 +4,6 @@
 #include <allegro.h>
 #include "structures.h"
 
-void TrackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, int (*callback) ( Object*, BITMAP*, int, int ) );
+void TrackLine( Level* level, Object* obj, int x1, int y1, int x2, int y2, int (*callback) ( Level*, Object*, int, int ) );
 
 #endif //_ECE_SPRITS_LINE_TRACKING_H_
