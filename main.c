@@ -66,7 +66,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	level.nb_stickmen_max = 10;
+	level.nb_stickmen_max = 1;
 	level.nb_stickmen_should_arrive = 9;
 	level.counter_stickmen_arrival_max = 50;
 
@@ -100,7 +100,7 @@ int main() {
 	level.gravity = (Vector2) { 0, 4 };
 	level.movement = (Vector2) { 1, 0 };
 
-	level.capacities = (Capacities) { 255, 255, 255 };
+	level.capacities = (CapacitiesNumber) { 255, 255, 255 };
 
 	Game_launch( &level );
 
