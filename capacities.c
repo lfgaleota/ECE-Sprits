@@ -138,12 +138,21 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	obj->state = STATE_DIGGING;
 	obj->capacities.digging = 1;
 	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
+
+	level->capacities.digging--;
+	sprintf( level->capacities_menu->items[ CAPACITY_DIG ].tooltip, "Creuser (reste %d)", level->capacities.digging );
+
+	if( level->capacities.digging < 1 ) {
+		level->capacities.digging = 0;
+		/*level->capacities_menu->items[ CAPACITY_DIG ].bg_color = makecol( 254, 254, 254 );
+		strcpy( level->capacities_menu->items[ CAPACITY_DIG ].tooltip, "Creuser (indisponible)" );*/
+	}
 }
 
 char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
 	switch( index ) {
 		case CAPACITY_DIG:
-			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing ) {
+			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.digging > 0 ) {
 				Capacities_setDigging( level, obj );
 			}
 			return 1;

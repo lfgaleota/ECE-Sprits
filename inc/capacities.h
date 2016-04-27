@@ -1,6 +1,7 @@
 #ifndef _ECE_SPRITS_CAPACITIES_H_
 #define _ECE_SPRITS_CAPACITIES_H_
 
+#include <stdio.h>
 #include <allegro.h>
 #include <math.h>
 #include "structures.h"
