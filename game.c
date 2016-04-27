@@ -97,10 +97,22 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 	obj->size.y = obj->bmp->w;
 }
 
-void Game_update( Level* level ) {
+void Game_checkWin( Level* level ) {
+	if( level->nb_stickmen_arrived >= level->nb_stickmen_should_arrive ) {
+		level->win = 1;
+	}
+}
+
+void Game_updateLevelProperties( Level* level ) {
 	Game_addStickmen( level );
 
+	Game_checkWin( level );
+}
+
+void Game_update( Level* level ) {
 	ObjectM *maillon, *next;
+
+	Game_updateLevelProperties( level );
 
 	// On parcours les maillons
 	for( maillon = level->stickmen; maillon != NULL; maillon = next ) {
@@ -119,6 +131,7 @@ void Game_update( Level* level ) {
 				Collision_continuous( maillon->obj, level->bmps.col );
 			} else {
 				level->stickmen = Object_remove( level->stickmen, maillon->obj );
+				level->nb_stickmen_dead++;
 			}
 		}
 	}
@@ -132,7 +145,10 @@ void Game_launch( Level* level ) {
 	level->nb_stickmen_arrived = 0;
 	level->nb_stickmen_dead = 0;
 
-	while( !key[ KEY_ESC ] ) {
+	level->win = 0;
+	level->quit = 0;
+
+	while( !level->quit ) {
 
 		if( key[ KEY_SPACE ] )
 			level->dt = level->fast_dt;

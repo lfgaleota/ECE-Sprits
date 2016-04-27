@@ -61,6 +61,7 @@ int main() {
 
 	level.stickmen = NULL;
 	level.nb_stickmen_max = 10;
+	level.nb_stickmen_should_arrive = 9;
 	level.counter_stickmen_arrival_max = 50;
 
 	level.bmps.stickmen_walking.bmps = Level_loadBitmaps( "images/sticks/stickMan", 20 );
