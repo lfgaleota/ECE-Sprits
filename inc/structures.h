@@ -52,8 +52,8 @@
 #define COLOR_DEATHZONE makecol( 255, 0, 0 )
 #define COLOR_EXIT makecol( 0, 255, 255 )
 
-#define X_SIGNIFICANT 2
-#define Y_SIGNIFICANT 2
+#define X_SIGNIFICANT 4
+#define Y_SIGNIFICANT 4
 
 #define Y_FALLDAMAGE 10
 
