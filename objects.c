@@ -33,6 +33,7 @@ void Object_init( Object *obj ) {
 	obj->capacities.direction = (Vector2) { 0, 0 };
 	obj->capacities.start_points[ 0 ] = (Vector2) { 0, 0 };
 	obj->capacities.start_points[ 1 ] = (Vector2) { 0, 0 };
+	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
 	obj->selected = 0;
 	Object_computeMomentOfInertia( obj );
 }

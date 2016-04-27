@@ -61,7 +61,7 @@
 #define QUIT_FAIL 2
 #define QUIT_DELIBERATE 3
 
-#define MAX_DIGGING 15
+#define MAX_DIGGING 80
 
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
@@ -98,6 +98,14 @@ struct Capacities {
 	Position start_points[ 2 ];
 	Vector2 direction;
 	float distance;
+	Vector2Char delta_combined;
+};
+
+typedef struct CapacitiesNumber CapacitiesNumber;
+struct CapacitiesNumber {
+	unsigned char digging;
+	unsigned char building;
+	unsigned char blowing;
 };
 
 typedef struct Object Object;
@@ -188,7 +196,7 @@ struct Level {
 	unsigned short nb_stickmen_dead;
 	unsigned short counter_stickmen_arrival;
 	unsigned short counter_stickmen_arrival_max;
-	Capacities capacities;
+	CapacitiesNumber capacities;
 	CircularMenu* capacities_menu;
 	CircularMenu* directions_menu;
 	Inputs inputs;

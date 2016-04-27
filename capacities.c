@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "inc/capacities.h"
 #include "inc/circular_menu.h"
 
@@ -12,8 +11,12 @@ int Capacities_diggingCallback( Level* level, Object* obj, int x, int y ) {
 }
 
 void Capacities_digging( Level* level, Object* obj ) {
-	if( ( obj->oldcp.x - obj->cp.x <= -1 ) || ( obj->oldcp.x - obj->cp.x >= 1 ) || ( obj->oldcp.y - obj->cp.y <= -1 ) || ( obj->oldcp.y - obj->cp.y >= 1 ) ) {
+	obj->capacities.delta_combined.x += obj->delta.x;
+	obj->capacities.delta_combined.y += obj->delta.y;
+
+	if( ( obj->capacities.delta_combined.x <= -1 ) || ( obj->capacities.delta_combined.x >= 1 ) || ( obj->capacities.delta_combined.y <= -1 ) || ( obj->capacities.delta_combined.y >= 1 ) ) {
 		obj->capacities.left--;
+		obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
 	}
 
 	if( obj->capacities.left > 0 ) {
@@ -134,6 +137,7 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	obj->capacities.left = MAX_DIGGING;
 	obj->state = STATE_DIGGING;
 	obj->capacities.digging = 1;
+	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
 }
 
 char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
