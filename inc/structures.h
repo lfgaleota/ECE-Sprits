@@ -36,6 +36,10 @@
 #define X_SIGNIFICANT 2
 #define Y_SIGNIFICANT 2
 
+#define QUIT_WIN 1
+#define QUIT_FAIL 2
+#define QUIT_DELIBERATE 3
+
 typedef struct Vector2 Vector2;
 typedef struct Vector2 Force;
 typedef struct Vector2 Acceleration;
@@ -112,9 +116,12 @@ struct Level {
 	float fast_dt;
 	Vector2 gravity;
 	Vector2 movement;
+	char quit;
+	char win;
 	unsigned short nb_stickmen_max;
 	unsigned short nb_stickmen_added;
 	unsigned short nb_stickmen_arrived;
+	unsigned short nb_stickmen_should_arrive;
 	unsigned short nb_stickmen_dead;
 	unsigned short counter_stickmen_arrival;
 	unsigned short counter_stickmen_arrival_max;

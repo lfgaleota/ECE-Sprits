@@ -8,6 +8,8 @@
 #include "physics.h"
 #include "collisions.h"
 
+void Game_updateLevelProperties( Level* level );
+
 void Game_launch( Level* level );
 void Game_show( Level* level );
 
