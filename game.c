@@ -150,10 +150,15 @@ void Game_launch( Level* level ) {
 
 	while( !level->quit ) {
 
-		if( key[ KEY_SPACE ] )
-			level->dt = level->fast_dt;
-		else
-			level->dt = level->fast_dt;
+		if( key[ KEY_SPACE ] ) {
+			if( level->dt == level->slow_dt ) {
+				level->dt = level->fast_dt;
+			} else if( level->dt == level->fast_dt ) {
+				level->dt = 0;
+			} else {
+				level->dt = level->slow_dt;
+			}
+		}
 
 		Game_update( level );
 
