@@ -1,5 +1,4 @@
 #include "inc/capacities.h"
-#include "inc/circular_menu.h"
 
 int Capacities_diggingCallback( Level* level, Object* obj, int x, int y ) {
 	if( getpixel( level->bmps.col, x, y ) == COLOR_BREAKABLEWALL ) {
