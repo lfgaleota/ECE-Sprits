@@ -91,8 +91,8 @@ void CircularMenu_show( CircularMenu* menu, BITMAP* dest, int x, int y ) {
 				tooltip_i = i;
 			}
 
-			blit( menu->items[ i ].icon, dest, 0, 0, menu->items[ i ].icon_x, menu->items[ i ].icon_y,
-			      menu->items[ i ].icon->w, menu->items[ i ].icon->h );
+			set_alpha_blender();
+			draw_trans_sprite( dest, menu->items[ i ].icon, menu->items[ i ].icon_x, menu->items[ i ].icon_y );
 		}
 
 		if( tooltip_i > -1 )
@@ -100,7 +100,7 @@ void CircularMenu_show( CircularMenu* menu, BITMAP* dest, int x, int y ) {
 	}
 }
 
-char CircularMenu_handleClick( CircularMenu* menu, int x, int y ) {
+char CircularMenu_handleClick( CircularMenu* menu, Level* level, Object* obj, int x, int y ) {
 	int i, col;
 	char ret = 0;
 
@@ -110,8 +110,7 @@ char CircularMenu_handleClick( CircularMenu* menu, int x, int y ) {
 		if( menu->opened ) {
 			for( i = 0; i < menu->count; i++ ) {
 				if( col > 0 && col == menu->items[ i ].bg_color ) {
-					if( menu->items[ i ].callback( i, mouse_x, mouse_y ) )
-						ret = 1;
+					ret = menu->items[ i ].callback( level, obj, i, mouse_x, mouse_y );
 				}
 			}
 		}
@@ -120,15 +119,20 @@ char CircularMenu_handleClick( CircularMenu* menu, int x, int y ) {
 	return ret;
 }
 
-void CircularMenu_free( CircularMenu* menu, char free_items, char free_items_content ) {
+void CircularMenu_free( CircularMenu* menu, char free_items, char free_items_bitmaps, char free_items_tooltips ) {
 	int i;
 
 	if( menu ) {
 		destroy_bitmap( menu->bmp );
 
-		if( free_items_content ) {
+		if( free_items_bitmaps ) {
 			for( i = 0; i < menu->count; i++ ) {
 				destroy_bitmap( menu->items[ i ].icon );
+			}
+		}
+
+		if( free_items_tooltips ) {
+			for( i = 0; i < menu->count; i++ ) {
 				free( menu->items[ i ].tooltip );
 			}
 		}

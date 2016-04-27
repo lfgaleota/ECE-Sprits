@@ -24,6 +24,16 @@ void Object_init( Object *obj ) {
 	obj->restitution = 0.3;
 	obj->counter = 0;
 	obj->state = STATE_WALKING;
+	obj->capacities.digging = 0;
+	obj->capacities.blowing = 0;
+	obj->capacities.building = 0;
+	obj->capacities.angle = 0;
+	obj->capacities.distance = 0;
+	obj->capacities.left = 0;
+	obj->capacities.direction = (Vector2) { 0, 0 };
+	obj->capacities.start_points[ 0 ] = (Vector2) { 0, 0 };
+	obj->capacities.start_points[ 1 ] = (Vector2) { 0, 0 };
+	obj->selected = 0;
 	Object_computeMomentOfInertia( obj );
 }
 
