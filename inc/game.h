@@ -8,9 +8,15 @@
 #include "physics.h"
 #include "collisions.h"
 
+void Game_showBackground( Level* level );
+void Game_showForeground( Level* level );
+void Game_show( Level* level );
+
 void Game_updateLevelProperties( Level* level );
+void Game_checkWin( Level* level );
+void Game_updateObjectProperties( Level* level, Object* obj );
+void Game_addStickmen( Level* level );
 
 void Game_launch( Level* level );
-void Game_show( Level* level );
 
 #endif //_ECE_SPRITS_GAME_H_
