@@ -1,7 +1,6 @@
 #include "inc/capacities.h"
 
 int Capacities_diggingCallback2( Level* level, Object* obj, int x, int y ) {
-	putpixel(screen,x,y,makecol(255,0,0));
 	if( getpixel( level->bmps.col, x, y ) == COLOR_BREAKABLEWALL ) {
 		putpixel( level->bmps.col, x, y, COLOR_NEUTRAL );
 		putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_NEUTRAL );
