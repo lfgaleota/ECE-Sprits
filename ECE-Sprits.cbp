@@ -58,12 +58,16 @@
 		<Unit filename="inc/collisions.h" />
 		<Unit filename="inc/game.h" />
 		<Unit filename="inc/init.h" />
+		<Unit filename="inc/level.h" />
 		<Unit filename="inc/line_tracking.h" />
 		<Unit filename="inc/memory.h" />
 		<Unit filename="inc/objects.h" />
 		<Unit filename="inc/physics.h" />
 		<Unit filename="inc/structures.h" />
 		<Unit filename="init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="level.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="line_tracking.c">
