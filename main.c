@@ -44,10 +44,6 @@ Frames Level_loadFrames( char* path, unsigned short count ) {
 int main() {
 	Init();
 
-	enable_hardware_cursor();
-	select_mouse_cursor( 2 );
-	show_mouse( screen );
-
 	Level level;
 
 	level.bmps.col = load_png( "niveau1/collision.png", NULL );
