@@ -56,9 +56,9 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	level.bmps.back = load_png( "niveau1/background.png", NULL );
+	level.bmps.back = load_jpg( "niveau1/background.jpg", NULL );
 	if( !level.bmps.back ) {
-		allegro_message( "Erreur chargement niveau1/background.png" );
+		allegro_message( "Erreur chargement niveau1/background.jpg" );
 		return EXIT_FAILURE;
 	}
 
@@ -79,8 +79,8 @@ int main() {
 	level.bmps.start = Level_loadFrames( "images/portails/portailDebut", 1 );
 	level.bmps.exit = Level_loadFrames( "images/portails/portailArrivee", 1 );
 
-	level.bmps.wall = load_png( "niveau1/texture_wall.png", NULL );
-	level.bmps.deathzone = load_png( "niveau1/texture_deathzone.png", NULL );
+	level.bmps.wall = load_jpg( "niveau1/texture_wall.jpg", NULL );
+	level.bmps.deathzone = load_jpg( "niveau1/texture_deathzone.jpg", NULL );
 
 	level.bmps.arrow = Level_loadBitmaps( "images/arrows/arrow", 9 );
 
