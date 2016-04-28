@@ -11,6 +11,8 @@
 
 #define FLOAT_AROUND( f1, f2, precision ) ( f1 >= f2 - precision && f1 <= f2 + precision )
 
+#define BUFFER_SIZE 255
+
 #define P_UP_LEFT 0
 #define P_UP_RIGHT 1
 #define P_DOWN_RIGHT 2

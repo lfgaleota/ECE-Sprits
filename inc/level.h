@@ -10,4 +10,15 @@
 BITMAP** Level_loadBitmaps( char* path, unsigned short count );
 Frames Level_loadFrames( char* path, unsigned short count );
 
+char Level_loadProperties( char* path, Level* level );
+
+void Level_parseConfigurationLine( Level* level, char* line, int* lines_parsed );
+char Level_extractKeyValue( char* line, char* key, char* value );
+char Level_extractArray( char* line, char*** values, int* count );
+char Level_parseCapacitiesNumber( CapacitiesNumber* cap, char* value );
+char Level_parseVector2( Vector2* vec, char* value );
+
+Level* Level_load( char* path );
+Level* Level_loadStandard( int number );
+
 #endif //_ECE_SPRITS_LEVEL_H_
