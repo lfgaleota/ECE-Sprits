@@ -165,8 +165,8 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	start_point.x = cosf( obj->capacities.angle ) * obj->capacities.distance;
 	start_point.y = - sinf( obj->capacities.angle ) * obj->capacities.distance;
 
-	obj->capacities.direction.x = - cosf( obj->capacities.angle ) * 2;
-	obj->capacities.direction.y = sinf( obj->capacities.angle ) * 2;
+	obj->capacities.direction.x = - cosf( obj->capacities.angle ) * DIGGING_DISTANCE;
+	obj->capacities.direction.y = sinf( obj->capacities.angle ) * DIGGING_DISTANCE;
 
 	obj->capacities.start_points[ 0 ].x = start_point.x - cosf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
 	obj->capacities.start_points[ 0 ].y = start_point.y + sinf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
@@ -207,7 +207,7 @@ void Capacities_setBuilding( Level* level, Object* obj ) {
 	obj->capacities.start_points[ 0 ].x = start_point.x;
 	obj->capacities.start_points[ 0 ].y = start_point.y;
 	obj->capacities.start_points[ 1 ].x = start_point.x;
-	obj->capacities.start_points[ 1 ].y = start_point.y + BUILDING_HIGH;
+	obj->capacities.start_points[ 1 ].y = start_point.y + BUILDING_DISTANCE;
 
 	obj->capacities.left = MAX_BUILDING;
 	obj->state = STATE_BUILDING;
