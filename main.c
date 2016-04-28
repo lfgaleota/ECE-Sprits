@@ -62,9 +62,9 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	level.bmps.fore = load_bitmap( "niveau1/foreground.bmp", NULL );
+	level.bmps.fore = load_png( "niveau1/foreground.png", NULL );
 	if( !level.bmps.fore ) {
-		allegro_message( "Erreur chargement niveau1/foreground.bmp" );
+		allegro_message( "Erreur chargement niveau1/foreground.png" );
 		return EXIT_FAILURE;
 	}
 
