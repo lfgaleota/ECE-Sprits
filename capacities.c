@@ -173,6 +173,21 @@ char Capacities_setDirection( Level* level, Object* obj ) {
 	return done - 1;
 }
 
+void Capacities_decreaseCapacity( Level* level, char* text, unsigned char* capacity_lefts, int capacity_index ) {
+	(*capacity_lefts)--;
+	sprintf( level->capacities_menu->items[ capacity_index ].tooltip, "%s (reste %d)", text, *capacity_lefts );
+
+	if( *capacity_lefts < 1 ) {
+		*capacity_lefts = 0;
+		level->capacities_menu->items[ capacity_index ].bg_color = makecol( capacity_index * 2 + 2, capacity_index * 2 + 2, capacity_index * 2 + 2 );
+		level->capacities_menu->items[ capacity_index ].bg_sel_color = makecol( capacity_index * 2 + 2, capacity_index * 2 + 2, capacity_index * 2 + 2 );
+		level->capacities_menu->items[ capacity_index ].text_color = makecol( 255, 255, 255 );
+		if( level->capacities_menu->items[ capacity_index ].tooltip )
+			sprintf( level->capacities_menu->items[ capacity_index ].tooltip, "%s (indisponible)", text );
+		CircularMenu_recompute( level->capacities_menu );
+	}
+}
+
 void Capacities_setDigging( Level* level, Object* obj ) {
 	Position start_point;
 
@@ -195,14 +210,7 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	obj->capacities.digging = 1;
 	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
 
-	level->capacities.digging--;
-	sprintf( level->capacities_menu->items[ CAPACITY_DIG ].tooltip, "Creuser (reste %d)", level->capacities.digging );
-
-	if( level->capacities.digging < 1 ) {
-		level->capacities.digging = 0;
-		/*level->capacities_menu->items[ CAPACITY_DIG ].bg_color = makecol( 254, 254, 254 );
-		strcpy( level->capacities_menu->items[ CAPACITY_DIG ].tooltip, "Creuser (indisponible)" );*/
-	}
+	Capacities_decreaseCapacity( level, "Creuser", &level->capacities.digging, CAPACITY_DIG );
 }
 
 void Capacities_setBuilding( Level* level, Object* obj ) {
@@ -232,13 +240,7 @@ void Capacities_setBuilding( Level* level, Object* obj ) {
 	obj->capacities.building = 1;
 	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
 
-	level->capacities.building--;
-	sprintf( level->capacities_menu->items[ CAPACITY_BUILD ].tooltip, "Construire (reste %d)", level->capacities.building );
-
-	if( level->capacities.building < 1 ) {
-		level->capacities.building = 0;
-		level->capacities_menu->items[ CAPACITY_BUILD ].bg_color = makecol( 4, 4, 4 );
-	}
+	Capacities_decreaseCapacity( level, "Construire", &level->capacities.building, CAPACITY_BUILD );
 }
 
 void Capacities_setBlowing( Level* level, Object* obj ) {
@@ -262,13 +264,7 @@ void Capacities_setBlowing( Level* level, Object* obj ) {
 	obj->state = STATE_BLOWING;
 	obj->capacities.blowing = 1;
 
-	level->capacities.blowing--;
-	sprintf( level->capacities_menu->items[ CAPACITY_BLOW ].tooltip, "Souffler (reste %d)", level->capacities.digging );
-
-	if( level->capacities.blowing < 1 ) {
-		level->capacities.blowing = 0;
-		level->capacities_menu->items[ CAPACITY_BLOW ].bg_color = makecol( 6, 6, 6 );
-	}
+	Capacities_decreaseCapacity( level, "Souffler", &level->capacities.blowing, CAPACITY_BLOW );
 }
 
 char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
