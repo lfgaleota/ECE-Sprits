@@ -172,6 +172,7 @@ struct Frames {
 
 typedef struct Bitmaps Bitmaps;
 struct Bitmaps {
+	FONT* droidsans_14_mono;
 	BITMAP* page;
 	BITMAP* col;
 	BITMAP* stick_col;

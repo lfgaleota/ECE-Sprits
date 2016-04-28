@@ -87,6 +87,8 @@ char Level_loadImages( char* path, Level* level ) {
 		return 0;
 	}
 
+	level->bmps.droidsans_14_mono = load_font( "polices/droidsans_14_mono.pcx", NULL, NULL );
+
 	return 1;
 }
 
