@@ -66,12 +66,14 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 			obj->force.y = 0;
 			obj->v.x = 0;
 			obj->v.y = 0;
+			obj->should_move = 0;
 			break;
 
 		case STATE_DIGGING:
 		case STATE_BUILDING:
 			obj->force.x = gravity.x;
 			obj->force.y = gravity.y;
+			obj->should_move = 1;
 
 			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
 				obj->v.x = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.x / 2.0;
@@ -82,6 +84,7 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 		default:
 			obj->force.x = gravity.x;
 			obj->force.y = gravity.y;
+			obj->should_move = 1;
 
 			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
 				obj->v.x = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.x;
