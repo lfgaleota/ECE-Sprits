@@ -62,6 +62,7 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 		case STATE_EXITING:
 		case STATE_BLOWING:
 		case STATE_DEAD:
+		case STATE_GONE:
 			obj->force.x = 0;
 			obj->force.y = 0;
 			obj->v.x = 0;

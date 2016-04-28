@@ -39,15 +39,17 @@
 
 #define MAX_STEP 7
 
-#define STATE_WALKING 0
-#define STATE_FALLING 1
-#define STATE_DEAD 2
-#define STATE_EXITING 3
-#define STATE_DYING 4
-#define STATE_FALLDYING 5
-#define STATE_BUILDING 6
-#define STATE_DIGGING 7
-#define STATE_BLOWING 8
+#define STATE_STARTING 0
+#define STATE_WALKING 1
+#define STATE_FALLING 2
+#define STATE_DEAD 3
+#define STATE_EXITING 4
+#define STATE_GONE 5
+#define STATE_DYING 6
+#define STATE_FALLDYING 7
+#define STATE_BUILDING 8
+#define STATE_DIGGING 9
+#define STATE_BLOWING 10
 
 #define COLOR_NEUTRAL makecol( 0, 0, 0 )
 #define COLOR_WALL makecol( 255, 255, 255 )
@@ -188,6 +190,8 @@ struct Bitmaps {
 	Frames stickmen_falling;
 	Frames stickmen_dying;
 	Frames stickmen_falldying;
+	Frames stickmen_starting;
+	Frames stickmen_exiting;
 };
 
 typedef struct Inputs Inputs;
