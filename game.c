@@ -1,5 +1,15 @@
 #include "inc/game.h"
 
+void Game_pauseMenu( Level* level ) {
+	char* choices[] = {
+		"Retour",
+		"Recommencer",
+	    "Quitter",
+	};
+
+	Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
+}
+
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
@@ -158,6 +168,10 @@ void Game_updateInputs( Level* level ) {
 void Game_handleInputs( Level* level, Object* obj ) {
 	ObjectM *maillon;
 	char ret = 0;
+
+	if( key[ KEY_ESC ] ) {
+		Game_pauseMenu( level );
+	}
 
 	if( !level->inputs.prev_mouse_l && level->inputs.mouse_l ) {
 		if( obj->selected == 1 ) {
