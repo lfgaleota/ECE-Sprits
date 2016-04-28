@@ -102,7 +102,7 @@ int main() {
 	level.gravity = (Vector2) { 0, 4 };
 	level.movement = (Vector2) { 1, 0 };
 
-	level.capacities = (CapacitiesNumber) { 255, 255, 255 };
+	level.capacities = (CapacitiesNumber) { 1, 1, 1 };
 
 	Game_launch( &level );
 
