@@ -280,7 +280,7 @@ char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
 			return 1;
 
 		case CAPACITY_BUILD:
-			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.digging > 0 ) {
+			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.building > 0 ) {
 				Capacities_setBuilding( level, obj );
 			}
 			return 1;
