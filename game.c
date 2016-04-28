@@ -83,7 +83,22 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 				obj->state = STATE_DEAD;
 			break;
 
+		case STATE_STARTING:
+			current = &level->bmps.stickmen_starting;
+			if( obj->counter >= current->count ) {
+				obj->counter = 10;
+				obj->state = STATE_FALLING;
+			}
+			break;
+
 		case STATE_EXITING:
+			current = &level->bmps.stickmen_exiting;
+			if( obj->counter >= current->count ) {
+				obj->state = STATE_GONE;
+				obj->counter = 9;
+			}
+			break;
+
 		case STATE_FALLING:
 			current = &level->bmps.stickmen_falling;
 			break;
@@ -181,7 +196,7 @@ void Game_update( Level* level ) {
 		next = maillon->next;
 
 		if( maillon->obj ) {
-			if( maillon->obj->state != STATE_DEAD ) {
+			if( maillon->obj->state != STATE_DEAD && maillon->obj->state != STATE_GONE ) {
 				Game_handleInputs( level, maillon->obj );
 
 				Game_updateObjectProperties( level, maillon->obj );
@@ -197,7 +212,10 @@ void Game_update( Level* level ) {
 				Collision_continuous( level, maillon->obj );
 			} else {
 				level->stickmen = Object_remove( level->stickmen, maillon->obj );
-				level->nb_stickmen_dead++;
+				if( maillon->obj->state == STATE_DEAD )
+					level->nb_stickmen_dead++;
+				else if( maillon->obj->state == STATE_GONE )
+					level->nb_stickmen_arrived++;
 			}
 		}
 	}

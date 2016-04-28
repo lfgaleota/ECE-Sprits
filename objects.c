@@ -23,7 +23,7 @@ void Object_init( Object *obj ) {
 	obj->mass = 5;
 	obj->restitution = 0.3;
 	obj->counter = 0;
-	obj->state = STATE_WALKING;
+	obj->state = STATE_STARTING;
 	obj->capacities.digging = 0;
 	obj->capacities.blowing = 0;
 	obj->capacities.building = 0;
