@@ -276,19 +276,19 @@ char Game_createMenus( Level* level ) {
 }
 
 char Game_createBitmaps( Level* level ) {
-	level->bmps.page = create_bitmap( 1024, 768 );
+	level->bmps.page = create_bitmap( SCREEN_W, SCREEN_H );
 	if( !level->bmps.page ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
 	}
 
-	level->bmps.stick_col = create_bitmap( 1024, 768 );
+	level->bmps.stick_col = create_bitmap( SCREEN_W, SCREEN_H );
 	if( !level->bmps.stick_col ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
 	}
 
-	level->bmps.wind_col = create_bitmap( 1024, 768 );
+	level->bmps.wind_col = create_bitmap( SCREEN_W, SCREEN_H );
 	if( !level->bmps.wind_col ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
