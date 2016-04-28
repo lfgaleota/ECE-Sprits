@@ -66,6 +66,25 @@ void Capacities_building( Level* level, Object* obj ) {
 	}
 }
 
+int Capacities_blowingCallback2( Level* level, Object* obj, int x, int y ) {
+	if( getpixel( level->bmps.col, x, y ) == COLOR_NEUTRAL ) {
+		putpixel( level->bmps.wind_col, x, y, obj->capacities.left );
+	}
+
+	return 0;
+}
+
+int Capacities_blowingCallback1( Level* level, Object* obj, int x, int y ) {
+	TrackLine( level, obj, x, y, x + obj->capacities.direction.x, y + obj->capacities.direction.y, Capacities_blowingCallback2 );
+	return 0;
+}
+
+void Capacities_blowing( Level* level, Object* obj ) {
+	obj->state = STATE_BLOWING;
+
+	TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_blowingCallback1 );
+}
+
 char Capacities_setDirectionCallback( Level* level, Object* obj, int index, int x, int y ) {
 	switch( index ) {
 		case UP:
@@ -222,6 +241,36 @@ void Capacities_setBuilding( Level* level, Object* obj ) {
 	}
 }
 
+void Capacities_setBlowing( Level* level, Object* obj ) {
+	Position start_point;
+
+	if( !Capacities_setDirection( level, obj ) ) {
+		return;
+	}
+
+	start_point.x = cosf( obj->capacities.angle ) * MIN( obj->size.x, obj->size.y ) / 2;
+	start_point.y = - sinf( obj->capacities.angle ) * MIN( obj->size.x, obj->size.y ) / 2;
+
+	obj->capacities.direction.x = cosf( obj->capacities.angle ) * BLOWING_DISTANCE;
+	obj->capacities.direction.y = - sinf( obj->capacities.angle ) * BLOWING_DISTANCE;
+
+	obj->capacities.start_points[ 0 ].x = start_point.x - cosf( obj->capacities.angle + M_PI_2 ) * BLOWING_WIDTH;
+	obj->capacities.start_points[ 0 ].y = start_point.y + sinf( obj->capacities.angle + M_PI_2 ) * BLOWING_WIDTH;
+	obj->capacities.start_points[ 1 ].x = start_point.x + cosf( obj->capacities.angle + M_PI_2 ) * BLOWING_WIDTH;
+	obj->capacities.start_points[ 1 ].y = start_point.y - sinf( obj->capacities.angle + M_PI_2 ) * BLOWING_WIDTH;
+	obj->capacities.left = makecol( 254, 254, 254 ) * obj->capacities.angle / ( 2 * M_PI ) + 1;
+	obj->state = STATE_BLOWING;
+	obj->capacities.blowing = 1;
+
+	level->capacities.blowing--;
+	sprintf( level->capacities_menu->items[ CAPACITY_BLOW ].tooltip, "Souffler (reste %d)", level->capacities.digging );
+
+	if( level->capacities.blowing < 1 ) {
+		level->capacities.blowing = 0;
+		level->capacities_menu->items[ CAPACITY_BLOW ].bg_color = makecol( 6, 6, 6 );
+	}
+}
+
 char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
 	switch( index ) {
 		case CAPACITY_DIG:
@@ -233,6 +282,12 @@ char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
 		case CAPACITY_BUILD:
 			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.digging > 0 ) {
 				Capacities_setBuilding( level, obj );
+			}
+			return 1;
+
+		case CAPACITY_BLOW:
+			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.blowing > 0 ) {
+				Capacities_setBlowing( level, obj );
 			}
 			return 1;
 
@@ -254,7 +309,7 @@ void Capacities_update( Level* level, Object* obj ) {
 	}
 
 	if( obj->capacities.blowing ) {
-
+		Capacities_blowing( level, obj );
 	}
 
 	if( obj->selected ) {
