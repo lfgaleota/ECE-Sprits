@@ -4,8 +4,8 @@ void Game_show( Level* level ) {
 	ObjectM *maillon;
 
 	clear_bitmap( level->bmps.page );
-
 	clear_bitmap( level->bmps.stick_col );
+	clear_bitmap( level->bmps.wind_col );
 
 	set_trans_blender( 255, 0, 255, 0 );
 
@@ -264,6 +264,12 @@ char Game_createBitmaps( Level* level ) {
 
 	level->bmps.stick_col = create_bitmap( 1024, 768 );
 	if( !level->bmps.stick_col ) {
+		allegro_message( "Erreur creation bitmap" );
+		return 0;
+	}
+
+	level->bmps.wind_col = create_bitmap( 1024, 768 );
+	if( !level->bmps.wind_col ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
 	}
