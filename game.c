@@ -213,7 +213,7 @@ char Game_createMenus( Level* level ) {
 		return 0;
 
 	for( i = 0; i < 4; i++ ) {
-		capacities[ i ].bg_color = makecol( 254 - i, 254 - i, 254 - i );
+		capacities[ i ].bg_color = makecol( 254 - i * 2, 254 - i * 2, 254 - i * 2 );
 		capacities[ i ].bg_sel_color = makecol( 200, 200, 200 );
 		capacities[ i ].text_color = makecol( 0, 0, 0 );
 		capacities[ i ].callback = Capacities_set;
@@ -233,17 +233,21 @@ char Game_createMenus( Level* level ) {
 
 	for( i = 0; i < 9; i++ ) {
 		directions[ i ].icon = level->bmps.arrow[ i ];
-		directions[ i ].bg_color = makecol( 254 - i, 254 - i, 254 - i );
+		directions[ i ].bg_color = makecol( 254 - i * 2, 254 - i * 2, 254 - i * 2 );
 		directions[ i ].bg_sel_color = makecol( 200, 200, 200 );
 		directions[ i ].text_color = makecol( 0, 0, 0 );
 		directions[ i ].callback = Capacities_setDirectionCallback;
 		directions[ i ].tooltip = malloc( sizeof( char ) * 40 );
+
+		if( !directions[ i ].tooltip )
+			return 0;
+
 		strcpy( directions[ i ].tooltip, "" );
 	}
 	strcpy( directions[ 8 ].tooltip, "Retour" );
 
 	level->capacities_menu = CircularMenu_create( 0, 0, 40, 40, capacities, 4 );
-	level->directions_menu = CircularMenu_create( 0, 0, 40, 40, directions, 8 );
+	level->directions_menu = CircularMenu_create( 0, 0, 80, 40, directions, 9 );
 
 	CircularMenu_compute( level->capacities_menu );
 	CircularMenu_compute( level->directions_menu );
