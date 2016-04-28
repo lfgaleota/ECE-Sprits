@@ -68,7 +68,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	level.nb_stickmen_max = 1;
+	level.nb_stickmen_max = 10;
 	level.nb_stickmen_should_arrive = 9;
 	level.counter_stickmen_arrival_max = 50;
 
