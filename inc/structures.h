@@ -76,8 +76,8 @@
 #define BLOWING_DISTANCE 150
 #define BLOWING_WIDTH 10
 
-#define WIND_FORCE_X 4
-#define WIND_FORCE_Y 4
+#define WIND_FORCE_X 12
+#define WIND_FORCE_Y 12
 
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
