@@ -66,7 +66,6 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 			obj->force.y = 0;
 			obj->v.x = 0;
 			obj->v.y = 0;
-			allegro_message("obj should not move");
 			break;
 
 		case STATE_DIGGING:
