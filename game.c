@@ -22,9 +22,9 @@ void Game_show( Level* level ) {
 	for( maillon = level->stickmen; maillon != NULL; maillon = maillon->next ) {
 		if( maillon->obj ) {
 			if( maillon->obj->direction )
-				draw_trans_sprite( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y );
+				rotate_sprite_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixmul( ftofix( maillon->obj->angle ), radtofix_r ) );
 			else
-				draw_sprite_h_flip( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y );
+				rotate_sprite_v_flip_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
 
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
 		}
