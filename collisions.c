@@ -80,14 +80,14 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 }
 
 void Collision_exitCallback( Object* obj, unsigned char status ) {
-	if( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) {
+	if( ( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) && obj->state != STATE_EXITING ) {
 		obj->state = STATE_EXITING;
 		obj->counter = 0;
 	}
 }
 
 void Collision_deathZoneCallback( Object* obj, unsigned char status ) {
-	if( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) {
+	if( ( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) && obj->state != STATE_DYING ) {
 		obj->state = STATE_DYING;
 		obj->counter = 0;
 	}

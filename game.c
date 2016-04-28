@@ -60,10 +60,12 @@ void Game_checkWin( Level* level ) {
 void Game_updateObjectProperties( Level* level, Object* obj ) {
 	Frames* current;
 
-	if( obj->v.y < -Y_SIGNIFICANT || obj->v.y > Y_SIGNIFICANT ) {
-		obj->state = STATE_FALLING;
-	} else {
-		obj->state = STATE_WALKING;
+	if( obj->state == STATE_WALKING || obj->state == STATE_FALLING ) {
+		if( obj->v.y < -Y_SIGNIFICANT || obj->v.y > Y_SIGNIFICANT ) {
+			obj->state = STATE_FALLING;
+		} else {
+			obj->state = STATE_WALKING;
+		}
 	}
 
 	obj->counter++;
