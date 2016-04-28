@@ -1,11 +1,17 @@
 #include "inc/capacities.h"
 
-int Capacities_diggingCallback( Level* level, Object* obj, int x, int y ) {
+int Capacities_diggingCallback2( Level* level, Object* obj, int x, int y ) {
+	putpixel(screen,x,y,makecol(255,0,0));
 	if( getpixel( level->bmps.col, x, y ) == COLOR_BREAKABLEWALL ) {
 		putpixel( level->bmps.col, x, y, COLOR_NEUTRAL );
 		putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_NEUTRAL );
 	}
 
+	return 0;
+}
+
+int Capacities_diggingCallback1( Level* level, Object* obj, int x, int y ) {
+	TrackLine( level, obj, x, y, x + obj->capacities.direction.x, y + obj->capacities.direction.y, Capacities_diggingCallback2 );
 	return 0;
 }
 
@@ -21,7 +27,7 @@ void Capacities_digging( Level* level, Object* obj ) {
 	if( obj->capacities.left > 0 ) {
 		obj->state = STATE_DIGGING;
 
-		TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_diggingCallback );
+		TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_diggingCallback1 );
 	} else {
 		obj->state = STATE_WALKING;
 		obj->capacities.digging = 0;
@@ -159,8 +165,8 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	start_point.x = cosf( obj->capacities.angle ) * obj->capacities.distance;
 	start_point.y = - sinf( obj->capacities.angle ) * obj->capacities.distance;
 
-	/*obj->capacities.direction.x = cosf( level->capacities.angle ) * 2;
-	obj->capacities.direction.y = - sinf( level->capacities.angle ) * 2;*/
+	obj->capacities.direction.x = - cosf( obj->capacities.angle ) * 2;
+	obj->capacities.direction.y = sinf( obj->capacities.angle ) * 2;
 
 	obj->capacities.start_points[ 0 ].x = start_point.x - cosf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
 	obj->capacities.start_points[ 0 ].y = start_point.y + sinf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
