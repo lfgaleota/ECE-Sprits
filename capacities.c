@@ -28,6 +28,39 @@ void Capacities_digging( Level* level, Object* obj ) {
 	}
 }
 
+int Capacities_buildingCallback2( Level* level, Object* obj, int x, int y ) {
+	if( getpixel( level->bmps.col, x, y ) == COLOR_NEUTRAL ) {
+		putpixel( level->bmps.col, x, y, COLOR_BREAKABLEWALL );
+		putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_BUILD );
+	}
+
+	return 0;
+}
+
+int Capacities_buildingCallback1( Level* level, Object* obj, int x, int y ) {
+	TrackLine( level, obj, x, y, x + obj->capacities.direction.x, y + obj->capacities.direction.y, Capacities_buildingCallback2 );
+	return 0;
+}
+
+void Capacities_building( Level* level, Object* obj ) {
+	obj->capacities.delta_combined.x += obj->delta.x;
+	obj->capacities.delta_combined.y += obj->delta.y;
+
+	if( ( obj->capacities.delta_combined.x <= -1 ) || ( obj->capacities.delta_combined.x >= 1 ) || ( obj->capacities.delta_combined.y <= -1 ) || ( obj->capacities.delta_combined.y >= 1 ) ) {
+		obj->capacities.left--;
+		obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
+	}
+
+	if( obj->capacities.left > 0 ) {
+		obj->state = STATE_BUILDING;
+
+		TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_buildingCallback1 );
+	} else {
+		obj->state = STATE_WALKING;
+		obj->capacities.building = 0;
+	}
+}
+
 char Capacities_setDirectionCallback( Level* level, Object* obj, int index, int x, int y ) {
 	switch( index ) {
 		case UP:
@@ -148,11 +181,53 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	}
 }
 
+void Capacities_setBuilding( Level* level, Object* obj ) {
+	Position start_point;
+
+	if( obj->direction == DIRECTION_LEFT ) {
+		start_point.x = obj->p[ P_DOWN_LEFT ].x - 1 - obj->cp.x;
+		start_point.y = obj->p[ P_DOWN_LEFT ].y - obj->cp.y;
+
+		obj->capacities.direction.x = -3;
+		obj->capacities.direction.y = 0;
+	} else {
+		start_point.x = obj->p[ P_DOWN_RIGHT ].x + 1 - obj->cp.x;
+		start_point.y = obj->p[ P_DOWN_RIGHT ].y - obj->cp.y;
+
+		obj->capacities.direction.x = 3;
+		obj->capacities.direction.y = 0;
+	}
+
+	obj->capacities.start_points[ 0 ].x = start_point.x;
+	obj->capacities.start_points[ 0 ].y = start_point.y;
+	obj->capacities.start_points[ 1 ].x = start_point.x;
+	obj->capacities.start_points[ 1 ].y = start_point.y + BUILDING_HIGH;
+
+	obj->capacities.left = MAX_BUILDING;
+	obj->state = STATE_BUILDING;
+	obj->capacities.building = 1;
+	obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
+
+	level->capacities.building--;
+	sprintf( level->capacities_menu->items[ CAPACITY_BUILD ].tooltip, "Construire (reste %d)", level->capacities.building );
+
+	if( level->capacities.building < 1 ) {
+		level->capacities.building = 0;
+		level->capacities_menu->items[ CAPACITY_BUILD ].bg_color = makecol( 4, 4, 4 );
+	}
+}
+
 char Capacities_set( Level* level, Object* obj, int index, int x, int y ) {
 	switch( index ) {
 		case CAPACITY_DIG:
 			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.digging > 0 ) {
 				Capacities_setDigging( level, obj );
+			}
+			return 1;
+
+		case CAPACITY_BUILD:
+			if( !obj->capacities.digging && !obj->capacities.building && !obj->capacities.blowing && level->capacities.digging > 0 ) {
+				Capacities_setBuilding( level, obj );
 			}
 			return 1;
 
@@ -170,7 +245,7 @@ void Capacities_update( Level* level, Object* obj ) {
 	}
 
 	if( obj->capacities.building ) {
-
+		Capacities_building( level, obj );
 	}
 
 	if( obj->capacities.blowing ) {
