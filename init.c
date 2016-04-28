@@ -17,5 +17,9 @@ void Init() {
 
 	set_window_title( "ECE-Sprits" );
 
+	enable_hardware_cursor();
+	select_mouse_cursor( 2 );
+	show_mouse( screen );
+
 	srand( time( NULL ) );
 }
