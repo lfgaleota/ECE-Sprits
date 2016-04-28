@@ -59,6 +59,17 @@ void CircularMenu_compute( CircularMenu *menu ) {
 	}
 }
 
+void CircularMenu_recompute( CircularMenu *menu ) {
+	if( menu ) {
+		if( menu->bmp ) {
+			destroy_bitmap( menu->bmp );
+			menu->bmp = NULL;
+		}
+
+		CircularMenu_compute( menu );
+	}
+}
+
 void CircularMenu_updatePosition( CircularMenu* menu, int x, int y ) {
 	int i;
 
