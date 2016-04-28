@@ -2,8 +2,8 @@
 
 int Capacities_diggingCallback( Level* level, Object* obj, int x, int y ) {
 	if( getpixel( level->bmps.col, x, y ) == COLOR_BREAKABLEWALL ) {
-		putpixel( level->bmps.col, x, y, makecol( 0, 0, 0 ) );
-		putpixel( level->bmps.fore, x, y, makecol( 255, 0, 255 ) );
+		putpixel( level->bmps.col, x, y, COLOR_NEUTRAL );
+		putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_NEUTRAL );
 	}
 
 	return 0;

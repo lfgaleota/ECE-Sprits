@@ -40,7 +40,7 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 		if( side == SIDE_LEFT && !( status & STATUS_WALL ) && obj->v.x != 0 ) {
 			obj->v.x = 0;
 			obj->force.x = 0;
-			obj->direction = 1;
+			obj->direction = DIRECTION_RIGHT;
 			ret |= STATUS_ALREADY_BLOCKED;
 			//printf("Blocked because second wall!\n");
 		}
@@ -48,7 +48,7 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 		if( side == SIDE_RIGHT && !( status & STATUS_WALL ) && obj->v.x != 0 ) {
 			obj->v.x = 0;
 			obj->force.x = 0;
-			obj->direction = 0;
+			obj->direction = DIRECTION_LEFT;
 			ret |= STATUS_ALREADY_BLOCKED;
 			//printf("Blocked because second wall!\n");
 		}
@@ -120,9 +120,9 @@ char Collision_callback( Object* obj, BITMAP* col, int x, int y, char side, unsi
 					obj->v.x = 0;
 					obj->force.x = 0;
 					if( side == SIDE_LEFT )
-						obj->direction = 1;
+						obj->direction = DIRECTION_RIGHT;
 					else
-						obj->direction = 0;
+						obj->direction = DIRECTION_LEFT;
 					ret |= STATUS_ALREADY_BLOCKED;
 					//printf("Blocked because wall too high!\n");
 				}

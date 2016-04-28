@@ -75,8 +75,8 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 			obj->force.y = gravity.y;
 
 			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
-				obj->v.x = ( obj->direction ? 1 : -1 ) * movement.x / 2.0;
-				obj->v.y = ( obj->direction ? 1 : -1 ) * movement.y / 2.0;
+				obj->v.x = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.x / 2.0;
+				obj->v.y = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.y / 2.0;
 			}
 			break;
 
@@ -85,8 +85,8 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 			obj->force.y = gravity.y;
 
 			if( obj->v.y >= -0.1 && obj->v.y <= 0.1 ) { //FLOAT_AROUND( obj->v.y, 0.0, 0.1 )
-				obj->v.x = ( obj->direction ? 1 : -1 ) * movement.x;
-				obj->v.y = ( obj->direction ? 1 : -1 ) * movement.y;
+				obj->v.x = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.x;
+				obj->v.y = ( obj->direction == DIRECTION_RIGHT ? 1 : -1 ) * movement.y;
 			}
 			break;
 	}
