@@ -7,6 +7,7 @@
 
 CircularMenu *CircularMenu_create( int x, int y, int radius, int size, MenuItem *items, int count );
 void CircularMenu_compute( CircularMenu *menu );
+void CircularMenu_recompute( CircularMenu *menu );
 void CircularMenu_updatePosition( CircularMenu* menu, int x, int y );
 void CircularMenu_show( CircularMenu* menu, BITMAP* dest, int x, int y );
 char CircularMenu_handleClick( CircularMenu* menu, Level* level, Object* obj, int x, int y );
