@@ -93,8 +93,18 @@ void Collision_deathZoneCallback( Object* obj, unsigned char status ) {
 	}
 }
 
-char Collision_callback( Object* obj, BITMAP* col, int x, int y, char side, unsigned char status, int progression_y ) {
-	int px = getpixel( col, x, y );
+void Collision_windCallback( Object* obj, int color, unsigned char status ) {
+	float angle;
+
+	if( ( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) && obj->should_move ) {
+		angle = ( color - 1 ) * ( 2 * M_PI ) / makecol( 254, 254, 254 );
+		obj->force.x = WIND_FORCE_X * cosf( angle );
+		obj->force.y = - WIND_FORCE_Y * sinf( angle );
+	}
+}
+
+char Collision_callback( Object* obj, BITMAP* col, BITMAP* wind_col, int x, int y, char side, unsigned char status, int progression_y ) {
+	int px = getpixel( col, x, y ), px2 = getpixel( wind_col, x, y );
 	char ret = 0;
 
 	if( px == COLOR_WALL || px == COLOR_BREAKABLEWALL ) {
@@ -104,16 +114,16 @@ char Collision_callback( Object* obj, BITMAP* col, int x, int y, char side, unsi
 
 		if( px == COLOR_EXIT ) {
 			Collision_exitCallback( obj, status );
-		}
-
-		if( px == COLOR_DEATHZONE ) {
+		} else if( px == COLOR_DEATHZONE ) {
 			Collision_deathZoneCallback( obj, status );
+		} else if( px2 != COLOR_NEUTRAL ) {
+			Collision_windCallback( obj, px2, status );
 		}
 
 		if( status & STATUS_IS_SIDE_OF_WALKING && progression_y > 0 && obj->dir.x != 0 ) {
 			if( status & STATUS_WALL ) {
 				//printf( "Status: Y: %d, Wall: %d, Blocked: %d\n", progression_y, status & STATUS_WALL, status & STATUS_ALREADY_BLOCKED );
-				if( progression_y < MAX_STEP ) {
+				if( progression_y < MAX_STEP && obj->should_move ) {
 					obj->propcp.y += progression_y;
 					//printf("Should go up!\n");
 				} else {
@@ -133,7 +143,7 @@ char Collision_callback( Object* obj, BITMAP* col, int x, int y, char side, unsi
 	return ret;
 }
 
-void Collision_trackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int y2, char side ) {
+void Collision_trackLine( Object* obj, BITMAP* col, BITMAP* wind_col, int x1, int y1, int x2, int y2, char side ) {
 	int dx, dy, dx_dir, dy_dir;
 	char ret;
 	unsigned char status = 0x2;
@@ -165,7 +175,7 @@ void Collision_trackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int 
 		return;
 	} else if( x1 == x2 ) {
 		for( i = y1; dy_dir * i <= dy_dir * y2; i += dy_dir ) {
-			ret = Collision_callback( obj, col, x1, floorf( i ), side, status, dy_dir * ( floorf( i ) - y1 ) );
+			ret = Collision_callback( obj, col, wind_col, x1, floorf( i ), side, status, dy_dir * ( floorf( i ) - y1 ) );
 			if( ret & STATUS_ALREADY_BLOCKED )
 				status |= STATUS_ALREADY_BLOCKED;
 			if( ret & STATUS_WALL )
@@ -173,7 +183,7 @@ void Collision_trackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int 
 		}
 	} else if( y1 == y2 ) {
 		for( j = x1; dx_dir * j <= dx_dir * x2; j += dx_dir ) {
-			ret = Collision_callback( obj, col, floorf( j ), y1, side, status, 0 );
+			ret = Collision_callback( obj, col, wind_col, floorf( j ), y1, side, status, 0 );
 			if( ret & STATUS_ALREADY_BLOCKED )
 				status |= STATUS_ALREADY_BLOCKED;
 			if( ret & STATUS_WALL )
@@ -186,7 +196,7 @@ void Collision_trackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int 
 			i = m * j;
 
 			if( dy_dir * i <= dy_dir * y2 ) {
-				ret = Collision_callback( obj, col, floorf( j ), floorf( i ), side, status, dy_dir * ( floorf( i ) - y1 ) );
+				ret = Collision_callback( obj, col, wind_col, floorf( j ), floorf( i ), side, status, dy_dir * ( floorf( i ) - y1 ) );
 				if( ret & STATUS_ALREADY_BLOCKED )
 					status |= STATUS_ALREADY_BLOCKED;
 				if( ret & STATUS_WALL )
@@ -210,7 +220,7 @@ void Collision_trackLine( Object* obj, BITMAP* col, int x1, int y1, int x2, int 
 		//printf("Should be blocked!\n");
 }
 
-void Collision_detect( Object *obj, BITMAP *bmp ) {
+void Collision_detect( Object *obj, BITMAP *col, BITMAP* wind_col ) {
 	/*  p2 p3
 	 *  +---+
 	 *  |   |  cp
@@ -220,16 +230,16 @@ void Collision_detect( Object *obj, BITMAP *bmp ) {
 	 *  p1 p4
 	 */
 	//printf("-> Before P4->P3\n");
-	Collision_trackLine( obj, bmp, floorf( obj->p[ P_DOWN_LEFT ].x ), floorf( obj->p[ P_DOWN_LEFT ].y ) + 1, floorf( obj->p[ P_DOWN_RIGHT ].x ), floor( obj->p[ P_DOWN_RIGHT ].y ) + 1, SIDE_DOWN );
+	Collision_trackLine( obj, col, wind_col, floorf( obj->p[ P_DOWN_LEFT ].x ), floorf( obj->p[ P_DOWN_LEFT ].y ) + 1, floorf( obj->p[ P_DOWN_RIGHT ].x ), floor( obj->p[ P_DOWN_RIGHT ].y ) + 1, SIDE_DOWN );
 
 	//printf("-> Before P4->P1\n");
-	Collision_trackLine( obj, bmp, floorf( obj->p[ P_DOWN_LEFT ].x ) - 1, floorf( obj->p[ P_DOWN_LEFT ].y ), floorf( obj->p[ P_UP_LEFT ].x ) - 1, floor( obj->p[ P_UP_LEFT ].y ), SIDE_LEFT );
+	Collision_trackLine( obj, col, wind_col, floorf( obj->p[ P_DOWN_LEFT ].x ) - 1, floorf( obj->p[ P_DOWN_LEFT ].y ), floorf( obj->p[ P_UP_LEFT ].x ) - 1, floor( obj->p[ P_UP_LEFT ].y ), SIDE_LEFT );
 
 	//printf("-> Before P3->P2\n");
-	Collision_trackLine( obj, bmp, floorf( obj->p[ P_DOWN_RIGHT ].x ) + 1, floorf( obj->p[ P_DOWN_RIGHT ].y ), floorf( obj->p[ P_UP_RIGHT ].x ) + 1, floor( obj->p[ P_UP_RIGHT ].y ), SIDE_RIGHT );
+	Collision_trackLine( obj, col, wind_col, floorf( obj->p[ P_DOWN_RIGHT ].x ) + 1, floorf( obj->p[ P_DOWN_RIGHT ].y ), floorf( obj->p[ P_UP_RIGHT ].x ) + 1, floor( obj->p[ P_UP_RIGHT ].y ), SIDE_RIGHT );
 
 	//printf("-> Before P1->P2\n");
-	Collision_trackLine( obj, bmp, floorf( obj->p[ P_UP_LEFT ].x ), floorf( obj->p[ P_UP_LEFT ].y ) - 1, floorf( obj->p[ P_UP_RIGHT ].x ), floor( obj->p[ P_UP_RIGHT ].y ) - 1, SIDE_UP );
+	Collision_trackLine( obj, col, wind_col, floorf( obj->p[ P_UP_LEFT ].x ), floorf( obj->p[ P_UP_LEFT ].y ) - 1, floorf( obj->p[ P_UP_RIGHT ].x ), floor( obj->p[ P_UP_RIGHT ].y ) - 1, SIDE_UP );
 }
 
 int Collision_collisionCallback( Level* level, Object *obj, int x, int y ) {
