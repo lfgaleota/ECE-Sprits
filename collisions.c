@@ -98,8 +98,8 @@ void Collision_windCallback( Object* obj, int color, unsigned char status ) {
 
 	if( ( status & STATUS_IS_SIDE_OF_FLYING || status & STATUS_IS_SIDE_OF_WALKING ) && obj->should_move ) {
 		angle = ( color - 1 ) * ( 2 * M_PI ) / makecol( 254, 254, 254 );
-		obj->force.x = WIND_FORCE_X * cosf( angle );
-		obj->force.y = - WIND_FORCE_Y * sinf( angle );
+		obj->force.x += WIND_FORCE_X * cosf( angle ) / obj->size.y;
+		obj->force.y -= WIND_FORCE_Y * sinf( angle ) / obj->size.y;
 	}
 }
 
