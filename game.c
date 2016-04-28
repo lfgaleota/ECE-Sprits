@@ -188,7 +188,7 @@ void Game_update( Level* level ) {
 
 				Physic_initMovement( maillon->obj, level->gravity, level->movement );
 
-				Collision_detect( maillon->obj, level->bmps.col );
+				Collision_detect( maillon->obj, level->bmps.col, level->bmps.wind_col );
 
 				Physic_compute( maillon->obj, level->dt );
 
