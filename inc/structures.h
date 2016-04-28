@@ -47,10 +47,17 @@
 #define STATE_DIGGING 7
 #define STATE_BLOWING 8
 
+#define COLOR_NEUTRAL makecol( 0, 0, 0 )
 #define COLOR_WALL makecol( 255, 255, 255 )
 #define COLOR_BREAKABLEWALL makecol( 0, 0, 255 )
 #define COLOR_DEATHZONE makecol( 255, 0, 0 )
 #define COLOR_EXIT makecol( 0, 255, 255 )
+
+#define COLOR_FOREGROUND_NEUTRAL makecol( 255, 0, 255 )
+#define COLOR_FOREGROUND_BUILD makecol( 128, 128, 128 )
+
+#define DIRECTION_LEFT 0
+#define DIRECTION_RIGHT 1
 
 #define X_SIGNIFICANT 4
 #define Y_SIGNIFICANT 4
@@ -62,6 +69,9 @@
 #define QUIT_DELIBERATE 3
 
 #define MAX_DIGGING 80
+#define MAX_BUILDING 45
+
+#define BUILDING_HIGH 2
 
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
