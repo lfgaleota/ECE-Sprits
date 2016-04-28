@@ -76,6 +76,9 @@
 #define BLOWING_DISTANCE 150
 #define BLOWING_WIDTH 10
 
+#define WIND_FORCE_X 4
+#define WIND_FORCE_Y 4
+
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
 #define CAPACITY_BLOW 2
@@ -136,6 +139,7 @@ struct Object {
 	Direction delta;
 	Direction dir;
 	char direction;
+	char should_move;
 	float torque;
 	float moment_of_inertia;
 	float av;
