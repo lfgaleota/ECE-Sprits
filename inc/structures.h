@@ -73,6 +73,8 @@
 
 #define DIGGING_DISTANCE 10
 #define BUILDING_DISTANCE 2
+#define BLOWING_DISTANCE 150
+#define BLOWING_WIDTH 10
 
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
@@ -105,7 +107,7 @@ struct Capacities {
 	unsigned char building;
 	unsigned char blowing;
 	float angle;
-	unsigned int left;
+	int left;
 	Position start_points[ 2 ];
 	Vector2 direction;
 	float distance;
@@ -165,6 +167,7 @@ struct Bitmaps {
 	BITMAP* page;
 	BITMAP* col;
 	BITMAP* stick_col;
+	BITMAP* wind_col;
 	BITMAP* back;
 	BITMAP* fore;
 	BITMAP* wall;
