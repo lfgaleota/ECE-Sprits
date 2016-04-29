@@ -68,6 +68,7 @@ char Level_loadImages( char* path, Level* level ) {
 	level->bmps.stickmen_falldying = Level_loadFrames( "images/sticks/stickManMortChute", 5 );
 	level->bmps.stickmen_starting = Level_loadFrames( "images/sticks/stickManDepart", 11 );
 	level->bmps.stickmen_exiting = Level_loadFrames( "images/sticks/stickManArrive", 10 );
+	level->bmps.stickmen_digging = Level_loadFrames( "images/sticks/stickManCreuse", 3 );
 	level->bmps.start = Level_loadFrames( "images/portails/portailDebut", 1 );
 	level->bmps.exit = Level_loadFrames( "images/portails/portailArrivee", 1 );
 
@@ -83,8 +84,9 @@ char Level_loadImages( char* path, Level* level ) {
 	level->bmps.capacity_blow = load_png( "images/capacites/souffler.png", NULL );
 
 	level->bmps.branch = load_png( "images/capacites/branche.png", NULL );
+	level->bmps.stick_fire = Level_loadBitmaps( "images/capacites/flamme", 3 );
 
-	if( !level->bmps.stickmen_walking.bmps || !level->bmps.stickmen_falling.bmps || !level->bmps.stickmen_dying.bmps || !level->bmps.stickmen_falldying.bmps || !level->bmps.stickmen_starting.bmps || !level->bmps.stickmen_exiting.bmps || !level->bmps.start.bmps || !level->bmps.exit.bmps || !level->bmps.arrow || !level->bmps.capacity_build || !level->bmps.capacity_dig || !level->bmps.capacity_blow || !level->bmps.branch ) {
+	if( !level->bmps.stickmen_walking.bmps || !level->bmps.stickmen_falling.bmps || !level->bmps.stickmen_dying.bmps || !level->bmps.stickmen_falldying.bmps || !level->bmps.stickmen_starting.bmps || !level->bmps.stickmen_exiting.bmps || !level->bmps.stickmen_digging.bmps || !level->bmps.start.bmps || !level->bmps.exit.bmps || !level->bmps.arrow || !level->bmps.capacity_build || !level->bmps.capacity_dig || !level->bmps.capacity_blow || !level->bmps.branch || !level->bmps.stick_fire ) {
 		allegro_message( "Impossible de charger les images" );
 		return 0;
 	}

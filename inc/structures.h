@@ -187,6 +187,7 @@ struct Bitmaps {
 	BITMAP* capacity_dig;
 	BITMAP* capacity_blow;
 	BITMAP* branch;
+	BITMAP** stick_fire;
 	Frames start;
 	Frames exit;
 	Frames stickmen_walking;
@@ -195,6 +196,7 @@ struct Bitmaps {
 	Frames stickmen_falldying;
 	Frames stickmen_starting;
 	Frames stickmen_exiting;
+	Frames stickmen_digging;
 };
 
 typedef struct Inputs Inputs;

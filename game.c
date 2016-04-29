@@ -36,6 +36,13 @@ void Game_show( Level* level ) {
 			else
 				rotate_sprite_v_flip_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
 
+			if( maillon->obj->state == STATE_DIGGING ) {
+				if( maillon->obj->direction )
+					rotate_sprite_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixmul( ftofix( maillon->obj->angle ), radtofix_r ) );
+				else
+					rotate_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
+			}
+
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
 		}
 	}
@@ -107,6 +114,10 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 				obj->state = STATE_GONE;
 				obj->counter = 9;
 			}
+			break;
+
+		case STATE_DIGGING:
+			current = &level->bmps.stickmen_digging;
 			break;
 
 		case STATE_FALLING:
