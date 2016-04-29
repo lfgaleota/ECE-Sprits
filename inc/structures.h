@@ -197,6 +197,7 @@ struct Bitmaps {
 	Frames stickmen_starting;
 	Frames stickmen_exiting;
 	Frames stickmen_digging;
+	Frames stickmen_building;
 };
 
 typedef struct Inputs Inputs;

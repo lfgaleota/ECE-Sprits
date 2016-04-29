@@ -120,6 +120,10 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 			current = &level->bmps.stickmen_digging;
 			break;
 
+		case STATE_BUILDING:
+			current = &level->bmps.stickmen_building;
+			break;
+
 		case STATE_FALLING:
 			current = &level->bmps.stickmen_falling;
 			break;
