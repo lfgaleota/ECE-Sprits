@@ -36,7 +36,7 @@ void Capacities_digging( Level* level, Object* obj ) {
 int Capacities_buildingCallback2( Level* level, Object* obj, int x, int y ) {
 	if( getpixel( level->bmps.col, x, y ) == COLOR_NEUTRAL ) {
 		putpixel( level->bmps.col, x, y, COLOR_BREAKABLEWALL );
-		putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_BUILD );
+		//putpixel( level->bmps.fore, x, y, COLOR_FOREGROUND_BUILD );
 	}
 
 	return 0;
@@ -44,6 +44,7 @@ int Capacities_buildingCallback2( Level* level, Object* obj, int x, int y ) {
 
 int Capacities_buildingCallback1( Level* level, Object* obj, int x, int y ) {
 	TrackLine( level, obj, x, y, x + obj->capacities.direction.x, y + obj->capacities.direction.y, Capacities_buildingCallback2 );
+	draw_trans_sprite( level->bmps.fore, level->bmps.branch, x, y );
 	return 0;
 }
 
