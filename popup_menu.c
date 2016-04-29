@@ -99,8 +99,6 @@ void Menu_open( FONT* fonttext, char** choices, int count ) {
 	width = MENU_PADDING_X * 2;
 	max_size = 0;
 
-	usleep( 100000 );
-
 	for( i = 0; i < count; i++ ) {
 		size = strlen( choices[ i ] );
 		if( size > max_size )
