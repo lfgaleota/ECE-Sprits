@@ -51,18 +51,18 @@ void Capacities_building( Level* level, Object* obj ) {
 	obj->capacities.delta_combined.x += obj->delta.x;
 	obj->capacities.delta_combined.y += obj->delta.y;
 
-	if( ( obj->capacities.delta_combined.x <= -1 ) || ( obj->capacities.delta_combined.x >= 1 ) || ( obj->capacities.delta_combined.y <= -1 ) || ( obj->capacities.delta_combined.y >= 1 ) ) {
+	if( ( obj->capacities.delta_combined.x <= -BUILDING_WIDTH ) || ( obj->capacities.delta_combined.x >= BUILDING_WIDTH ) || ( obj->capacities.delta_combined.y <= -BUILDING_WIDTH ) || ( obj->capacities.delta_combined.y >= BUILDING_WIDTH ) ) {
 		obj->capacities.left--;
 		obj->capacities.delta_combined = (Vector2Char) { 0, 0 };
-	}
 
-	if( obj->capacities.left > 0 ) {
-		obj->state = STATE_BUILDING;
+		if( obj->capacities.left > 0 ) {
+			obj->state = STATE_BUILDING;
 
-		TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_buildingCallback1 );
-	} else {
-		obj->state = STATE_WALKING;
-		obj->capacities.building = 0;
+			TrackLine( level, obj, obj->cp.x + obj->capacities.start_points[ 0 ].x, obj->cp.y + obj->capacities.start_points[ 0 ].y, obj->cp.x + obj->capacities.start_points[ 1 ].x, obj->cp.y + obj->capacities.start_points[ 1 ].y, Capacities_buildingCallback1 );
+		} else {
+			obj->state = STATE_WALKING;
+			obj->capacities.building = 0;
+		}
 	}
 }
 
@@ -218,15 +218,15 @@ void Capacities_setBuilding( Level* level, Object* obj ) {
 
 	if( obj->direction == DIRECTION_LEFT ) {
 		start_point.x = obj->p[ P_DOWN_LEFT ].x - 1 - obj->cp.x;
-		start_point.y = obj->p[ P_DOWN_LEFT ].y - obj->cp.y;
+		start_point.y = obj->p[ P_DOWN_LEFT ].y - 1 - obj->cp.y;
 
-		obj->capacities.direction.x = -3;
+		obj->capacities.direction.x = -BUILDING_WIDTH;
 		obj->capacities.direction.y = 0;
 	} else {
 		start_point.x = obj->p[ P_DOWN_RIGHT ].x + 1 - obj->cp.x;
-		start_point.y = obj->p[ P_DOWN_RIGHT ].y - obj->cp.y;
+		start_point.y = obj->p[ P_DOWN_RIGHT ].y - 1 - obj->cp.y;
 
-		obj->capacities.direction.x = 3;
+		obj->capacities.direction.x = BUILDING_WIDTH;
 		obj->capacities.direction.y = 0;
 	}
 
