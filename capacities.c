@@ -219,13 +219,13 @@ void Capacities_setBuilding( Level* level, Object* obj ) {
 
 	if( obj->direction == DIRECTION_LEFT ) {
 		start_point.x = obj->p[ P_DOWN_LEFT ].x - 1 - obj->cp.x;
-		start_point.y = obj->p[ P_DOWN_LEFT ].y - 1 - obj->cp.y;
+		start_point.y = obj->p[ P_DOWN_LEFT ].y - 3 - obj->cp.y;
 
 		obj->capacities.direction.x = -BUILDING_WIDTH;
 		obj->capacities.direction.y = 0;
 	} else {
 		start_point.x = obj->p[ P_DOWN_RIGHT ].x + 1 - obj->cp.x;
-		start_point.y = obj->p[ P_DOWN_RIGHT ].y - 1 - obj->cp.y;
+		start_point.y = obj->p[ P_DOWN_RIGHT ].y - 3 - obj->cp.y;
 
 		obj->capacities.direction.x = BUILDING_WIDTH;
 		obj->capacities.direction.y = 0;
