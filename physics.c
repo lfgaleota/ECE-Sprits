@@ -71,7 +71,6 @@ void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
 			break;
 
 		case STATE_DIGGING:
-		case STATE_BUILDING:
 			obj->force.x = gravity.x;
 			obj->force.y = gravity.y;
 			obj->should_move = 1;
