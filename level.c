@@ -45,21 +45,21 @@ char Level_loadImages( char* path, Level* level ) {
 	level->bmps.col = load_png( fullpath, NULL );
 	if( !level->bmps.col ) {
 		allegro_message( "Erreur chargement %s", fullpath );
-		return 1;
+		return 0;
 	}
 
 	sprintf( fullpath, "%s/background.jpg", path );
 	level->bmps.back = load_jpg( fullpath, NULL );
 	if( !level->bmps.back ) {
 		allegro_message( "Erreur chargement %s", fullpath );
-		return 1;
+		return 0;
 	}
 
 	sprintf( fullpath, "%s/foreground.png", path );
 	level->bmps.fore = load_png( fullpath, NULL );
 	if( !level->bmps.fore ) {
 		allegro_message( "Erreur chargement %s", fullpath );
-		return 1;
+		return 0;
 	}
 
 	level->bmps.stickmen_walking = Level_loadFrames( "images/sticks/stickMan", 20 );
