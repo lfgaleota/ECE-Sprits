@@ -186,6 +186,7 @@ struct Bitmaps {
 	BITMAP* capacity_build;
 	BITMAP* capacity_dig;
 	BITMAP* capacity_blow;
+	BITMAP* branch;
 	Frames start;
 	Frames exit;
 	Frames stickmen_walking;
