@@ -116,7 +116,7 @@ struct Capacities {
 	unsigned char blowing;
 	float angle;
 	int left;
-	Position start_points[ 2 ];
+	Position start_points[ 3 ];
 	Vector2 direction;
 	float distance;
 	Vector2Char delta_combined;

@@ -206,6 +206,8 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 	obj->capacities.start_points[ 0 ].y = start_point.y + sinf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
 	obj->capacities.start_points[ 1 ].x = start_point.x + cosf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
 	obj->capacities.start_points[ 1 ].y = start_point.y - sinf( obj->capacities.angle + M_PI_2 ) * MAX( obj->size.x, obj->size.y );
+	obj->capacities.start_points[ 2 ].x = start_point.x;
+	obj->capacities.start_points[ 2 ].y = start_point.y;
 	obj->capacities.left = MAX_DIGGING;
 	obj->state = STATE_DIGGING;
 	obj->capacities.digging = 1;
