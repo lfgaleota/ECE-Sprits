@@ -10,6 +10,13 @@ void Game_pauseMenu( Level* level ) {
 	Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
 }
 
+void Game_showFlame( Level* level, Object* obj ) {
+	if( obj->direction )
+		pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->p[ P_UP_LEFT ].x, obj->p[ P_UP_LEFT ].y, 0, 0, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+	else
+		pivot_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->cp.x + obj->capacities.start_points[ 2 ].x, obj->cp.y + obj->capacities.start_points[ 2 ].y, 0, 0, fixadd( itofix( 128 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+}
+
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
@@ -37,10 +44,7 @@ void Game_show( Level* level ) {
 				rotate_sprite_v_flip_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
 
 			if( maillon->obj->state == STATE_DIGGING ) {
-				if( maillon->obj->direction )
-					pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, 0, 0, fixsub( itofix( 256 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
-				else
-					pivot_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->cp.x + maillon->obj->capacities.start_points[ 2 ].x, maillon->obj->cp.y + maillon->obj->capacities.start_points[ 2 ].y, 0, 0, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
+				Game_showFlame( level, maillon->obj );
 			}
 
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
