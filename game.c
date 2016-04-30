@@ -73,6 +73,31 @@ void Game_showBlow( Level* level, Object* obj ) {
 	}
 }
 
+void Game_showUI( Level* level ) {
+	rectfill( level->bmps.page, 0, 0, UI_WIDTH, SCREEN_H, makecol( 255, 255, 255 ) );
+	rectfill( level->bmps.page, UI_WIDTH, 0, UI_WIDTH + 1, SCREEN_H, makecol( 0, 0, 0 ) );
+
+	blit( level->bmps.ui_accelerate, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, UI_PADDING_Y, UI_BUTTON_X, UI_BUTTON_Y );
+	blit( level->bmps.ui_pause, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, 2 * UI_PADDING_Y + UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
+
+	blit( level->bmps.ui_menu, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, SCREEN_H - UI_PADDING_Y - UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
+
+	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, 3 * UI_PADDING_Y + 2 * UI_BUTTON_Y, makecol( 0, 0, 0 ), -1, "V: %0.1f", level->dt );
+
+	draw_trans_sprite( level->bmps.page, level->bmps.stickmen_walking.bmps[ 0 ], ( UI_WIDTH - level->bmps.stickmen_walking.bmps[ 0 ]->w ) / 2, SCREEN_H / 4 );
+	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, SCREEN_H / 4 + UI_PADDING_Y + level->bmps.stickmen_walking.bmps[ 0 ]->h, makecol( 0, 0, 0 ), -1, "%d", level->nb_stickmen_arrived );
+	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, SCREEN_H / 4 + 2 * UI_PADDING_Y + level->bmps.stickmen_walking.bmps[ 0 ]->h + UI_FONT_SIZE, makecol( 0, 0, 0 ), -1, "/%d", level->nb_stickmen_should_arrive );
+
+	draw_trans_sprite( level->bmps.page, level->bmps.capacity_dig, 1, SCREEN_H / 2 );
+	textprintf_ex( level->bmps.page, level->bmps.droidsans_14_mono, 26, SCREEN_H / 2, makecol( 0, 0, 0 ), -1, "%d", level->capacities.digging );
+
+	draw_trans_sprite( level->bmps.page, level->bmps.capacity_build, 1, SCREEN_H / 2 + 24 + UI_PADDING_Y );
+	textprintf_ex( level->bmps.page, level->bmps.droidsans_14_mono, 26, SCREEN_H / 2 + 24 + UI_PADDING_Y, makecol( 0, 0, 0 ), -1, "%d", level->capacities.building );
+
+	draw_trans_sprite( level->bmps.page, level->bmps.capacity_blow, 1, SCREEN_H / 2 + 2 * 24 +  2 *UI_PADDING_Y );
+	textprintf_ex( level->bmps.page, level->bmps.droidsans_14_mono, 26, SCREEN_H / 2 + 2 * 24 +  2 *UI_PADDING_Y, makecol( 0, 0, 0 ), -1, "%d", level->capacities.blowing );
+}
+
 void Game_show( Level* level ) {
 	ObjectM *maillon;
 
@@ -109,6 +134,8 @@ void Game_show( Level* level ) {
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
 		}
 	}
+
+	Game_showUI( level );
 
 	CircularMenu_show( level->capacities_menu, level->bmps.page, mouse_x, mouse_y );
 
@@ -247,7 +274,7 @@ void Game_updateInputs( Level* level ) {
 	level->inputs.mouse_l = mouse_b & 1;
 }
 
-void Game_handleInputs( Level* level, Object* obj ) {
+void Game_handleObjectClick( Level* level, Object* obj ) {
 	ObjectM *maillon;
 	char ret = 0;
 
@@ -281,39 +308,65 @@ void Game_handleInputs( Level* level, Object* obj ) {
 	}
 }
 
+void Game_handleInputs( Level* level ) {
+	if( !level->inputs.prev_mouse_l && level->inputs.mouse_l ) {
+		if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y >= 0 && mouse_y <= UI_PADDING_Y + UI_BUTTON_Y ) {
+			if( level->dt == level->fast_dt ) {
+				level->dt = level->slow_dt;
+			} else {
+				level->dt = level->fast_dt;
+			}
+		} else if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y > UI_PADDING_Y + UI_BUTTON_Y &&
+		           mouse_y <= 2 * UI_PADDING_Y + 2 * UI_BUTTON_Y ) {
+			if( level->dt == 0 ) {
+				level->dt = level->slow_dt;
+			} else {
+				level->dt = 0;
+				Game_show( level );
+			}
+		} else if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y >= SCREEN_H - UI_BUTTON_Y - UI_PADDING_Y &&
+		           mouse_y <= SCREEN_H ) {
+			Game_pauseMenu( level );
+		}
+	}
+}
+
 void Game_update( Level* level ) {
 	ObjectM *maillon, *next;
 
 	Game_updateInputs( level );
 	Game_updateLevelProperties( level );
+	Game_handleInputs( level );
 
 	// On parcours les maillons
-	for( maillon = level->stickmen; maillon != NULL; maillon = next ) {
-		next = maillon->next;
+	if( level->dt > 0 ) {
+		for( maillon = level->stickmen; maillon != NULL; maillon = next ) {
+			next = maillon->next;
 
-		if( maillon->obj ) {
-			if( maillon->obj->state != STATE_DEAD && maillon->obj->state != STATE_GONE ) {
-				Game_handleInputs( level, maillon->obj );
+			if( maillon->obj ) {
+				if( maillon->obj->state != STATE_DEAD && maillon->obj->state != STATE_GONE ) {
+					Game_handleObjectClick( level, maillon->obj );
 
-				Game_updateObjectProperties( level, maillon->obj );
+					Game_updateObjectProperties( level, maillon->obj );
 
-				Capacities_update( level, maillon->obj );
+					Capacities_update( level, maillon->obj );
 
-				Physic_initMovement( maillon->obj, level->gravity, level->movement );
+					Physic_initMovement( maillon->obj, level->gravity, level->movement );
 
-				Collision_detect( maillon->obj, level->bmps.col, level->bmps.wind_col );
+					Collision_detect( maillon->obj, level->bmps.col, level->bmps.wind_col );
 
-				Physic_compute( maillon->obj, level->dt );
+					Physic_compute( maillon->obj, level->dt );
 
-				Collision_continuous( level, maillon->obj );
-			} else {
-				if( maillon->obj->selected )
-					level->capacities_menu->opened = 0;
-				level->stickmen = Object_remove( level->stickmen, maillon->obj );
-				if( maillon->obj->state == STATE_DEAD )
-					level->nb_stickmen_dead++;
-				else if( maillon->obj->state == STATE_GONE )
-					level->nb_stickmen_arrived++;
+					Collision_continuous( level, maillon->obj );
+				} else {
+					if( maillon->obj->selected )
+						level->capacities_menu->opened = 0;
+					level->stickmen = Object_remove( level->stickmen, maillon->obj );
+					if( maillon->obj->state == STATE_DEAD )
+						level->nb_stickmen_dead++;
+					else if( maillon->obj->state == STATE_GONE )
+						level->nb_stickmen_arrived++;
+				}
 			}
 		}
 	}
@@ -473,7 +526,8 @@ void Game_launch( Level* level ) {
 
 		Game_update( level );
 
-		Game_show( level );
+		if( level->dt > 0 )
+			Game_show( level );
 
 		SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
 	}

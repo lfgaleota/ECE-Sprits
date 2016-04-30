@@ -89,6 +89,12 @@
 #define CAPACITY_DIG 1
 #define CAPACITY_BLOW 2
 
+#define UI_WIDTH 56
+#define UI_PADDING_Y 5
+#define UI_BUTTON_X 34
+#define UI_BUTTON_Y 33
+#define UI_FONT_SIZE 16
+
 typedef struct MenuItem MenuItem;
 typedef struct CircularMenu CircularMenu;
 
@@ -191,6 +197,9 @@ struct Bitmaps {
 	BITMAP* branch;
 	BITMAP** stick_fire;
 	BITMAP* blow;
+	BITMAP* ui_accelerate;
+	BITMAP* ui_pause;
+	BITMAP* ui_menu;
 	Frames start;
 	Frames exit;
 	Frames stickmen_walking;
