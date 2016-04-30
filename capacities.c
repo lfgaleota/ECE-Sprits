@@ -87,6 +87,8 @@ void Capacities_blowing( Level* level, Object* obj ) {
 }
 
 char Capacities_setDirectionCallback( Level* level, Object* obj, int index, int x, int y ) {
+	obj->capacities.approx_direction = index;
+
 	switch( index ) {
 		case UP:
 			obj->capacities.angle = M_PI_2;

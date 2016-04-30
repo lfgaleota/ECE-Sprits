@@ -120,6 +120,7 @@ struct Capacities {
 	Vector2 direction;
 	float distance;
 	Vector2Char delta_combined;
+	int approx_direction;
 };
 
 typedef struct CapacitiesNumber CapacitiesNumber;
@@ -199,6 +200,7 @@ struct Bitmaps {
 	Frames stickmen_exiting;
 	Frames stickmen_digging;
 	Frames stickmen_building;
+	Frames stickmen_blowing;
 };
 
 typedef struct Inputs Inputs;
