@@ -38,9 +38,9 @@ void Game_show( Level* level ) {
 
 			if( maillon->obj->state == STATE_DIGGING ) {
 				if( maillon->obj->direction )
-					pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->cp.x + maillon->obj->capacities.start_points[ 2 ].x + 2 * maillon->obj->capacities.direction.x, maillon->obj->cp.y + maillon->obj->capacities.start_points[ 2 ].y + 2 * maillon->obj->capacities.direction.y, 0, 0, fixsub( itofix( 256 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
+					pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, 0, 0, fixsub( itofix( 256 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
 				else
-					pivot_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->cp.x + maillon->obj->capacities.start_points[ 2 ].x + 2 * maillon->obj->capacities.direction.x, maillon->obj->cp.y + maillon->obj->capacities.start_points[ 2 ].y + 2 * maillon->obj->capacities.direction.y, 0, 0, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
+					pivot_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ maillon->obj->counter ], maillon->obj->cp.x + maillon->obj->capacities.start_points[ 2 ].x, maillon->obj->cp.y + maillon->obj->capacities.start_points[ 2 ].y, 0, 0, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->capacities.angle ), radtofix_r ) ) );
 			}
 
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
