@@ -307,6 +307,8 @@ void Game_update( Level* level ) {
 
 				Collision_continuous( level, maillon->obj );
 			} else {
+				if( maillon->obj->selected )
+					level->capacities_menu->opened = 0;
 				level->stickmen = Object_remove( level->stickmen, maillon->obj );
 				if( maillon->obj->state == STATE_DEAD )
 					level->nb_stickmen_dead++;
