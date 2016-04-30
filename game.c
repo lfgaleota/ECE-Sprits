@@ -1,13 +1,48 @@
 #include "inc/game.h"
 
 void Game_pauseMenu( Level* level ) {
-	char* choices[] = {
-		"Retour",
-		"Recommencer",
-	    "Quitter",
-	};
+	int choice = 0;
 
-	Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
+	if( level->win ) {
+		char* choices[] = {
+				"Retour",
+				"Passer au niveau suivant"
+				"Recommencer",
+				"Quitter",
+		};
+
+		choice = Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
+	} else {
+		char* choices[] = {
+				"Retour",
+				"Recommencer",
+				"Quitter",
+		};
+
+		choice = Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
+	}
+
+	switch( choice ) {
+		case 2:
+			if( level->win ) {
+				level->quit = QUIT_WIN;
+			} else {
+				level->quit = QUIT_RESTART;
+			}
+			break;
+
+		case 3:
+			if( level->win ) {
+				level->quit = QUIT_RESTART;
+				break;
+			}
+
+		case 4:
+			level->quit = QUIT_DELIBERATE;
+
+		default:
+			break;
+	}
 }
 
 void Game_showFlame( Level* level, Object* obj ) {
