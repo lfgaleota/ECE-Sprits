@@ -82,7 +82,7 @@
 #define BLOWING_WIDTH 10
 
 #define WIND_FORCE_X 12
-#define WIND_FORCE_Y 12
+#define WIND_FORCE_Y 14
 
 #define CAPACITY_BUILD 0
 #define CAPACITY_DIG 1
