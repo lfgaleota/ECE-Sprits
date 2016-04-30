@@ -362,8 +362,8 @@ char Game_createMenus( Level* level ) {
 	}
 	strcpy( directions[ 8 ].tooltip, "Retour" );
 
-	level->capacities_menu = CircularMenu_create( 0, 0, 40, 40, capacities, 4 );
-	level->directions_menu = CircularMenu_create( 0, 0, 80, 40, directions, 9 );
+	level->capacities_menu = CircularMenu_create( 0, 0, 40, 40, capacities, 4, level->bmps.droidsans_14_mono );
+	level->directions_menu = CircularMenu_create( 0, 0, 80, 40, directions, 9, level->bmps.droidsans_14_mono );
 
 	CircularMenu_compute( level->capacities_menu );
 	CircularMenu_compute( level->directions_menu );

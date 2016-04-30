@@ -1,12 +1,18 @@
 #include "inc/circular_menu.h"
 
-CircularMenu *CircularMenu_create( int x, int y, int radius, int size, MenuItem *items, int count ) {
+CircularMenu *CircularMenu_create( int x, int y, int radius, int size, MenuItem *items, int count, FONT* font ) {
 	CircularMenu *menu = malloc( sizeof( CircularMenu ) );
 	if( !menu ) {
 		allegro_message( "Allocation du menu échouée." );
 		return NULL;
 	}
 
+	if( radius <= 0 || size <= 0 || !items || count <= 0 || !font ) {
+		allegro_message( "Configuration du menu circulaire invalide." );
+		return NULL;
+	}
+
+	menu->font = font;
 	menu->count = count;
 	menu->inner_radius = radius;
 	menu->medium_radius = radius + size / 2;
@@ -107,7 +113,7 @@ void CircularMenu_show( CircularMenu* menu, BITMAP* dest, int x, int y ) {
 		}
 
 		if( tooltip_i > -1 )
-			textprintf_ex( dest, font, x, y, menu->items[ tooltip_i ].text_color, menu->items[ tooltip_i ].bg_sel_color, "%s", menu->items[ tooltip_i ].tooltip );
+			textprintf_ex( dest, menu->font, x + menu->font->height, y, menu->items[ tooltip_i ].text_color, menu->items[ tooltip_i ].bg_sel_color, "%s", menu->items[ tooltip_i ].tooltip );
 	}
 }
 

@@ -262,6 +262,7 @@ struct CircularMenu {
 	int screen_y;
 	BITMAP *bmp;
 	MenuItem *items;
+	FONT *font;
 };
 
 #endif //_ECE_SPRITS_STRUCTURES_H_
