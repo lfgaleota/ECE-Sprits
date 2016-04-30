@@ -71,6 +71,7 @@
 #define QUIT_WIN 1
 #define QUIT_FAIL 2
 #define QUIT_DELIBERATE 3
+#define QUIT_RESTART 4
 
 #define MAX_DIGGING 80
 #define MAX_BUILDING 10
