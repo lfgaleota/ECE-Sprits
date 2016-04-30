@@ -90,9 +90,10 @@ BITMAP* Menu_generateBackground( int width, int height ) {
 	return back;
 }
 
-void Menu_open( FONT* fonttext, char** choices, int count ) {
+int Menu_open( FONT* fonttext, char** choices, int count ) {
 	BITMAP *back, *page, *save;
 	int width, height, i, choice = 0, quit = 0, start_x, start_y, end_x, selected_button;
+	unsigned char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
 	size_t size, max_size;
 
 	height = MENU_PADDING_Y * 2 + ( count - 1 ) * MENU_LETTER_SPACING_Y + count * MENU_FONT_SIZE;
@@ -109,13 +110,13 @@ void Menu_open( FONT* fonttext, char** choices, int count ) {
 
 	back = Menu_generateBackground( width, height );
 	if( !back ) {
-		return;
+		return 0;
 	}
 
 	page = create_bitmap( SCREEN_W, SCREEN_H );
 	if( !page ) {
 		allegro_message( "Erreur d'allocation" );
-		return;
+		return 0;
 	}
 
 	save = create_bitmap( SCREEN_W, SCREEN_H );
@@ -127,12 +128,37 @@ void Menu_open( FONT* fonttext, char** choices, int count ) {
 	end_x = ( SCREEN_W + width ) / 2 - MENU_PADDING_X;
 
 	while( !quit ) {
-		if( key[ KEY_ENTER ] )
+		prev_mouse_l = mouse_l;
+		mouse_l = (unsigned char) mouse_b & 1;
+
+		prev_key_down = key_down;
+		key_down = key[ KEY_DOWN ];
+
+		prev_key_up= key_up;
+		key_up = key[ KEY_UP ];
+
+		prev_key_enter = key_enter;
+		key_enter = key[ KEY_ENTER ];
+
+		prev_key_esc = key_esc;
+		key_esc = key[ KEY_ESC ];
+
+		if( !prev_key_enter && key_enter )
 			quit = 1;
 
-		if( key[ KEY_ESC ] ) {
-			quit = 1;
+		if( !prev_key_up && key_up ) {
+			if( choice > 1 )
+				choice--;
+		}
+
+		if( !prev_key_down && key_down ) {
+			if( choice < count )
+				choice++;
+		}
+
+		if( !prev_key_esc && key_esc ) {
 			choice = 0;
+			quit = 1;
 		}
 
 		if( save )
@@ -144,6 +170,10 @@ void Menu_open( FONT* fonttext, char** choices, int count ) {
 			selected_button = ( mouse_y - start_y ) / ( MENU_FONT_SIZE + MENU_LETTER_SPACING_Y );
 			if( selected_button >= 0 && selected_button < count ) {
 				choice = selected_button + 1;
+			}
+
+			if( !prev_mouse_l && mouse_l ) {
+				quit = 1;
 			}
 		}
 
@@ -161,4 +191,6 @@ void Menu_open( FONT* fonttext, char** choices, int count ) {
 	if( save )
 		destroy_bitmap( save );
 	destroy_bitmap( page );
+
+	return choice;
 }
