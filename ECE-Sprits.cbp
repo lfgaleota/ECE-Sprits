@@ -63,6 +63,7 @@
 		<Unit filename="inc/memory.h" />
 		<Unit filename="inc/objects.h" />
 		<Unit filename="inc/physics.h" />
+		<Unit filename="inc/popup_menu.h" />
 		<Unit filename="inc/structures.h" />
 		<Unit filename="init.c">
 			<Option compilerVar="CC" />
@@ -83,6 +84,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="physics.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="popup_menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
