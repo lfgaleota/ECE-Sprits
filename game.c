@@ -15,7 +15,27 @@ void Game_showFlame( Level* level, Object* obj ) {
 }
 
 void Game_showBlow( Level* level, Object* obj ) {
-	pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->cp.y, 6, 14, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+	switch( obj->capacities.approx_direction ) {
+		case UP:
+			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->p[ P_UP_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			break;
+
+		case DOWN:
+			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->p[ P_DOWN_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			break;
+
+		case UP_LEFT:
+		case LEFT:
+		case DOWN_LEFT:
+			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->p[ P_UP_LEFT ].x + 1, obj->p[ P_UP_LEFT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			break;
+
+		case DOWN_RIGHT:
+		case RIGHT:
+		case UP_RIGHT:
+			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->p[ P_UP_RIGHT ].x - 1, obj->p[ P_UP_RIGHT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			break;
+	}
 }
 
 void Game_show( Level* level ) {
@@ -130,6 +150,10 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 
 		case STATE_BUILDING:
 			current = &level->bmps.stickmen_building;
+			break;
+
+		case STATE_BLOWING:
+			current = &level->bmps.stickmen_blowing;
 			break;
 
 		case STATE_FALLING:
