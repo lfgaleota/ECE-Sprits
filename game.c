@@ -11,10 +11,11 @@ void Game_pauseMenu( Level* level ) {
 }
 
 void Game_showFlame( Level* level, Object* obj ) {
-	if( obj->direction )
-		pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->p[ P_UP_LEFT ].x, obj->p[ P_UP_LEFT ].y, 0, 0, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
-	else
-		pivot_sprite_v_flip_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->cp.x + obj->capacities.start_points[ 2 ].x, obj->cp.y + obj->capacities.start_points[ 2 ].y, 0, 0, fixadd( itofix( 128 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+	pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->cp.x, obj->cp.y, 6, 14, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+}
+
+void Game_showBlow( Level* level, Object* obj ) {
+	pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->cp.y, 6, 14, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 }
 
 void Game_show( Level* level ) {
@@ -45,6 +46,9 @@ void Game_show( Level* level ) {
 
 			if( maillon->obj->state == STATE_DIGGING ) {
 				Game_showFlame( level, maillon->obj );
+			}
+			if( maillon->obj->state == STATE_BLOWING ) {
+				Game_showBlow( level, maillon->obj );
 			}
 
 			rectfill( level->bmps.stick_col, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, maillon->obj->p[ P_DOWN_RIGHT ].x, maillon->obj->p[ P_DOWN_RIGHT ].y, maillon->obj->id );
