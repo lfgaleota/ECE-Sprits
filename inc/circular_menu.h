@@ -5,7 +5,7 @@
 #include <math.h>
 #include "structures.h"
 
-CircularMenu *CircularMenu_create( int x, int y, int radius, int size, MenuItem *items, int count );
+CircularMenu *CircularMenu_create( int x, int y, int radius, int size, MenuItem *items, int count, FONT* font );
 void CircularMenu_compute( CircularMenu *menu );
 void CircularMenu_recompute( CircularMenu *menu );
 void CircularMenu_updatePosition( CircularMenu* menu, int x, int y );
