@@ -174,13 +174,17 @@ char Level_parseVector2( Vector2* vec, char* value ) {
 	if( !Level_extractArray( value, &values, &count ) )
 		return 0;
 
+	if( values == NULL )
+		return 0;
+
 	if( count > 1 ) {
 		*vec = (Vector2) { strtol( values[ 0 ], NULL, 10 ), strtol( values[ 1 ], NULL, 10 ) };
 		ret = 1;
 	}
 
 	for( i = 0; i < count; i++ ) {
-		free( values[ i ] );
+		if( values[ i ] )
+			free( values[ i ] );
 	}
 	free( values );
 
@@ -194,18 +198,20 @@ char Level_parseCapacitiesNumber( CapacitiesNumber* cap, char* value ) {
 	if( !Level_extractArray( value, &values, &count ) )
 		return 0;
 
+	if( values == NULL )
+		return 0;
+
 	if( count > 2 ) {
 		*cap = (CapacitiesNumber) { strtoul( values[ 0 ], 0, 10 ), strtoul( values[ 1 ], 0, 10 ), strtoul( values[ 2 ], 0, 10 ) };
 		ret = 1;
 	}
 
-	if( values ) {
-		for( i = 0; i < count; i++ ) {
+	for( i = 0; i < count; i++ ) {
+		if( values[ i ] )
 			free( values[ i ] );
-		}
-
-		free( values );
 	}
+
+	free( values );
 
 	return ret;
 }
