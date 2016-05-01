@@ -227,7 +227,7 @@ void Menu_alert( char* title, FONT* fonttext ) {
 		}
 	}
 
-	Menu_open( fonttext, title, choices, 1 );
+	Menu_open( title, choices, 1, fonttext );
 
 	if( font_loaded ) {
 		destroy_font( fonttext );
