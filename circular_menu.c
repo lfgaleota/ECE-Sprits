@@ -144,7 +144,8 @@ void CircularMenu_free( CircularMenu* menu, char free_items, char free_items_bit
 
 		if( free_items_bitmaps ) {
 			for( i = 0; i < menu->count; i++ ) {
-				destroy_bitmap( menu->items[ i ].icon );
+				if( menu->items[ i ].icon )
+					destroy_bitmap( menu->items[ i ].icon );
 			}
 		}
 
