@@ -26,7 +26,7 @@
       <sourceFolder url="file://$MODULE_DIR$/collisions.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/menu.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/level.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/save.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/inc/save.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/memory.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/popup_menu.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />

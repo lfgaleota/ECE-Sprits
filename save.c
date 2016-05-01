@@ -1,4 +1,4 @@
-#include "save.h"
+#include "inc/save.h"
 
 char Save_save( Save* save ) {
 	FILE* file;
