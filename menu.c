@@ -203,6 +203,10 @@ void Menu_options( Menu* menu, GeneralConfig* config ) {
 	show_mouse( screen );
 }
 
+void Menu_rules( Menu* menu ) {
+
+}
+
 void Menu_launch( GeneralConfig* config ) {
 	Menu menu;
 
@@ -255,6 +259,7 @@ void Menu_launch( GeneralConfig* config ) {
 				case 3:
 					if( menu.submenu == MENU_MAIN ) {
 						// Règles
+						Menu_rules( &menu );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 3
 						Menu_newGame( 3 );
