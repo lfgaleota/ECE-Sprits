@@ -50,7 +50,7 @@ void Physic_updatePosition( Object* obj ) {
 	obj->p[ P_DOWN_LEFT ].x = obj->cp.x - CPtoP2.x;
 	obj->p[ P_DOWN_LEFT ].y = obj->cp.y - CPtoP2.y;
 
-	obj->propcp = (Vector2Char) { 0, 0 };
+	obj->propcp = (Vector2) { 0, 0 };
 }
 
 void Physic_initMovement( Object *obj, Vector2 gravity, Vector2 movement ) {
