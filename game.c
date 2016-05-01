@@ -135,7 +135,7 @@ void Game_show( Level* level ) {
 		}
 	}
 
-	CircularMenu_show( level->capacities_menu, level->bmps.scrolling_page, mouse_x, mouse_y );
+	CircularMenu_show( level->capacities_menu, level->bmps.scrolling_page, level->inputs.scrolling_mouse.x, level->inputs.scrolling_mouse.y );
 
 	blit( level->bmps.scrolling_page, level->bmps.page, level->scrolling.x, level->scrolling.y, UI_WIDTH, 0, SCREEN_W, SCREEN_H );
 
@@ -279,6 +279,10 @@ void Game_addStickmen( Level* level ) {
 void Game_updateInputs( Level* level ) {
 	level->inputs.prev_mouse_l = level->inputs.mouse_l;
 	level->inputs.mouse_l = mouse_b & 1;
+
+	level->inputs.scrolling_mouse.x = mouse_x + level->scrolling.x - UI_WIDTH;
+	level->inputs.scrolling_mouse.y = mouse_y + level->scrolling.y;
+
 }
 
 void Game_handleObjectClick( Level* level, Object* obj ) {
@@ -291,14 +295,14 @@ void Game_handleObjectClick( Level* level, Object* obj ) {
 
 	if( !level->inputs.prev_mouse_l && level->inputs.mouse_l ) {
 		if( obj->selected == 1 ) {
-			ret = CircularMenu_handleClick( level->capacities_menu, level, obj, mouse_x, mouse_y );
+			ret = CircularMenu_handleClick( level->capacities_menu, level, obj, level->inputs.scrolling_mouse.x, level->inputs.scrolling_mouse.y );
 
 			if( ret == 1 ) {
 				level->capacities_menu->opened = 0;
 				obj->selected = 0;
 			}
 		} else {
-			if( getpixel( level->bmps.stick_col, mouse_x, mouse_y ) == obj->id ) {
+			if( getpixel( level->bmps.stick_col, level->inputs.scrolling_mouse.x, level->inputs.scrolling_mouse.y ) == obj->id ) {
 				for( maillon = level->stickmen; maillon != NULL; maillon = maillon->next ) {
 					if( maillon->obj ) {
 						maillon->obj->selected = 0;
