@@ -1,0 +1,195 @@
+#include "inc/menu.h"
+
+void Menu_showBackground( Menu* menu ) {
+	clear_bitmap( menu->page );
+
+	if( menu->submenu == MENU_MAIN ) {
+		blit( menu->back, menu->page, menu->back->w - SCREEN_W, 0, 0, 0, SCREEN_W, SCREEN_H );
+	} else {
+		blit( menu->back, menu->page, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
+	}
+}
+
+void Menu_showForeground( Menu* menu ) {
+	int colors[ 6 ];
+	unsigned int px;
+	int i;
+
+	set_alpha_blender();
+	
+	// Attribution des couleurs de la carte de collision pour realiser les tests
+	for( i = 0; i < 6; i++ ) {
+		colors[ i ] = makecol( 50 * i, 30 * i, 3 * i );
+	}
+
+	if( menu->submenu == MENU_MAIN ) {
+		// Récupération de la couleur
+		px = getpixel( menu->col1, mouse_x, mouse_y );
+
+		// Tests successifs des couleurs puis affichage à l'ecran d'un nouveau avant-plan et sélection du choix
+		if( px == colors[ 1 ] ) {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 1 ], 0, 0 );
+			menu->choice = 1;
+		} else if( px == colors[ 2 ] ) {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 2 ], 0, 0 );
+			menu->choice = 2;
+		} else if( px == colors[ 3 ] ) {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 3 ], 0, 0 );
+			menu->choice = 3;
+		} else if( px == colors[ 4 ] ) {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 4 ], 0, 0 );
+			menu->choice = 4;
+		} else if( px == colors[ 5 ] ) {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 5 ], 0, 0 );
+			menu->choice = 5;
+		} else {
+			draw_trans_sprite( menu->page, menu->fore1.bmps[ 0 ], 0, 0 );
+			menu->choice = 0;
+		}
+	} else {
+		// Récupération de la couleur
+		px = getpixel( menu->col2, mouse_x, mouse_y );
+
+		// Tests successifs des couleurs puis affichage à l'ecran d'un nouveau avant-plan
+		if( px == colors[ 1 ] ) {
+			draw_trans_sprite( menu->page, menu->fore2.bmps[ 1 ], 0, 0 );
+			menu->choice = 1;
+		} else if( px == colors[ 2 ] ) {
+			draw_trans_sprite( menu->page, menu->fore2.bmps[ 2 ], 0, 0 );
+			menu->choice = 2;
+		} else if( px == colors[ 3 ] ) {
+			draw_trans_sprite( menu->page, menu->fore2.bmps[ 3 ], 0, 0 );
+			menu->choice = 3;
+		} else if( px == colors[ 4 ] ) {
+			draw_trans_sprite( menu->page, menu->fore2.bmps[ 4 ], 0, 0 );
+			menu->choice = 4;
+		} else {
+			draw_trans_sprite( menu->page, menu->fore2.bmps[ 0 ], 0, 0 );
+			menu->choice = 0;
+		}
+	}
+}
+
+void Menu_transition( Menu* menu, unsigned char direction ) {
+	int i;
+
+	if( direction == MENU_MAIN ) {
+		for( i = 0; i < menu->back->w - SCREEN_W; i++ ) {
+			blit( menu->back, screen, i, 0, 0, 0, SCREEN_W, SCREEN_H );
+
+			SLEEP( 1/30 * 1000 );
+		}
+	} else {
+		for( i = menu->back->w - SCREEN_W; i > 0; i-- ) {
+			blit( menu->back, screen, i, 0, 0, 0, SCREEN_W, SCREEN_H );
+
+			SLEEP( 1/30 * 1000 );
+		}
+	}
+}
+
+char Menu_load( Menu* menu ) {
+	//Creation et chargement des bitmaps
+	menu->page = create_bitmap( SCREEN_W, SCREEN_H );
+	if( !menu->page ) {
+		allegro_message( "Problème d'allocation de bitmap." );
+		return 0;
+	}
+
+	menu->back = load_jpg( "images/menu/fond.jpg", NULL );
+	menu->col1 = load_png( "images/menu/collision1.png", NULL );
+	menu->col2 = load_png( "images/menu/collision2.png", NULL );
+	menu->fore1 = Level_loadFrames( "images/menu/fond1sel", 6 );
+	menu->fore2 = Level_loadFrames( "images/menu/fond2sel", 5 );
+
+	if( !menu->back || !menu->fore1.bmps || !menu->fore2.bmps || !menu->col1 || !menu->col2 ) {
+		allegro_message( "Impossible de charger les images." );
+		return 0;
+	}
+
+	menu->submenu = MENU_MAIN;
+	menu->choice = 0;
+	
+	return 1;
+}
+
+void Menu_launch() {
+	Menu menu;
+
+	if( !Menu_load( &menu ) )
+		return;
+
+	int quit = 0, prev_mouse_l, mouse_l = 0;
+
+	//Boucle de jeu
+	while( !quit ) {
+		prev_mouse_l = mouse_l;
+		mouse_l = mouse_b & 1;
+
+		Menu_showBackground( &menu );
+		Menu_showForeground( &menu );
+		blit( menu.page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
+
+		if( !prev_mouse_l && mouse_l ) {
+			switch( menu.choice ) {
+				case 1:
+					if( menu.submenu == MENU_MAIN ) {
+						// Passage au menu de nouvelle partie
+						menu.submenu = MENU_NEW;
+						Menu_transition( &menu, MENU_NEW );
+					} else if( menu.submenu == MENU_NEW ) {
+						// Créer une partie sur la sauvegarde 1
+
+					} else if( menu.submenu == MENU_LOAD ) {
+						// Charger une partie sur la sauvegarde 1
+					}
+					break;
+
+				case 2:
+					if( menu.submenu == MENU_MAIN ) {
+						// Passage au menu de chargement de partie
+						menu.submenu = MENU_LOAD;
+						Menu_transition( &menu, MENU_NEW );
+					} else if( menu.submenu == MENU_NEW ) {
+						// Créer une partie sur la sauvegarde 2
+
+					} else if( menu.submenu == MENU_LOAD ) {
+						// Charger une partie sur la sauvegarde 2
+					}
+					break;
+
+				case 3:
+					if( menu.submenu == MENU_MAIN ) {
+						// Règles
+					} else if( menu.submenu == MENU_NEW ) {
+						// Créer une partie sur la sauvegarde 3
+
+					} else if( menu.submenu == MENU_LOAD ) {
+						// Charger une partie sur la sauvegarde 3
+
+					}
+					break;
+
+				case 4:
+					if( menu.submenu == MENU_MAIN ) {
+						// Options
+					} else {
+						// Retour au menu principal
+						menu.submenu = MENU_MAIN;
+						Menu_transition( &menu, MENU_MAIN );
+					}
+					break;
+
+				case 5:
+					if( menu.submenu == MENU_MAIN ) {
+						// Quitter
+						quit = 1;
+					}
+					break;
+			}
+		}
+
+		// Petite pause
+		rest( 20 );
+	}
+}
