@@ -6,6 +6,7 @@
 #include <loadpng.h>
 #include <jpgalleg.h>
 #include "structures.h"
+#include "config.h"
 
 BITMAP** Level_loadBitmaps( char* path, unsigned short count );
 Frames Level_loadFrames( char* path, unsigned short count );
