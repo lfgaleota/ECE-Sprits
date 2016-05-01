@@ -17,6 +17,8 @@ void Menu_launchGame( FMod* fmod, unsigned char id ) {
 
 	save = Save_load( id );
 
+	FMod_stopMusic( fmod );
+
 	if( ( save.standard_level >= LEVEL_MINSTANDARD ) && ( save.standard_level <= LEVEL_MAXSTANDARD ) ) {
 		// On lance la boucle des niveaux tnt qu'il ne faut pas quitter
 		while( !quit ) {
@@ -55,6 +57,8 @@ void Menu_launchGame( FMod* fmod, unsigned char id ) {
 			}
 		}
 	}
+
+	FMod_playMusic( fmod, fmod->menu );
 }
 
 void Menu_showBackground( Menu* menu ) {
@@ -220,6 +224,8 @@ void Menu_launch( FMod* fmod, GeneralConfig* config ) {
 		return;
 
 	menu.fmod = fmod;
+
+	FMod_playMusic( menu.fmod, menu.fmod->menu );
 
 	//Boucle de jeu
 	while( !quit ) {

@@ -552,6 +552,8 @@ char Game_levelInit( Level* level ) {
 
 	ret &= Game_createBitmaps( level );
 
+	ret &= FMod_loadLevelMusic( level->fmod, level->path );
+
 	return ret;
 }
 
@@ -573,6 +575,8 @@ char Game_launch( Level* level ) {
 		return QUIT_DELIBERATE;
 	}
 
+	FMod_playMusic( level->fmod, level->fmod->music );
+
 	while( !level->quit ) {
 
 		if( key[ KEY_SPACE ] ) {
@@ -592,6 +596,8 @@ char Game_launch( Level* level ) {
 
 		SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
 	}
+
+	FMod_stopMusic( level->fmod );
 
 	Game_free( level );
 

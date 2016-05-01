@@ -238,6 +238,10 @@ struct FMod {
 	FMOD_SOUND* blow;
 	FMOD_SOUND* start;
 	FMOD_SOUND* exit;
+	FMOD_SOUND* menu;
+	FMOD_SOUND* music;
+	FMOD_CHANNELGROUP* channel_master;
+	FMOD_CHANNEL* channel_1;
 };
 
 typedef struct Inputs Inputs;
@@ -249,6 +253,7 @@ struct Inputs {
 
 typedef struct Level Level;
 struct Level {
+	char path[ 255 ];
 	Bitmaps bmps;
 	ObjectM* stickmen;
 	float dt;
