@@ -7,6 +7,8 @@
 #include "structures.h"
 #include "line_tracking.h"
 
+void Collision_resetState( Object* obj, unsigned char status );
+
 void Collision_detect( Object *obj, BITMAP *col, BITMAP* wind_col );
 void Collision_trackLine( Object* obj, BITMAP* col, BITMAP* wind_col, int x1, int y1, int x2, int y2, char side );
 char Collision_callback( Object* obj, BITMAP* col, BITMAP* wind_col, int x, int y, char side, unsigned char status, int progression_y );

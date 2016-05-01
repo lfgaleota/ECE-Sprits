@@ -1,5 +1,15 @@
 #include "inc/collisions.h"
 
+void Collision_resetState( Object* obj, unsigned char status ) {
+	// Si le personnage est en train de creuser ou construire
+	if( obj->state == STATE_DIGGING || obj->state == STATE_BUILDING ) {
+		// On le remet dans un état normal
+		obj->state = STATE_WALKING;
+		obj->capacities.digging = 0;
+		obj->capacities.building = 0;
+	}
+}
+
 char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 	char ret = 0;
 
@@ -24,7 +34,7 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 		normal.y *= obj->dir.y;
 	}*/
 
-	// Si le personnage n'est pas déjà bloqué
+	// Si le personnage n'est pas déjà été bloqué
 	if( !( status & STATUS_ALREADY_BLOCKED ) ) {
 		// S'il se dirige vers le haut ou le bas, et qu'on étudie le côté suivant le mouvement
 		if( ( side == SIDE_UP && obj->dir.y <= 0 ) || ( side == SIDE_DOWN && obj->dir.y >= 0 ) ) {
@@ -47,6 +57,9 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 			obj->force.x = 0;
 			obj->direction = DIRECTION_RIGHT;
 			ret |= STATUS_ALREADY_BLOCKED;
+
+			// On réinitialise l'état de l'objet si besoin
+			Collision_resetState( obj, status );
 		}
 
 		// Si on étudie le côté droit, qu'on se trouve sur un deuxième mur et qu'il se déplace
@@ -56,6 +69,9 @@ char Collision_wallCallback( Object* obj, char side, unsigned char status ) {
 			obj->force.x = 0;
 			obj->direction = DIRECTION_LEFT;
 			ret |= STATUS_ALREADY_BLOCKED;
+
+			// On réinitialise l'état de l'objet si besoin
+			Collision_resetState( obj, status );
 		}
 	}
 
@@ -154,6 +170,9 @@ char Collision_callback( Object* obj, BITMAP* col, BITMAP* wind_col, int x, int 
 					else
 						obj->direction = DIRECTION_LEFT;
 					ret |= STATUS_ALREADY_BLOCKED;
+
+					// On réinitialise l'état de l'objet si besoin
+					Collision_resetState( obj, status );
 				}
 			}
 		}
@@ -247,14 +266,6 @@ void Collision_trackLine( Object* obj, BITMAP* col, BITMAP* wind_col, int x1, in
 		// On applique le déplacemetn vertical correspondant
 		obj->cp.y -= obj->propcp.y;
 		obj->propcp.y = 0;
-	}
-
-	// Si le personnage a été bloqué et qu'il est en train de creuser ou construire
-	if( status & STATUS_ALREADY_BLOCKED && ( obj->state == STATE_DIGGING || obj->state == STATE_BUILDING ) ) {
-		// On le remet dans un état normal
-		obj->state = STATE_WALKING;
-		obj->capacities.digging = 0;
-		obj->capacities.building = 0;
 	}
 }
 
