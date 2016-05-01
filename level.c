@@ -125,135 +125,13 @@ char Level_loadImages( char* path, Level* level ) {
 	return 1;
 }
 
-char Level_extractKeyValue( char* line, char* key, char* value ) {
-	char c;
-	size_t i;
-
-	if( !line || !key || !value )
-		return 0;
-
-	for( i = 0; i < BUFFER_SIZE - 1 && line[ i ] != 0; i++ ) {
-		c = line[ i ];
-
-		if( c == ':' ) {
-			strncpy( key, line, i );
-			key[ i ] = 0;
-			strncpy( value, line + i + 1, BUFFER_SIZE - i );
-			value[ BUFFER_SIZE - i ] = 0;
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-char Level_extractArray( char* line, char*** values, int* count ) {
-	char** newvalues;
-	char buffer[ BUFFER_SIZE ], buffer2[ BUFFER_SIZE ], c, *token;
-	int i, start_index = -1, end_index = -1;
-
-	if( !line || !count )
-		return 0;
-
-	*count = 0;
-
-	for( i = 0; i < BUFFER_SIZE - 1 && line[ i ] != 0; i++ ) {
-		c = line[ i ];
-
-		if( c == '(' ) {
-			start_index = i + 1;
-		} else if( c == ')' && start_index != -1 ) {
-			end_index = i;
-		}
-	}
-
-	if( start_index < 0 || end_index < 0 )
-		return 0;
-
-	strncpy( buffer, line + start_index, (size_t) end_index - start_index );
-	buffer[ end_index - start_index ] = 0;
-	strcpy( buffer2, buffer );
-
-	token = strtok( buffer2, "," );
-	while( token != NULL ) {
-		(*count)++;
-		token = strtok( NULL, "," );
-	}
-
-	newvalues = calloc( (size_t) (*count), sizeof( char* ) );
-	if( !newvalues )
-		return 0;
-
-	for( i = 0, token = strtok( buffer, "," ); i < *count && token != NULL; i++ ) {
-		newvalues[ i ] = calloc( strlen( token ) + 1, sizeof( char ) );
-		if( !newvalues[ i ] )
-			return 0;
-
-		strcpy( newvalues[ i ], token );
-		token = strtok( NULL, "," );
-	}
-
-	*values = newvalues;
-
-	return 1;
-}
-
-char Level_parseVector2( Vector2* vec, char* value ) {
-	int i, count = 0;
-	char ret = 0, **values = NULL;
-
-	if( !Level_extractArray( value, &values, &count ) )
-		return 0;
-
-	if( values == NULL )
-		return 0;
-
-	if( count > 1 ) {
-		*vec = (Vector2) { strtol( values[ 0 ], NULL, 10 ), strtol( values[ 1 ], NULL, 10 ) };
-		ret = 1;
-	}
-
-	for( i = 0; i < count; i++ ) {
-		if( values[ i ] )
-			free( values[ i ] );
-	}
-	free( values );
-
-	return ret;
-}
-
-char Level_parseCapacitiesNumber( CapacitiesNumber* cap, char* value ) {
-	int i, count = 0;
-	char ret = 0, **values = NULL;
-
-	if( !Level_extractArray( value, &values, &count ) )
-		return 0;
-
-	if( values == NULL )
-		return 0;
-
-	if( count > 2 ) {
-		*cap = (CapacitiesNumber) { strtoul( values[ 0 ], 0, 10 ), strtoul( values[ 1 ], 0, 10 ), strtoul( values[ 2 ], 0, 10 ) };
-		ret = 1;
-	}
-
-	for( i = 0; i < count; i++ ) {
-		if( values[ i ] )
-			free( values[ i ] );
-	}
-
-	free( values );
-
-	return ret;
-}
-
 void Level_parseConfigurationLine( Level* level, char* line, int* lines_parsed ) {
 	char key[ BUFFER_SIZE ], value[ BUFFER_SIZE ];
 
 	if( !level || !line )
 		return;
 
-	if( Level_extractKeyValue( line, key, value ) ) {
+	if( Config_extractKeyValue( line, key, value ) ) {
 		if( strcmp( key, "nb_stickmen_max" ) == 0 ) {
 			level->nb_stickmen_max = (unsigned short) strtoul( value, 0, 10 );
 			(*lines_parsed)++;
@@ -270,19 +148,19 @@ void Level_parseConfigurationLine( Level* level, char* line, int* lines_parsed )
 			level->fast_dt = strtof( value, 0 );
 			(*lines_parsed)++;
 		} else if( strcmp( key, "start" ) == 0 ) {
-			if( Level_parseVector2( &level->start, value ) )
+			if( Config_parseVector2( &level->start, value ) )
 				(*lines_parsed)++;
 		} else if( strcmp( key, "exit" ) == 0 ) {
-			if( Level_parseVector2( &level->exit, value ) )
+			if( Config_parseVector2( &level->exit, value ) )
 				(*lines_parsed)++;
 		} else if( strcmp( key, "gravity" ) == 0 ) {
-			if( Level_parseVector2( &level->gravity, value ) )
+			if( Config_parseVector2( &level->gravity, value ) )
 				(*lines_parsed)++;
 		} else if( strcmp( key, "movement" ) == 0 ) {
-			if( Level_parseVector2( &level->movement, value ) )
+			if( Config_parseVector2( &level->movement, value ) )
 				(*lines_parsed)++;
 		} else if( strcmp( key, "capacities" ) == 0 ) {
-			if( Level_parseCapacitiesNumber( &level->capacities, value ) )
+			if( Config_parseCapacitiesNumber( &level->capacities, value ) )
 				(*lines_parsed)++;
 		}
 	}
