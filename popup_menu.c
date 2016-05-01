@@ -96,7 +96,7 @@ int Menu_open( FONT* fonttext, char** choices, int count ) {
 	unsigned char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
 	size_t size, max_size;
 
-	height = MENU_PADDING_Y * 2 + ( count - 1 ) * MENU_LETTER_SPACING_Y + count * MENU_FONT_SIZE;
+	height = MENU_PADDING_Y * 2 + ( count - 1 ) * MENU_LETTER_SPACING_Y + count * MENU_FONT_SIZE_Y;
 	width = MENU_PADDING_X * 2;
 	max_size = 0;
 
@@ -106,7 +106,7 @@ int Menu_open( FONT* fonttext, char** choices, int count ) {
 			max_size = size;
 	}
 
-	width += max_size * MENU_FONT_SIZE * MENU_LETTER_SPACING_X;
+	width += max_size * MENU_FONT_SIZE_X * MENU_LETTER_SPACING_X;
 
 	back = Menu_generateBackground( width, height );
 	if( !back ) {
@@ -167,7 +167,7 @@ int Menu_open( FONT* fonttext, char** choices, int count ) {
 		masked_blit( back, page, 0, 0, ( SCREEN_W - width ) / 2, ( SCREEN_H - height ) / 2, SCREEN_W, SCREEN_H );
 
 		if( mouse_x >= start_x && mouse_x <= end_x ) {
-			selected_button = ( mouse_y - start_y ) / ( MENU_FONT_SIZE + MENU_LETTER_SPACING_Y );
+			selected_button = ( mouse_y - start_y ) / ( MENU_FONT_SIZE_Y + MENU_LETTER_SPACING_Y );
 			if( selected_button >= 0 && selected_button < count ) {
 				choice = selected_button + 1;
 			}
@@ -179,9 +179,9 @@ int Menu_open( FONT* fonttext, char** choices, int count ) {
 
 		for( i = 0; i < count; i++ ) {
 			if( i == choice - 1 )
-				textprintf_centre_ex( page, fonttext, SCREEN_W / 2, ( SCREEN_H - height ) / 2 + MENU_PADDING_Y + i * ( MENU_FONT_SIZE + MENU_LETTER_SPACING_Y ), makecol( 255, 255, 255 ), -1, choices[ i ] );
+				textprintf_centre_ex( page, fonttext, SCREEN_W / 2, ( SCREEN_H - height ) / 2 + MENU_PADDING_Y + i * ( MENU_FONT_SIZE_Y + MENU_LETTER_SPACING_Y ), makecol( 255, 255, 255 ), -1, choices[ i ] );
 			else
-				textprintf_centre_ex( page, fonttext, SCREEN_W / 2, ( SCREEN_H - height ) / 2 + MENU_PADDING_Y + i * ( MENU_FONT_SIZE + MENU_LETTER_SPACING_Y ), makecol( 255, 255, 0 ), -1, choices[ i ] );
+				textprintf_centre_ex( page, fonttext, SCREEN_W / 2, ( SCREEN_H - height ) / 2 + MENU_PADDING_Y + i * ( MENU_FONT_SIZE_Y + MENU_LETTER_SPACING_Y ), makecol( 255, 255, 0 ), -1, choices[ i ] );
 		}
 
 		blit( page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
