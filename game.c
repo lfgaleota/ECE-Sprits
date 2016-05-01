@@ -497,6 +497,9 @@ char Game_levelInit( Level* level ) {
 	level->win = 0;
 	level->quit = 0;
 
+	level->inputs.prev_mouse_l = 0;
+	level->inputs.mouse_l = 0;
+
 	Game_generateTextures( level );
 
 	ret = Game_createMenus( level );
