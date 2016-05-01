@@ -139,19 +139,22 @@ char Collision_callback( Object* obj, BITMAP* col, BITMAP* wind_col, int x, int 
 
 		// Si on est sur le côté selon le déplacement horizontal, que le personnage se déplace et qu'on est sur le 2ème pixel dans l'odre des tests
 		if( status & STATUS_IS_SIDE_OF_WALKING && progression_y > 0 && obj->dir.x != 0 ) {
-			// Si l'objet peut se déplacer et qu'il peut monter
-			if( progression_y < MAX_STEP && obj->should_move ) {
-				// On le fait monter
-				obj->propcp.y += progression_y;
-			} else {
-				// Sinon on le bloque
-				obj->v.x = 0;
-				obj->force.x = 0;
-				if( side == SIDE_LEFT )
-					obj->direction = DIRECTION_RIGHT;
-				else
-					obj->direction = DIRECTION_LEFT;
-				ret |= STATUS_ALREADY_BLOCKED;
+			// Si on était sur un mur continu avant
+			if( status & STATUS_WALL ) {
+				// Si l'objet peut se déplacer et qu'il peut monter
+				if( progression_y < MAX_STEP && obj->should_move ) {
+					// On le fait monter
+					obj->propcp.y += progression_y;
+				} else {
+					// Sinon on le bloque
+					obj->v.x = 0;
+					obj->force.x = 0;
+					if( side == SIDE_LEFT )
+						obj->direction = DIRECTION_RIGHT;
+					else
+						obj->direction = DIRECTION_LEFT;
+					ret |= STATUS_ALREADY_BLOCKED;
+				}
 			}
 		}
 	}
