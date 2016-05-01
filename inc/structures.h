@@ -244,6 +244,7 @@ typedef struct Inputs Inputs;
 struct Inputs {
 	int prev_mouse_l;
 	int mouse_l;
+	Vector2Int scrolling_mouse;
 };
 
 typedef struct Level Level;
