@@ -212,9 +212,8 @@ int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext ) {
 	return choice;
 }
 
-void PopupMenu_alert( char* title, FONT* fonttext ) {
+void PopupMenu_alert( char* title, char* button, FONT* fonttext ) {
 	char font_loaded = 0;
-	char* choices[] = { "OK" };
 
 	if( fonttext == NULL ) {
 		fonttext = load_font( "polices/droidsans_14_mono.pcx", NULL, NULL );
@@ -227,7 +226,15 @@ void PopupMenu_alert( char* title, FONT* fonttext ) {
 		}
 	}
 
-	PopupMenu_open( title, choices, 1, fonttext );
+	if( button == NULL ) {
+		char* choices[] = { "OK" };
+
+		PopupMenu_open( title, choices, 1, fonttext );
+	} else {
+		char* choices[] = { button };
+
+		PopupMenu_open( title, choices, 1, fonttext );
+	}
 
 	if( font_loaded ) {
 		destroy_font( fonttext );
