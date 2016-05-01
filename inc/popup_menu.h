@@ -15,8 +15,8 @@
 #define MENU_PADDING_Y 20
 #define MENU_PADDING_X 25
 
-BITMAP* Menu_generateBackground( int width, int height );
-int Menu_open( char* title, char** choices, int count, FONT* fonttext );
-void Menu_alert( char* title, FONT* fonttext );
+BITMAP* PopupMenu_generateBackground( int width, int height );
+int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext );
+void PopupMenu_alert( char* title, FONT* fonttext );
 
 #endif //_ECE_SPRITS_POPUP_MENU_H_
