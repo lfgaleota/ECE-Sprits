@@ -242,6 +242,7 @@ struct FMod {
 	FMOD_SOUND* music;
 	FMOD_CHANNELGROUP* channel_master;
 	FMOD_CHANNEL* channel_1;
+	FMOD_CHANNEL* channel_2;
 };
 
 typedef struct Inputs Inputs;
