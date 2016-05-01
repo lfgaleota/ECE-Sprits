@@ -4,7 +4,7 @@
  * Allocation d'un objet
  */
 Object* Object_allocate() {
-	return ( (Object*) malloc( sizeof( Object ) ) );
+	return ( (Object*) calloc( 1, sizeof( Object ) ) );
 }
 
 /*
@@ -19,14 +19,14 @@ void Object_free( Object* obj ) {
  * Allocation d'un maillon objet
  */
 ObjectM* ObjectM_allocate() {
-	ObjectM* ObjectM = malloc( sizeof( ObjectM ) );
+	ObjectM* maillon = calloc( 1, sizeof( ObjectM ) );
 
-	if( ObjectM != NULL )  {
-		ObjectM->prev = NULL;
-		ObjectM->obj = NULL;
-		ObjectM->next = NULL;
+	if( maillon != NULL )  {
+		maillon->prev = NULL;
+		maillon->obj = NULL;
+		maillon->next = NULL;
 
-		return ObjectM;
+		return maillon;
 	}
 
 	return NULL;
