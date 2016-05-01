@@ -6,24 +6,30 @@ void Game_pauseMenu( Level* level ) {
 	if( level->win ) {
 		char* choices[] = {
 				"Retour",
+				"Mettre en pause/remettre la musique",
 				"Passer au niveau suivant",
 				"Recommencer",
 				"Quitter",
 		};
 
-		choice = PopupMenu_open( "Pause", choices, 4, level->bmps.droidsans_14_mono );
+		choice = PopupMenu_open( "Pause", choices, 5, level->bmps.droidsans_14_mono );
 	} else {
 		char* choices[] = {
 				"Retour",
+				"Mettre en pause/remettre la musique",
 				"Recommencer",
 				"Quitter",
 		};
 
-		choice = PopupMenu_open( "Pause", choices, 3, level->bmps.droidsans_14_mono );
+		choice = PopupMenu_open( "Pause", choices, 4, level->bmps.droidsans_14_mono );
 	}
 
 	switch( choice ) {
 		case 2:
+			FMod_pauseMusic( level->fmod );
+			break;
+
+		case 3:
 			if( level->win ) {
 				level->quit = QUIT_WIN;
 			} else {
@@ -31,13 +37,13 @@ void Game_pauseMenu( Level* level ) {
 			}
 			break;
 
-		case 3:
+		case 4:
 			if( level->win ) {
 				level->quit = QUIT_RESTART;
 				break;
 			}
 
-		case 4:
+		case 5:
 			level->quit = QUIT_DELIBERATE;
 
 		default:
