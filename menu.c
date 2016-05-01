@@ -263,7 +263,7 @@ void Menu_launch() {
 		}
 
 		// Petite pause
-		rest( 20 );
+		SLEEP( 20 );
 	}
 
 	Menu_free( &menu );
