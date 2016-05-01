@@ -112,6 +112,12 @@ struct Vector2 {
 	float y;
 };
 
+typedef struct Vector2Int Vector2Int;
+struct Vector2Int {
+	int x;
+	int y;
+};
+
 typedef struct Vector2Char Vector2Char;
 typedef struct Vector2Char Direction;
 struct Vector2Char {
@@ -142,17 +148,17 @@ struct CapacitiesNumber {
 
 typedef struct Object Object;
 struct Object {
-	unsigned int id;
+	int id;
 	Position cp;
 	Position oldcp;
 	Position p[ 4 ];
-	Vector2Char propcp;
+	Vector2 propcp;
 	Force force;
 	Acceleration a;
 	Velocity v;
 	Size size;
 	float diagonal;
-	Direction delta;
+	Vector2 delta;
 	Direction dir;
 	char direction;
 	char should_move;
@@ -231,6 +237,7 @@ struct Level {
 	float fast_dt;
 	Vector2 gravity;
 	Vector2 movement;
+	Vector2Int scrolling;
 	Position start;
 	Position exit;
 	char quit;

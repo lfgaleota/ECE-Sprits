@@ -93,7 +93,7 @@ BITMAP* PopupMenu_generateBackground( int width, int height ) {
 int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext ) {
 	BITMAP *back, *page, *save;
 	int width, height, i, choice = 0, quit = 0, start_x, start_y, end_x, selected_button;
-	unsigned char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
+	volatile char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
 	size_t size, max_size;
 	char font_loaded = 0;
 

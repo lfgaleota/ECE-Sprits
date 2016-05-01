@@ -68,7 +68,7 @@ void Menu_showBackground( Menu* menu ) {
 
 void Menu_showForeground( Menu* menu ) {
 	int colors[ 6 ];
-	unsigned int px;
+	int px;
 	int i;
 
 	set_alpha_blender();
