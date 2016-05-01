@@ -184,7 +184,10 @@ void Menu_free( Menu* menu ) {
 	Level_freeFrames( &menu->fore2 );
 }
 
-void Menu_options( GeneralConfig* config ) {
+void Menu_options( Menu* menu, GeneralConfig* config ) {
+	PopupMenu_alert( "Attention, en l'etat actuel, ces options peuvent causer des problemes.", "J'accepte", NULL );
+	Menu_show( menu );
+
 	gfx_mode_select_ex( &config->card, &config->width, &config->height, &config->color_depth );
 	GeneralConfig_save( config );
 
@@ -266,7 +269,7 @@ void Menu_launch( GeneralConfig* config ) {
 				case 4:
 					if( menu.submenu == MENU_MAIN ) {
 						// Options
-						Menu_options( config );
+						Menu_options( &menu, config );
 					} else {
 						// Retour au menu principal
 						menu.submenu = MENU_MAIN;
