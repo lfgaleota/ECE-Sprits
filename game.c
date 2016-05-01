@@ -506,6 +506,13 @@ char Game_levelInit( Level* level ) {
 	return ret;
 }
 
+void Game_free( Level* level ) {
+	CircularMenu_free( level->capacities_menu, 1, 1, 1 );
+	CircularMenu_free( level->directions_menu, 1, 1, 1 );
+
+	ObjectM_freeAll( level->stickmen, 1 );
+}
+
 char Game_launch( Level* level ) {
 	if( !Game_levelInit( level ) ) {
 		allegro_message( "Impossible de lancer le niveau!" );
@@ -531,6 +538,8 @@ char Game_launch( Level* level ) {
 
 		SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
 	}
+
+	Game_free( level );
 
 	return level->quit;
 }
