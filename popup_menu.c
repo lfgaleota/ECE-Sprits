@@ -196,3 +196,25 @@ int Menu_open( FONT* fonttext, char* title, char** choices, int count ) {
 
 	return choice;
 }
+
+void Menu_alert( char* title, FONT* fonttext ) {
+	char font_loaded = 0;
+	char* choices[] = { "OK" };
+
+	if( fonttext == NULL ) {
+		fonttext = load_font( "polices/droidsans_14_mono.pcx", NULL, NULL );
+		font_loaded = 1;
+
+		if( fonttext == NULL ) {
+			font_loaded = 0;
+			allegro_message( "Imoossible de charger la police pour le menu." );
+			fonttext = font;
+		}
+	}
+
+	Menu_open( fonttext, title, choices, 1 );
+
+	if( font_loaded ) {
+		destroy_font( fonttext );
+	}
+}
