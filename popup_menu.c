@@ -1,6 +1,6 @@
 #include "inc/popup_menu.h"
 
-BITMAP* Menu_generateBackground( int width, int height ) {
+BITMAP* PopupMenu_generateBackground( int width, int height ) {
 	int i, j;
 
 	BITMAP* back = create_bitmap( width, height );
@@ -90,7 +90,7 @@ BITMAP* Menu_generateBackground( int width, int height ) {
 	return back;
 }
 
-int Menu_open( char* title, char** choices, int count, FONT* fonttext ) {
+int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext ) {
 	BITMAP *back, *page, *save;
 	int width, height, i, choice = 0, quit = 0, start_x, start_y, end_x, selected_button;
 	unsigned char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
@@ -212,7 +212,7 @@ int Menu_open( char* title, char** choices, int count, FONT* fonttext ) {
 	return choice;
 }
 
-void Menu_alert( char* title, FONT* fonttext ) {
+void PopupMenu_alert( char* title, FONT* fonttext ) {
 	char font_loaded = 0;
 	char* choices[] = { "OK" };
 
