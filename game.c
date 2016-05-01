@@ -11,7 +11,7 @@ void Game_pauseMenu( Level* level ) {
 				"Quitter",
 		};
 
-		choice = Menu_open( level->bmps.droidsans_14_mono, choices, 3 );
+		choice = Menu_open( level->bmps.droidsans_14_mono, choices, 4 );
 	} else {
 		char* choices[] = {
 				"Retour",
