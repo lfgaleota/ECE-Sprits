@@ -19,6 +19,6 @@ void Game_checkWin( Level* level );
 void Game_updateObjectProperties( Level* level, Object* obj );
 void Game_addStickmen( Level* level );
 
-void Game_launch( Level* level );
+char Game_launch( Level* level );
 
 #endif //_ECE_SPRITS_GAME_H_
