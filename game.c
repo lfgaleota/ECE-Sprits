@@ -509,7 +509,7 @@ char Game_levelInit( Level* level ) {
 char Game_launch( Level* level ) {
 	if( !Game_levelInit( level ) ) {
 		allegro_message( "Impossible de lancer le niveau!" );
-		return;
+		return QUIT_DELIBERATE;
 	}
 
 	while( !level->quit ) {
