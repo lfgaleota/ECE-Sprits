@@ -6,6 +6,7 @@ void FMod_init( FMod* fmod ) {
 	FMOD_System_Init( fmod->sys, 10, FMOD_INIT_NORMAL, NULL );
 	FMOD_System_GetMasterChannelGroup( fmod->sys, &fmod->channel_master );
 	FMOD_System_GetChannel( fmod->sys, 1, &fmod->channel_1 );
+	FMOD_System_GetChannel( fmod->sys, 2, &fmod->channel_2 );
 }
 
 char FMod_load( FMod* fmod ) {
@@ -72,8 +73,12 @@ void FMod_free( FMod* fmod ) {
 	FMOD_System_Release( fmod->sys );
 }
 
-void FMod_playSound( FMod* fmod, FMOD_SOUND* sound ) {
-	FMOD_System_PlaySound( fmod->sys, FMOD_CHANNEL_FREE, sound, 0, NULL );
+void FMod_playSound( FMod* fmod, FMOD_SOUND* sound ) {int index;
+	if( FMOD_Channel_GetIndex( fmod->channel_2, &index ) ) {
+		index = FMOD_CHANNEL_FREE;
+	}
+
+	FMOD_System_PlaySound( fmod->sys, index, sound, 0, NULL );
 }
 
 void FMod_playMusic( FMod* fmod, FMOD_SOUND* music ) {
