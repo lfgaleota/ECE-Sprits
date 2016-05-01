@@ -264,6 +264,7 @@ struct Level {
 	Vector2Int scrolling;
 	Position start;
 	Position exit;
+	char start_direction;
 	char quit;
 	char win;
 	unsigned short nb_stickmen_max;

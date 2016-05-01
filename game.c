@@ -262,6 +262,8 @@ void Game_addStickmen( Level* level ) {
 				obj->cp.x = level->start.x;
 				obj->cp.y = level->start.y;
 
+				obj->direction = level->start_direction;
+
 				Physic_computeDelta( obj );
 
 				level->stickmen = Object_add( level->stickmen, obj, 1 );
