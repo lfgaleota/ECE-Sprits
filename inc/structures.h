@@ -103,7 +103,7 @@
 #define UI_SCROLL_SPEED 5
 
 #define LEVEL_MINSTANDARD 1
-#define LEVEL_MAXSTANDARD 4
+#define LEVEL_MAXSTANDARD 3
 
 typedef struct MenuItem MenuItem;
 typedef struct CircularMenu CircularMenu;

@@ -1,5 +1,5 @@
 nb_stickmen_max:10
-nb_stickmen_should_arrive:9
+nb_stickmen_should_arrive:5
 counter_stickmen_arrival_max:50
 slow_dt:1
 fast_dt:2

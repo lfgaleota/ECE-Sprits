@@ -5,7 +5,6 @@ void Menu_secretMenu( FMod* fmod, Menu* menu ) {
 		"Niveau 1",
 	    "Niveau 2",
 	    "Niveau 3",
-	    "Niveau 4",
 	    "Retour"
 	};
 
@@ -14,7 +13,7 @@ void Menu_secretMenu( FMod* fmod, Menu* menu ) {
 	save.standard_level = 1;
 
 
-	switch( PopupMenu_open( "Menu secret", choices, 5, NULL ) ) {
+	switch( PopupMenu_open( "Menu secret", choices, 4, NULL ) ) {
 		case 1:
 			save.standard_level = 1;
 			Save_save( &save );
@@ -29,12 +28,6 @@ void Menu_secretMenu( FMod* fmod, Menu* menu ) {
 
 		case 3:
 			save.standard_level = 3;
-			Save_save( &save );
-			Menu_launchGame( fmod, 128 );
-			break;
-
-		case 4:
-			save.standard_level = 4;
 			Save_save( &save );
 			Menu_launchGame( fmod, 128 );
 			break;

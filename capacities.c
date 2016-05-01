@@ -126,7 +126,7 @@ char Capacities_setDirectionCallback( Level* level, Object* obj, int index, int 
 			return 2;
 
 		case DOWN:
-			obj->capacities.angle = - M_PI_2;
+			obj->capacities.angle = 3 * M_PI_2;
 			obj->capacities.distance = obj->size.y / 2;
 			return 2;
 
