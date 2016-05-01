@@ -126,6 +126,12 @@ void Menu_showForeground( Menu* menu ) {
 	}
 }
 
+void Menu_show( Menu* menu ) {
+	Menu_showBackground( menu );
+	Menu_showForeground( menu );
+	blit( menu->page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
+}
+
 void Menu_transition( Menu* menu, unsigned char direction ) {
 	/*int i;
 
@@ -207,9 +213,7 @@ void Menu_launch( GeneralConfig* config ) {
 		prev_mouse_l = mouse_l;
 		mouse_l = mouse_b & 1;
 
-		Menu_showBackground( &menu );
-		Menu_showForeground( &menu );
-		blit( menu.page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
+		Menu_show( &menu );
 
 		if( !prev_mouse_l && mouse_l ) {
 			switch( menu.choice ) {
