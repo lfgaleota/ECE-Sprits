@@ -311,22 +311,27 @@ void Game_handleObjectClick( Level* level, Object* obj ) {
 }
 
 void Game_handleInputs( Level* level ) {
+	// Si le curseur n'est pas dans l'interface
 	if( mouse_x >= UI_WIDTH ) {
+		// S'il est à tout à gauche
 		if( mouse_x <= UI_WIDTH + UI_SCROLL ) {
 			// Scrolling sur la gauche
 			level->scrolling.x -= UI_SCROLL_SPEED;
 		}
 
+		// S'il est à tout à droite
 		if( mouse_x >= SCREEN_W - UI_SCROLL && mouse_x <= SCREEN_W ) {
 			// Scrolling sur la droite
 			level->scrolling.x += UI_SCROLL_SPEED;
 		}
 
+		// S'il est à tout en haut
 		if( mouse_y >= 0 && mouse_y <= UI_SCROLL ) {
 			// Scrolling vers le haut
 			level->scrolling.y -= UI_SCROLL_SPEED;
 		}
 
+		// S'il est à tout en bas
 		if( mouse_y >= SCREEN_H - UI_SCROLL && mouse_y <= SCREEN_H ) {
 			// Scrolling vers le bas
 			level->scrolling.y += UI_SCROLL_SPEED;
@@ -463,13 +468,13 @@ char Game_createBitmaps( Level* level ) {
 		return 0;
 	}
 
-	level->bmps.stick_col = create_bitmap( SCREEN_W, SCREEN_H );
+	level->bmps.stick_col = create_bitmap( level->bmps.col->w, level->bmps.col->h );
 	if( !level->bmps.stick_col ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
 	}
 
-	level->bmps.wind_col = create_bitmap( SCREEN_W, SCREEN_H );
+	level->bmps.wind_col = create_bitmap( level->bmps.col->w, level->bmps.col->h );
 	if( !level->bmps.wind_col ) {
 		allegro_message( "Erreur creation bitmap" );
 		return 0;
