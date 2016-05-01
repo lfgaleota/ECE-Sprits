@@ -1,0 +1,11 @@
+nb_stickmen_max:20
+nb_stickmen_should_arrive:15
+counter_stickmen_arrival_max:50
+slow_dt:1
+fast_dt:2
+start_direction:0
+start:(1000.0,52.0)
+exit:(72.0,798.0)
+gravity:(0.0,4.0)
+movement:(1.0,0.0)
+capacities:(2,5,2)
