@@ -21,4 +21,9 @@ char Level_parseVector2( Vector2* vec, char* value );
 Level* Level_load( char* path );
 Level* Level_loadStandard( int number );
 
+void Level_freeBitmap( BITMAP* bmp );
+void Level_freeBitmaps( BITMAP** bmps, unsigned short count );
+void Level_freeFrames( Frames* frames );
+void Level_free( Level* level );
+
 #endif //_ECE_SPRITS_LEVEL_H_

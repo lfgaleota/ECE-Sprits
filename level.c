@@ -38,6 +38,28 @@ Frames Level_loadFrames( char* path, unsigned short count ) {
 	return frames;
 }
 
+void Level_freeBitmap( BITMAP* bmp ) {
+	if( bmp )
+		destroy_bitmap( bmp );
+}
+
+void Level_freeBitmaps( BITMAP** bmps, unsigned short count ) {
+	int i;
+	
+	if( !bmps )
+		return;
+	
+	for( i = 0; i < count; i++ ) {
+		Level_freeBitmap( bmps[ i ] );
+	}
+	
+	free( bmps );
+}
+
+void Level_freeFrames( Frames* frames ) {
+	Level_freeBitmaps( frames->bmps, frames->count );
+}
+
 char Level_loadImages( char* path, Level* level ) {
 	char fullpath[ BUFFER_SIZE ];
 
@@ -313,4 +335,36 @@ Level* Level_loadStandard( int number ) {
 	sprintf( fullpath, "niveau%d/", number );
 
 	return Level_load( fullpath );
+}
+
+void Level_free( Level* level ) {
+	Level_freeBitmap( level->bmps.col );
+	Level_freeBitmap( level->bmps.back );
+	Level_freeBitmap( level->bmps.fore );
+	level->bmps.stickmen_walking = Level_loadFrames( "images/sticks/stickMan", 20 );
+	Level_freeFrames( &level->bmps.stickmen_falling );
+	Level_freeFrames( &level->bmps.stickmen_dying );
+	Level_freeFrames( &level->bmps.stickmen_falldying );
+	Level_freeFrames( &level->bmps.stickmen_starting );
+	Level_freeFrames( &level->bmps.stickmen_exiting );
+	Level_freeFrames( &level->bmps.stickmen_digging );
+	Level_freeFrames( &level->bmps.stickmen_building );
+	Level_freeFrames( &level->bmps.stickmen_blowing );
+	Level_freeFrames( &level->bmps.start );
+	Level_freeFrames( &level->bmps.exit );
+	Level_freeBitmap( level->bmps.wall );
+	Level_freeBitmap( level->bmps.deathzone );
+	Level_freeBitmaps( level->bmps.arrow, 9 );
+	Level_freeBitmap( level->bmps.capacity_build );
+	Level_freeBitmap( level->bmps.capacity_dig );
+	Level_freeBitmap( level->bmps.capacity_blow );
+	Level_freeBitmap( level->bmps.branch );
+	Level_freeBitmaps( level->bmps.stick_fire, 3 );
+	Level_freeBitmap( level->bmps.blow );
+	Level_freeBitmap( level->bmps.ui_accelerate );
+	Level_freeBitmap( level->bmps.ui_pause );
+	Level_freeBitmap( level->bmps.ui_menu );
+	
+	if( level->bmps.droidsans_14_mono )
+		destroy_font( level->bmps.droidsans_14_mono );
 }
