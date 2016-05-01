@@ -1,5 +1,49 @@
 #include "inc/menu.h"
 
+void Menu_secretMenu( FMod* fmod, Menu* menu ) {
+	char* choices[] = {
+		"Niveau 1",
+	    "Niveau 2",
+	    "Niveau 3",
+	    "Niveau 4",
+	    "Retour"
+	};
+
+	Save save;
+	save.id = 128;
+	save.standard_level = 1;
+
+
+	switch( PopupMenu_open( "Menu secret", choices, 5, NULL ) ) {
+		case 1:
+			save.standard_level = 1;
+			Save_save( &save );
+			Menu_launchGame( fmod, 128 );
+			break;
+
+		case 2:
+			save.standard_level = 2;
+			Save_save( &save );
+			Menu_launchGame( fmod, 128 );
+			break;
+
+		case 3:
+			save.standard_level = 3;
+			Save_save( &save );
+			Menu_launchGame( fmod, 128 );
+			break;
+
+		case 4:
+			save.standard_level = 4;
+			Save_save( &save );
+			Menu_launchGame( fmod, 128 );
+			break;
+
+		default:
+			break;
+	}
+}
+
 void Menu_newGame( FMod* fmod, unsigned char id ) {
 	Save save;
 	save = Save_load( id );
@@ -233,6 +277,10 @@ void Menu_launch( FMod* fmod, GeneralConfig* config ) {
 		mouse_l = mouse_b & 1;
 
 		Menu_show( &menu );
+
+		if( key[ KEY_H ] ) {
+			Menu_secretMenu( fmod, &menu );
+		}
 
 		if( !prev_mouse_l && mouse_l ) {
 			switch( menu.choice ) {
