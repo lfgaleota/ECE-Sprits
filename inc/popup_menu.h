@@ -17,6 +17,6 @@
 
 BITMAP* PopupMenu_generateBackground( int width, int height );
 int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext );
-void PopupMenu_alert( char* title, FONT* fonttext );
+void PopupMenu_alert( char* title, char* button, FONT* fonttext );
 
 #endif //_ECE_SPRITS_POPUP_MENU_H_
