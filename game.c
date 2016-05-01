@@ -46,29 +46,29 @@ void Game_pauseMenu( Level* level ) {
 }
 
 void Game_showFlame( Level* level, Object* obj ) {
-	pivot_sprite_trans( level->bmps.page, level->bmps.stick_fire[ obj->counter ], obj->cp.x, obj->cp.y, 6, 14, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+	pivot_sprite_trans( level->bmps.scrolling_page, level->bmps.stick_fire[ obj->counter ], obj->cp.x, obj->cp.y, 6, 14, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 }
 
 void Game_showBlow( Level* level, Object* obj ) {
 	switch( obj->capacities.approx_direction ) {
 		case UP:
-			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->p[ P_UP_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			pivot_sprite_trans( level->bmps.scrolling_page, level->bmps.blow, obj->cp.x, obj->p[ P_UP_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 			break;
 
 		case DOWN:
-			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->cp.x, obj->p[ P_DOWN_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			pivot_sprite_trans( level->bmps.scrolling_page, level->bmps.blow, obj->cp.x, obj->p[ P_DOWN_LEFT ].y, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 			break;
 
 		case UP_LEFT:
 		case LEFT:
 		case DOWN_LEFT:
-			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->p[ P_UP_LEFT ].x + 1, obj->p[ P_UP_LEFT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			pivot_sprite_trans( level->bmps.scrolling_page, level->bmps.blow, obj->p[ P_UP_LEFT ].x + 1, obj->p[ P_UP_LEFT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 			break;
 
 		case DOWN_RIGHT:
 		case RIGHT:
 		case UP_RIGHT:
-			pivot_sprite_trans( level->bmps.page, level->bmps.blow, obj->p[ P_UP_RIGHT ].x - 1, obj->p[ P_UP_RIGHT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
+			pivot_sprite_trans( level->bmps.scrolling_page, level->bmps.blow, obj->p[ P_UP_RIGHT ].x - 1, obj->p[ P_UP_RIGHT ].y + 5, 0, 13, fixsub( itofix( 256 ), fixmul( ftofix( obj->capacities.angle ), radtofix_r ) ) );
 			break;
 	}
 }
@@ -109,8 +109,8 @@ void Game_show( Level* level ) {
 
 	Game_showBackground( level );
 
-	draw_sprite( level->bmps.page, level->bmps.start.bmps[ 0 ], level->start.x - level->bmps.start.bmps[ 0 ]->w / 2, level->start.y - level->bmps.start.bmps[ 0 ]->h / 2 );
-	draw_sprite( level->bmps.page, level->bmps.exit.bmps[ 0 ], level->exit.x - level->bmps.exit.bmps[ 0 ]->w / 2, level->exit.y - level->bmps.exit.bmps[ 0 ]->h / 2 );
+	draw_sprite( level->bmps.scrolling_page, level->bmps.start.bmps[ 0 ], level->start.x - level->bmps.start.bmps[ 0 ]->w / 2, level->start.y - level->bmps.start.bmps[ 0 ]->h / 2 );
+	draw_sprite( level->bmps.scrolling_page, level->bmps.exit.bmps[ 0 ], level->exit.x - level->bmps.exit.bmps[ 0 ]->w / 2, level->exit.y - level->bmps.exit.bmps[ 0 ]->h / 2 );
 
 	Game_showForeground( level );
 
@@ -120,9 +120,9 @@ void Game_show( Level* level ) {
 	for( maillon = level->stickmen; maillon != NULL; maillon = maillon->next ) {
 		if( maillon->obj ) {
 			if( maillon->obj->direction )
-				rotate_sprite_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixmul( ftofix( maillon->obj->angle ), radtofix_r ) );
+				rotate_sprite_trans( level->bmps.scrolling_page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixmul( ftofix( maillon->obj->angle ), radtofix_r ) );
 			else
-				rotate_sprite_v_flip_trans( level->bmps.page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
+				rotate_sprite_v_flip_trans( level->bmps.scrolling_page, maillon->obj->bmp, maillon->obj->p[ P_UP_LEFT ].x, maillon->obj->p[ P_UP_LEFT ].y, fixadd( itofix( 128 ), fixmul( ftofix( maillon->obj->angle ), radtofix_r ) ) );
 
 			if( maillon->obj->state == STATE_DIGGING ) {
 				Game_showFlame( level, maillon->obj );
@@ -135,20 +135,22 @@ void Game_show( Level* level ) {
 		}
 	}
 
-	Game_showUI( level );
+	CircularMenu_show( level->capacities_menu, level->bmps.scrolling_page, mouse_x, mouse_y );
 
-	CircularMenu_show( level->capacities_menu, level->bmps.page, mouse_x, mouse_y );
+	blit( level->bmps.scrolling_page, level->bmps.page, level->scrolling.x, level->scrolling.y, UI_WIDTH, 0, SCREEN_W, SCREEN_H );
+
+	Game_showUI( level );
 
 	blit( level->bmps.page, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H );
 }
 
 void Game_showBackground( Level* level ) {
-	blit( level->bmps.back, level->bmps.page, 0, 0, 0, 0, level->bmps.back->w, level->bmps.back->h );
+	blit( level->bmps.back, level->bmps.scrolling_page, 0, 0, 0, 0, level->bmps.back->w, level->bmps.back->h );
 }
 
 void Game_showForeground( Level* level ) {
 	if( level->bmps.fore ) {
-		masked_blit( level->bmps.fore, level->bmps.page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
+		masked_blit( level->bmps.fore, level->bmps.scrolling_page, 0, 0, 0, 0, level->bmps.col->w, level->bmps.col->h );
 	}
 }
 
@@ -309,6 +311,28 @@ void Game_handleObjectClick( Level* level, Object* obj ) {
 }
 
 void Game_handleInputs( Level* level ) {
+	if( mouse_x >= UI_WIDTH ) {
+		if( mouse_x <= UI_WIDTH + UI_SCROLL ) {
+			// Scrolling sur la gauche
+			level->scrolling.x -= UI_SCROLL_SPEED;
+		}
+
+		if( mouse_x >= SCREEN_W - UI_SCROLL && mouse_x <= SCREEN_W ) {
+			// Scrolling sur la droite
+			level->scrolling.x += UI_SCROLL_SPEED;
+		}
+
+		if( mouse_y >= 0 && mouse_y <= UI_SCROLL ) {
+			// Scrolling vers le haut
+			level->scrolling.y -= UI_SCROLL_SPEED;
+		}
+
+		if( mouse_y >= SCREEN_H - UI_SCROLL && mouse_y <= SCREEN_H ) {
+			// Scrolling vers le bas
+			level->scrolling.y += UI_SCROLL_SPEED;
+		}
+	}
+
 	if( !level->inputs.prev_mouse_l && level->inputs.mouse_l ) {
 		if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y >= 0 && mouse_y <= UI_PADDING_Y + UI_BUTTON_Y ) {
 			if( level->dt == level->fast_dt ) {
@@ -433,6 +457,12 @@ char Game_createBitmaps( Level* level ) {
 		return 0;
 	}
 
+	level->bmps.scrolling_page = create_bitmap( level->bmps.col->w, level->bmps.col->h );
+	if( !level->bmps.scrolling_page ) {
+		allegro_message( "Erreur creation bitmap" );
+		return 0;
+	}
+
 	level->bmps.stick_col = create_bitmap( SCREEN_W, SCREEN_H );
 	if( !level->bmps.stick_col ) {
 		allegro_message( "Erreur creation bitmap" );
@@ -500,6 +530,8 @@ char Game_levelInit( Level* level ) {
 	level->inputs.prev_mouse_l = 0;
 	level->inputs.mouse_l = 0;
 
+	level->scrolling = (Vector2Int) { 0, 0 };
+
 	Game_generateTextures( level );
 
 	ret = Game_createMenus( level );
@@ -516,6 +548,7 @@ void Game_free( Level* level ) {
 	ObjectM_freeAll( level->stickmen, 1 );
 
 	destroy_bitmap( level->bmps.page );
+	destroy_bitmap( level->bmps.scrolling_page );
 	destroy_bitmap( level->bmps.stick_col );
 	destroy_bitmap( level->bmps.wind_col );
 }

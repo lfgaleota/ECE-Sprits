@@ -94,6 +94,8 @@
 #define UI_BUTTON_X 34
 #define UI_BUTTON_Y 33
 #define UI_FONT_SIZE 16
+#define UI_SCROLL 20
+#define UI_SCROLL_SPEED 5
 
 #define LEVEL_MINSTANDARD 1
 #define LEVEL_MAXSTANDARD 3
@@ -192,6 +194,7 @@ typedef struct Bitmaps Bitmaps;
 struct Bitmaps {
 	FONT* droidsans_14_mono;
 	BITMAP* page;
+	BITMAP* scrolling_page;
 	BITMAP* col;
 	BITMAP* stick_col;
 	BITMAP* wind_col;
