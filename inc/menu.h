@@ -32,6 +32,9 @@ void Menu_showBackground( Menu* menu );
 void Menu_showForeground( Menu* menu );
 void Menu_show( Menu* menu );
 
+void Menu_options( Menu* menu, GeneralConfig* config );
+void Menu_rules( Menu* menu );
+
 void Menu_transition( Menu* menu, unsigned char direction );
 
 char Menu_load( Menu* menu );
