@@ -4,7 +4,8 @@
 #include <allegro.h>
 #include <loadpng.h>
 #include <jpgalleg.h>
+#include "config.h"
 
-void Init();
+void Init( GeneralConfig* config );
 
 #endif //_ECE_SPRITS_INIT_H_

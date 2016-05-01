@@ -36,6 +36,6 @@ void Menu_transition( Menu* menu, unsigned char direction );
 char Menu_load( Menu* menu );
 void Menu_free( Menu* menu );
 
-void Menu_launch();
+void Menu_launch( GeneralConfig* config );
 
 #endif

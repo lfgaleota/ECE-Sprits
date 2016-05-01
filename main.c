@@ -3,9 +3,11 @@
 #include "inc/menu.h"
 
 int main() {
-	Init();
+	GeneralConfig config;
 
-	Menu_launch();
+	Init( &config );
+
+	Menu_launch( &config );
 
 	allegro_exit();
 
