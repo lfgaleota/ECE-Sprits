@@ -162,6 +162,9 @@ void Level_parseConfigurationLine( Level* level, char* line, int* lines_parsed )
 		} else if( strcmp( key, "capacities" ) == 0 ) {
 			if( Config_parseCapacitiesNumber( &level->capacities, value ) )
 				(*lines_parsed)++;
+		} else if( strcmp( key, "start_direction" ) == 0 ) {
+			level->start_direction = (unsigned short) strtoul( value, 0, 10 );
+			(*lines_parsed)++;
 		}
 	}
 }
@@ -183,7 +186,7 @@ char Level_loadProperties( char* path, Level* level ) {
 		Level_parseConfigurationLine( level, buffer, &lines_parsed );
 	}
 
-	if( lines_parsed == 10 ) {
+	if( lines_parsed == 11 ) {
 		strcpy( level->path, path );
 		return 1;
 	}
