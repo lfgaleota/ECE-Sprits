@@ -38,6 +38,7 @@
 			<Add library="loadpng" />
 			<Add library="jpgalleg" />
 			<Add library="alleg44" />
+			<Add library="lib/fmodex/libfmodex.a" />
 		</Linker>
 		<Unit filename="CMakeLists.txt" />
 		<Unit filename="README.md" />
@@ -50,12 +51,27 @@
 		<Unit filename="collisions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fmod.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="game.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="inc/capacities.h" />
 		<Unit filename="inc/circular_menu.h" />
 		<Unit filename="inc/collisions.h" />
+		<Unit filename="inc/config.h" />
+		<Unit filename="inc/fmod.h" />
+		<Unit filename="inc/fmodex/fmod.h" />
+		<Unit filename="inc/fmodex/fmod.hpp" />
+		<Unit filename="inc/fmodex/fmod_codec.h" />
+		<Unit filename="inc/fmodex/fmod_dsp.h" />
+		<Unit filename="inc/fmodex/fmod_errors.h" />
+		<Unit filename="inc/fmodex/fmod_memoryinfo.h" />
+		<Unit filename="inc/fmodex/fmod_output.h" />
 		<Unit filename="inc/game.h" />
 		<Unit filename="inc/init.h" />
 		<Unit filename="inc/level.h" />
