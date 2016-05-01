@@ -30,6 +30,7 @@ void Menu_launchGame( unsigned char id );
 
 void Menu_showBackground( Menu* menu );
 void Menu_showForeground( Menu* menu );
+void Menu_show( Menu* menu );
 
 void Menu_transition( Menu* menu, unsigned char direction );
 
