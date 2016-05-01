@@ -1,5 +1,61 @@
 #include "inc/menu.h"
 
+void Menu_newGame( unsigned char id ) {
+	Save save;
+	save = Save_load( id );
+	save.standard_level = LEVEL_MINSTANDARD;
+	if( !Save_save( &save ) )
+		allegro_message( "Erreur lors de la sauvegarde!" );
+
+	Menu_launchGame( save.id );
+}
+
+void Menu_launchGame( unsigned char id ) {
+	Save save;
+	Level* level;
+	char quit = 0;
+
+	save = Save_load( id );
+
+	if( ( save.standard_level >= LEVEL_MINSTANDARD ) && ( save.standard_level <= LEVEL_MAXSTANDARD ) ) {
+		// On lance la boucle des niveaux tnt qu'il ne faut pas quitter
+		while( !quit ) {
+			// On recupère le niveau standard désigné par la sauvegarde
+			level = Level_loadStandard( save.standard_level );
+
+			// On lance le niveau s'il a été chargé
+			if( level ) {
+				// On fait tourner le niveau et récupère la sortie
+				switch( Game_launch( level ) ) {
+					case QUIT_WIN: // S'il a réussi le niveau
+						save.standard_level++; // On passe au niveau suivant au niveau de la sauvegarde
+						// On sauvegarde
+						if( !Save_save( &save ) )
+							allegro_message( "Erreur lors de la sauvegarde!" );
+						break;
+
+					case QUIT_DELIBERATE: // S'il souhaite quitter
+						// On quitte la boucle
+						quit = 1;
+						break;
+
+					default: // Sinon on relance le niveau
+						break;
+				}
+
+				// On libère la mémoire
+				Level_free( level );
+			} else {
+				// On informe le joueur
+				allegro_message( "Impossible de charger le niveau %d! Le jeu va retourner au menu.", save.standard_level );
+
+				// On quitte la boucle
+				quit = 1;
+			}
+		}
+	}
+}
+
 void Menu_showBackground( Menu* menu ) {
 	clear_bitmap( menu->page );
 
@@ -113,6 +169,15 @@ char Menu_load( Menu* menu ) {
 	return 1;
 }
 
+void Menu_free( Menu* menu ) {
+	Level_freeBitmap( menu->page );
+	Level_freeBitmap( menu->back );
+	Level_freeBitmap( menu->col1 );
+	Level_freeBitmap( menu->col2 );
+	Level_freeFrames( &menu->fore1 );
+	Level_freeFrames( &menu->fore2 );
+}
+
 void Menu_launch() {
 	Menu menu;
 
@@ -139,9 +204,12 @@ void Menu_launch() {
 						Menu_transition( &menu, MENU_NEW );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 1
-
+						Menu_newGame( 1 );
+						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 1
+						Menu_launchGame( 1 );
+						menu.submenu = MENU_MAIN;
 					}
 					break;
 
@@ -152,9 +220,12 @@ void Menu_launch() {
 						Menu_transition( &menu, MENU_NEW );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 2
-
+						Menu_newGame( 2 );
+						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 2
+						Menu_launchGame( 2 );
+						menu.submenu = MENU_MAIN;
 					}
 					break;
 
@@ -163,10 +234,12 @@ void Menu_launch() {
 						// Règles
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 3
-
+						Menu_newGame( 3 );
+						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 3
-
+						Menu_launchGame( 3 );
+						menu.submenu = MENU_MAIN;
 					}
 					break;
 
@@ -192,4 +265,6 @@ void Menu_launch() {
 		// Petite pause
 		rest( 20 );
 	}
+
+	Menu_free( &menu );
 }
