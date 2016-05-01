@@ -175,7 +175,7 @@ char GeneralConfig_save( GeneralConfig* config ) {
 		return 0;
 	}
 
-	fprintf( properties, "card:%d\nwidth%d\nheight:%d\ncolor_depth:%d", config->card, config->width, config->height, config->color_depth );
+	fprintf( properties, "card:%d\nwidth:%d\nheight:%d\ncolor_depth:%d", config->card, config->width, config->height, config->color_depth );
 
 	return 0;
 }
