@@ -7,6 +7,8 @@ int main() {
 
 	Menu_launch();
 
+	allegro_exit();
+
 	return 0;
 }
 

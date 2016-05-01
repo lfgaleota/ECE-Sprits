@@ -341,7 +341,7 @@ void Level_free( Level* level ) {
 	Level_freeBitmap( level->bmps.col );
 	Level_freeBitmap( level->bmps.back );
 	Level_freeBitmap( level->bmps.fore );
-	level->bmps.stickmen_walking = Level_loadFrames( "images/sticks/stickMan", 20 );
+	Level_freeFrames( &level->bmps.stickmen_walking );
 	Level_freeFrames( &level->bmps.stickmen_falling );
 	Level_freeFrames( &level->bmps.stickmen_dying );
 	Level_freeFrames( &level->bmps.stickmen_falldying );
