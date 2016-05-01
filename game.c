@@ -6,7 +6,7 @@ void Game_pauseMenu( Level* level ) {
 	if( level->win ) {
 		char* choices[] = {
 				"Retour",
-				"Passer au niveau suivant"
+				"Passer au niveau suivant",
 				"Recommencer",
 				"Quitter",
 		};
