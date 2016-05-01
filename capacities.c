@@ -142,7 +142,7 @@ char Capacities_setDirection( Level* level, Object* obj ) {
 	unsigned char done = 0;
 	char ret;
 
-	CircularMenu_updatePosition( level->directions_menu, obj->cp.x, obj->cp.y );
+	CircularMenu_updatePosition( level->directions_menu, mouse_x, mouse_y );
 
 	level->directions_menu->opened = 1;
 
