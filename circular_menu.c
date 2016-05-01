@@ -158,5 +158,7 @@ void CircularMenu_free( CircularMenu* menu, char free_items, char free_items_bit
 		if( free_items ) {
 			free( menu->items );
 		}
+
+		free( menu );
 	}
 }
