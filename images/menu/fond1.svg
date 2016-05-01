@@ -17,7 +17,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="fond1.svg"
-   inkscape:export-filename="X:\Users\Louis\Documents\Projets\C\ECE-Sprits\images\menu\fond1sel6.png"
+   inkscape:export-filename="X:\Users\Louis\Documents\Projets\C\ECE-Sprits\images\menu\fond1sel4.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -352,8 +352,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="119.89606"
-     inkscape:cy="687.28307"
+     inkscape:cx="-623.20909"
+     inkscape:cy="649.43778"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -384,13 +384,13 @@
       <image
          sodipodi:absref="X:\Users\Louis\Documents\Projets\C\ECE-Sprits\images\menu\fond.jpg"
          xlink:href="fond.jpg"
-         width="3288.6316"
-         height="1849.8555"
-         preserveAspectRatio="none"
-         style="image-rendering:optimizeSpeed"
-         id="image3344"
+         y="-181.85353"
          x="-39.031689"
-         y="-181.85353" />
+         id="image3344"
+         style="image-rendering:optimizeSpeed"
+         preserveAspectRatio="none"
+         height="1849.8555"
+         width="3288.6316" />
       <g
          transform="matrix(0.98720274,0,0,0.98720274,964.78848,-189.64059)"
          id="g3451">
@@ -532,79 +532,75 @@
          x="591.82373"
          y="301.60623"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:123.32369232px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:none;stroke:#000000;stroke-width:1.00029218;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">Nouvelle partie</tspan></text>
-    <g
-       id="g5404"
-       transform="translate(-61.928851,0)">
-      <text
-         sodipodi:linespacing="125%"
-         id="text5167"
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5334)"
+       x="466.73196"
+       y="420.98819"
+       id="text5167"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5169"
+         x="466.73196"
          y="420.98819"
-         x="528.66083"
-         style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5334)"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
-           y="420.98819"
-           x="528.66083"
-           id="tspan5169"
-           sodipodi:role="line">Charger une partie</tspan></text>
-      <text
-         sodipodi:linespacing="125%"
-         id="text5171"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1">Charger une partie</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5346)"
+       x="756.94818"
+       y="553.42334"
+       id="text5171"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5173"
+         x="756.94818"
          y="553.42334"
-         x="886.7016"
-         style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5346)"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;stroke:none;stroke-opacity:1"
-           y="553.42334"
-           x="886.7016"
-           id="tspan5173"
-           sodipodi:role="line">Règles</tspan></text>
-      <text
-         sodipodi:linespacing="125%"
-         id="text5175"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;stroke:none;stroke-opacity:1">Options</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5358)"
+       x="770.69507"
+       y="683.57654"
+       id="text5175"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5177"
+         x="770.69507"
          y="683.57654"
-         x="832.6239"
-         style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5358)"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;stroke:none;stroke-opacity:1"
-           y="683.57654"
-           x="832.6239"
-           id="tspan5177"
-           sodipodi:role="line">Options</tspan></text>
-      <text
-         sodipodi:linespacing="125%"
-         id="text5179"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff;stroke:none;stroke-opacity:1">Quitter</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5370)"
+       x="784.79462"
+       y="812.10803"
+       id="text5179"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5181"
+         x="784.79462"
          y="812.10803"
-         x="846.72345"
-         style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5370)"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff"
-           y="812.10803"
-           x="846.72345"
-           id="tspan5181"
-           sodipodi:role="line">Quitter</tspan></text>
-      <text
-         sodipodi:linespacing="125%"
-         id="text5282"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5322)"
+       x="593.84338"
+       y="286.26843"
+       id="text5282"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5284"
+         x="593.84338"
          y="286.26843"
-         x="655.77222"
-         style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5322)"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff"
-           y="286.26843"
-           x="655.77222"
-           id="tspan5284"
-           sodipodi:role="line">Nouvelle partie</tspan></text>
-    </g>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:95.91842651px;font-family:'Midnights on the Shore';-inkscape-font-specification:'Midnights on the Shore';fill:#ffffff">Nouvelle partie</tspan></text>
     <image
        sodipodi:absref="X:\Users\Louis\Documents\Projets\C\ECE-Sprits\images\menu\logo.png"
        xlink:href="logo.png"
-       width="644.16577"
-       height="527.46912"
-       preserveAspectRatio="none"
-       id="image5424"
+       y="120.43223"
        x="-241.19371"
-       y="120.43223" />
+       id="image5424"
+       preserveAspectRatio="none"
+       height="527.46912"
+       width="644.16577" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:54.81053162px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5431)"
