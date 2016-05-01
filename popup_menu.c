@@ -120,7 +120,7 @@ int PopupMenu_open( char* title, char** choices, int count, FONT* fonttext ) {
 
 	width += max_size * MENU_FONT_SIZE_X * MENU_LETTER_SPACING_X;
 
-	back = Menu_generateBackground( width, height );
+	back = PopupMenu_generateBackground( width, height );
 	if( !back ) {
 		return 0;
 	}
@@ -227,7 +227,7 @@ void PopupMenu_alert( char* title, FONT* fonttext ) {
 		}
 	}
 
-	Menu_open( title, choices, 1, fonttext );
+	PopupMenu_open( title, choices, 1, fonttext );
 
 	if( font_loaded ) {
 		destroy_font( fonttext );
