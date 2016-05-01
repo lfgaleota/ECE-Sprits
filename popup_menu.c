@@ -90,11 +90,23 @@ BITMAP* Menu_generateBackground( int width, int height ) {
 	return back;
 }
 
-int Menu_open( FONT* fonttext, char* title, char** choices, int count ) {
+int Menu_open( char* title, char** choices, int count, FONT* fonttext ) {
 	BITMAP *back, *page, *save;
 	int width, height, i, choice = 0, quit = 0, start_x, start_y, end_x, selected_button;
 	unsigned char prev_mouse_l, mouse_l = 1, prev_key_down, key_down = 1, prev_key_up, key_up = 1, prev_key_enter, key_enter = 1, prev_key_esc, key_esc = 1;
 	size_t size, max_size;
+	char font_loaded = 0;
+
+	if( fonttext == NULL ) {
+		fonttext = load_font( "polices/droidsans_14_mono.pcx", NULL, NULL );
+		font_loaded = 1;
+
+		if( fonttext == NULL ) {
+			font_loaded = 0;
+			allegro_message( "Imoossible de charger la police pour le menu." );
+			fonttext = font;
+		}
+	}
 
 	height = MENU_PADDING_Y * 2 + ( count + 1 ) * MENU_LETTER_SPACING_Y + ( count + 2 ) * MENU_FONT_SIZE_Y;
 	width = MENU_PADDING_X * 2;
@@ -193,6 +205,9 @@ int Menu_open( FONT* fonttext, char* title, char** choices, int count ) {
 	if( save )
 		destroy_bitmap( save );
 	destroy_bitmap( page );
+
+	if( font_loaded )
+		destroy_font( fonttext );
 
 	return choice;
 }
