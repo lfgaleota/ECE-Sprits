@@ -506,7 +506,7 @@ char Game_levelInit( Level* level ) {
 	return ret;
 }
 
-void Game_launch( Level* level ) {
+char Game_launch( Level* level ) {
 	if( !Game_levelInit( level ) ) {
 		allegro_message( "Impossible de lancer le niveau!" );
 		return;
@@ -531,4 +531,6 @@ void Game_launch( Level* level ) {
 
 		SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
 	}
+
+	return level->quit;
 }
