@@ -510,10 +510,14 @@ char Game_levelInit( Level* level ) {
 }
 
 void Game_free( Level* level ) {
-	CircularMenu_free( level->capacities_menu, 1, 1, 1 );
-	CircularMenu_free( level->directions_menu, 1, 1, 1 );
+	CircularMenu_free( level->capacities_menu, 1, 0, 1 );
+	CircularMenu_free( level->directions_menu, 1, 0, 1 );
 
 	ObjectM_freeAll( level->stickmen, 1 );
+
+	destroy_bitmap( level->bmps.page );
+	destroy_bitmap( level->bmps.stick_col );
+	destroy_bitmap( level->bmps.wind_col );
 }
 
 char Game_launch( Level* level ) {
