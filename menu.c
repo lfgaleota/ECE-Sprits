@@ -127,7 +127,7 @@ void Menu_showForeground( Menu* menu ) {
 }
 
 void Menu_transition( Menu* menu, unsigned char direction ) {
-	int i;
+	/*int i;
 
 	if( direction == MENU_MAIN ) {
 		for( i = 0; i < menu->back->w - SCREEN_W; i++ ) {
@@ -141,7 +141,7 @@ void Menu_transition( Menu* menu, unsigned char direction ) {
 
 			SLEEP( 1/30 * 1000 );
 		}
-	}
+	}*/
 }
 
 char Menu_load( Menu* menu ) {
