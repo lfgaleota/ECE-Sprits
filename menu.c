@@ -1,16 +1,16 @@
 #include "inc/menu.h"
 
-void Menu_newGame( unsigned char id ) {
+void Menu_newGame( FMod* fmod, unsigned char id ) {
 	Save save;
 	save = Save_load( id );
 	save.standard_level = LEVEL_MINSTANDARD;
 	if( !Save_save( &save ) )
 		allegro_message( "Erreur lors de la sauvegarde!" );
 
-	Menu_launchGame( save.id );
+	Menu_launchGame( fmod, save.id );
 }
 
-void Menu_launchGame( unsigned char id ) {
+void Menu_launchGame( FMod* fmod, unsigned char id ) {
 	Save save;
 	Level* level;
 	char quit = 0;
@@ -25,6 +25,7 @@ void Menu_launchGame( unsigned char id ) {
 
 			// On lance le niveau s'il a été chargé
 			if( level ) {
+				level->fmod = fmod;
 				// On fait tourner le niveau et récupère la sortie
 				switch( Game_launch( level ) ) {
 					case QUIT_WIN: // S'il a réussi le niveau
@@ -207,13 +208,18 @@ void Menu_rules( Menu* menu ) {
 
 }
 
-void Menu_launch( GeneralConfig* config ) {
+void Menu_launch( FMod* fmod, GeneralConfig* config ) {
 	Menu menu;
 
 	if( !Menu_load( &menu ) )
 		return;
 
 	int quit = 0, prev_mouse_l, mouse_l = 0;
+
+	if( !fmod )
+		return;
+
+	menu.fmod = fmod;
 
 	//Boucle de jeu
 	while( !quit ) {
@@ -231,11 +237,11 @@ void Menu_launch( GeneralConfig* config ) {
 						Menu_transition( &menu, MENU_NEW );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 1
-						Menu_newGame( 1 );
+						Menu_newGame( fmod, 1 );
 						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 1
-						Menu_launchGame( 1 );
+						Menu_launchGame( fmod, 1 );
 						menu.submenu = MENU_MAIN;
 					}
 					break;
@@ -247,11 +253,11 @@ void Menu_launch( GeneralConfig* config ) {
 						Menu_transition( &menu, MENU_NEW );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 2
-						Menu_newGame( 2 );
+						Menu_newGame( fmod, 2 );
 						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 2
-						Menu_launchGame( 2 );
+						Menu_launchGame( fmod, 2 );
 						menu.submenu = MENU_MAIN;
 					}
 					break;
@@ -262,11 +268,11 @@ void Menu_launch( GeneralConfig* config ) {
 						Menu_rules( &menu );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 3
-						Menu_newGame( 3 );
+						Menu_newGame( fmod, 3 );
 						menu.submenu = MENU_MAIN;
 					} else if( menu.submenu == MENU_LOAD ) {
 						// Charger une partie sur la sauvegarde 3
-						Menu_launchGame( 3 );
+						Menu_launchGame( fmod, 3 );
 						menu.submenu = MENU_MAIN;
 					}
 					break;

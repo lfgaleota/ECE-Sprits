@@ -2,6 +2,11 @@
 #define _ECE_SPRITS_STRUCTURES_H_
 
 #include <allegro.h>
+#ifdef __WIN32
+#include "fmodex/fmod.h"
+#else
+#include <fmodex/fmod.h>
+#endif
 
 #ifdef __WIN32
 #define SLEEP( ms ) rest( ms )
@@ -225,6 +230,16 @@ struct Bitmaps {
 	Frames stickmen_blowing;
 };
 
+typedef struct FMod FMod;
+struct FMod {
+	FMOD_SYSTEM* sys;
+	FMOD_SOUND* dig;
+	FMOD_SOUND* build;
+	FMOD_SOUND* blow;
+	FMOD_SOUND* start;
+	FMOD_SOUND* exit;
+};
+
 typedef struct Inputs Inputs;
 struct Inputs {
 	int prev_mouse_l;
@@ -256,6 +271,7 @@ struct Level {
 	CircularMenu* capacities_menu;
 	CircularMenu* directions_menu;
 	Inputs inputs;
+	FMod* fmod;
 };
 
 struct MenuItem {
