@@ -145,7 +145,7 @@ void GeneralConfig_parseConfigurationLine( GeneralConfig* config, char* line, in
 	}
 }
 
-char GeneralConfig_loadProperties( GeneralConfig* config ) {
+char GeneralConfig_load( GeneralConfig* config ) {
 	FILE* properties;
 	int lines_parsed = 0;
 	char buffer[ BUFFER_SIZE ];
@@ -160,8 +160,22 @@ char GeneralConfig_loadProperties( GeneralConfig* config ) {
 		GeneralConfig_parseConfigurationLine( config, buffer, &lines_parsed );
 	}
 
-	if( lines_parsed == 10 )
+	if( lines_parsed == 4 )
 		return 1;
+
+	return 0;
+}
+
+char GeneralConfig_save( GeneralConfig* config ) {
+	FILE* properties;
+
+	properties = fopen( "config", "w" );
+
+	if( !properties ) {
+		return 0;
+	}
+
+	fprintf( properties, "card:%d\nwidth%d\nheight:%d\ncolor_depth:%d", config->card, config->width, config->height, config->color_depth );
 
 	return 0;
 }

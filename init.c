@@ -1,6 +1,6 @@
 #include "inc/init.h"
 
-void Init() {
+void Init( GeneralConfig* config ) {
 	allegro_init();
 
 	jpgalleg_init();
@@ -8,8 +8,16 @@ void Init() {
 	install_keyboard();
 	install_mouse();
 
-	set_color_depth( desktop_color_depth() );
-	if( set_gfx_mode( GFX_AUTODETECT_WINDOWED, 1024, 768, 0, 0 ) != 0 ) {
+	if( !GeneralConfig_load( config ) ) {
+		config->card = GFX_AUTODETECT_WINDOWED;
+		config->width = 1024;
+		config->height = 768;
+		config->color_depth = desktop_color_depth();
+		GeneralConfig_save( config );
+	}
+
+	set_color_depth( config->color_depth );
+	if( set_gfx_mode( config->card, config->width, config->height, 0, 0 ) != 0 ) {
 		allegro_message( "probleme mode graphique" );
 		allegro_exit();
 		exit( EXIT_FAILURE );

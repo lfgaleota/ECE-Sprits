@@ -178,7 +178,7 @@ void Menu_free( Menu* menu ) {
 	Level_freeFrames( &menu->fore2 );
 }
 
-void Menu_launch() {
+void Menu_launch( GeneralConfig* config ) {
 	Menu menu;
 
 	if( !Menu_load( &menu ) )

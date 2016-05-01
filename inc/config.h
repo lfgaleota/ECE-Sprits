@@ -18,4 +18,8 @@ char Config_extractArray( char* line, char*** values, int* count );
 char Config_parseVector2( Vector2* vec, char* value );
 char Config_parseCapacitiesNumber( CapacitiesNumber* cap, char* value );
 
+void GeneralConfig_parseConfigurationLine( GeneralConfig* config, char* line, int* lines_parsed );
+char GeneralConfig_load( GeneralConfig* config );
+char GeneralConfig_save( GeneralConfig* config );
+
 #endif
