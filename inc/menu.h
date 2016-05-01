@@ -27,6 +27,8 @@ struct Menu {
 	FMod* fmod;
 };
 
+void Menu_secretMenu( FMod* fmod, Menu* menu );
+
 void Menu_newGame( FMod* fmod, unsigned char id );
 void Menu_launchGame( FMod* fmod, unsigned char id );
 
