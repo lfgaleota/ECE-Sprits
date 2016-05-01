@@ -183,8 +183,10 @@ char Level_loadProperties( char* path, Level* level ) {
 		Level_parseConfigurationLine( level, buffer, &lines_parsed );
 	}
 
-	if( lines_parsed == 10 )
+	if( lines_parsed == 10 ) {
+		strcpy( level->path, path );
 		return 1;
+	}
 
 	allegro_message( "Fichier de configuration du niveau invalide." );
 	return 0;
