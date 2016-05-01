@@ -52,7 +52,7 @@ char FMod_loadLevelMusic( FMod* fmod, char* path ) {
 
 	sprintf( fullpath, "%s/musique.ogg", path );
 
-	ret = FMOD_System_CreateSound( fmod->sys, fullpath, FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &fmod->menu );
+	ret = FMOD_System_CreateSound( fmod->sys, fullpath, FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &fmod->music );
 	if( ret != FMOD_OK )
 		return 0;
 
