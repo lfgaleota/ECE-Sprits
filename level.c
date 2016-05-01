@@ -148,6 +148,7 @@ char Level_extractKeyValue( char* line, char* key, char* value ) {
 }
 
 char Level_extractArray( char* line, char*** values, int* count ) {
+	char** newvalues;
 	char buffer[ BUFFER_SIZE ], buffer2[ BUFFER_SIZE ], c, *token;
 	int i, start_index = -1, end_index = -1;
 
@@ -179,18 +180,20 @@ char Level_extractArray( char* line, char*** values, int* count ) {
 		token = strtok( NULL, "," );
 	}
 
-	*values = malloc( sizeof( char* ) * (*count) );
-	if( !*values )
+	newvalues = calloc( (size_t) (*count), sizeof( char* ) );
+	if( !newvalues )
 		return 0;
 
 	for( i = 0, token = strtok( buffer, "," ); i < *count && token != NULL; i++ ) {
-		(*values)[ i ] = malloc( sizeof( char ) * strlen( token ) );
-		if( !(*values)[ i ] )
+		newvalues[ i ] = calloc( strlen( token ) + 1, sizeof( char ) );
+		if( !newvalues[ i ] )
 			return 0;
 
-		strcpy( (*values)[ i ], token );
+		strcpy( newvalues[ i ], token );
 		token = strtok( NULL, "," );
 	}
+
+	*values = newvalues;
 
 	return 1;
 }
