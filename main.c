@@ -4,10 +4,20 @@
 
 int main() {
 	GeneralConfig config;
+	FMod fmod;
 
 	Init( &config );
 
-	Menu_launch( &config );
+	FMod_init( &fmod );
+
+	if( !FMod_load( &fmod ) ) {
+		allegro_message( "Impossible de charger les sons et musiques." );
+		return 1;
+	}
+
+	Menu_launch( &fmod, &config );
+
+	FMod_free( &fmod );
 
 	allegro_exit();
 

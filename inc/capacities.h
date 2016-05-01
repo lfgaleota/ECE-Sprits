@@ -7,6 +7,7 @@
 #include "structures.h"
 #include "line_tracking.h"
 #include "circular_menu.h"
+#include "fmod.h"
 
 void Capacities_update( Level* level, Object* obj );
 

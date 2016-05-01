@@ -202,6 +202,9 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 
 		case STATE_EXITING:
 			current = &level->bmps.stickmen_exiting;
+			if( obj->counter <= 1 )
+				FMod_playSound( level->fmod, level->fmod->exit );
+
 			if( obj->counter >= current->count ) {
 				obj->state = STATE_GONE;
 				obj->counter = 9;
@@ -260,6 +263,8 @@ void Game_addStickmen( Level* level ) {
 				if( level->stickmen == NULL ) {
 					allegro_message( "Erreur d'allocation du stickman" );
 				} else {
+					FMod_playSound( level->fmod, level->fmod->start );
+
 					level->nb_stickmen_added++;
 				}
 			} else {

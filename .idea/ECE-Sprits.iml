@@ -14,6 +14,7 @@
       <sourceFolder url="file://$MODULE_DIR$/inc/collisions.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/inc/structures.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/inc/menu.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/inc/fmod.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/inc/level.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/inc/memory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/inc/popup_menu.h" isTestSource="false" />
@@ -28,6 +29,7 @@
       <sourceFolder url="file://$MODULE_DIR$/init.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/collisions.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/menu.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fmod.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/level.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/memory.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/popup_menu.c" isTestSource="false" />

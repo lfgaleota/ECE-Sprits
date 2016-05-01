@@ -5,6 +5,7 @@
 #include <loadpng.h>
 #include <jpgalleg.h>
 #include "structures.h"
+#include "fmod.h"
 #include "level.h"
 #include "game.h"
 #include "save.h"
@@ -23,10 +24,11 @@ struct Menu {
 	BITMAP* col2;
 	Frames fore1;
 	Frames fore2;
+	FMod* fmod;
 };
 
-void Menu_newGame( unsigned char id );
-void Menu_launchGame( unsigned char id );
+void Menu_newGame( FMod* fmod, unsigned char id );
+void Menu_launchGame( FMod* fmod, unsigned char id );
 
 void Menu_showBackground( Menu* menu );
 void Menu_showForeground( Menu* menu );
@@ -40,6 +42,6 @@ void Menu_transition( Menu* menu, unsigned char direction );
 char Menu_load( Menu* menu );
 void Menu_free( Menu* menu );
 
-void Menu_launch( GeneralConfig* config );
+void Menu_launch( FMod* fmod, GeneralConfig* config );
 
 #endif

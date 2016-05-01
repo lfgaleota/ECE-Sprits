@@ -198,6 +198,8 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 		return;
 	}
 
+	FMod_playSound( level->fmod, level->fmod->dig );
+
 	start_point.x = cosf( obj->capacities.angle ) * obj->capacities.distance;
 	start_point.y = - sinf( obj->capacities.angle ) * obj->capacities.distance;
 
@@ -220,6 +222,8 @@ void Capacities_setDigging( Level* level, Object* obj ) {
 
 void Capacities_setBuilding( Level* level, Object* obj ) {
 	Position start_point;
+
+	FMod_playSound( level->fmod, level->fmod->build );
 
 	if( obj->direction == DIRECTION_LEFT ) {
 		start_point.x = obj->p[ P_DOWN_LEFT ].x - 1 - obj->cp.x;
@@ -254,6 +258,8 @@ void Capacities_setBlowing( Level* level, Object* obj ) {
 	if( !Capacities_setDirection( level, obj ) ) {
 		return;
 	}
+
+	FMod_playSound( level->fmod, level->fmod->blow );
 
 	start_point.x = cosf( obj->capacities.angle ) * MIN( obj->size.x, obj->size.y ) / 2;
 	start_point.y = - sinf( obj->capacities.angle ) * MIN( obj->size.x, obj->size.y ) / 2;
