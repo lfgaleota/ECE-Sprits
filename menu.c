@@ -178,6 +178,22 @@ void Menu_free( Menu* menu ) {
 	Level_freeFrames( &menu->fore2 );
 }
 
+void Menu_options( GeneralConfig* config ) {
+	gfx_mode_select_ex( &config->card, &config->width, &config->height, &config->color_depth );
+	GeneralConfig_save( config );
+
+	set_color_depth( config->color_depth );
+	if( set_gfx_mode( config->card, config->width, config->height, 0, 0 ) != 0 ) {
+		allegro_message( "Problème mode graphique" );
+		allegro_exit();
+		exit( EXIT_FAILURE );
+	}
+
+	enable_hardware_cursor();
+	select_mouse_cursor( 2 );
+	show_mouse( screen );
+}
+
 void Menu_launch( GeneralConfig* config ) {
 	Menu menu;
 
@@ -246,6 +262,7 @@ void Menu_launch( GeneralConfig* config ) {
 				case 4:
 					if( menu.submenu == MENU_MAIN ) {
 						// Options
+						Menu_options( config );
 					} else {
 						// Retour au menu principal
 						menu.submenu = MENU_MAIN;
