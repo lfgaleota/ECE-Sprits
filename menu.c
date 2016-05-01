@@ -137,9 +137,6 @@ void Menu_showForeground( Menu* menu ) {
 		} else if( px == colors[ 4 ] ) {
 			draw_trans_sprite( menu->page, menu->fore1.bmps[ 4 ], 0, 0 );
 			menu->choice = 4;
-		} else if( px == colors[ 5 ] ) {
-			draw_trans_sprite( menu->page, menu->fore1.bmps[ 5 ], 0, 0 );
-			menu->choice = 5;
 		} else {
 			draw_trans_sprite( menu->page, menu->fore1.bmps[ 0 ], 0, 0 );
 			menu->choice = 0;
@@ -203,7 +200,7 @@ char Menu_load( Menu* menu ) {
 	menu->back = load_jpg( "images/menu/fond.jpg", NULL );
 	menu->col1 = load_png( "images/menu/collision1.png", NULL );
 	menu->col2 = load_png( "images/menu/collision2.png", NULL );
-	menu->fore1 = Level_loadFrames( "images/menu/fond1sel", 6 );
+	menu->fore1 = Level_loadFrames( "images/menu/fond1sel", 5 );
 	menu->fore2 = Level_loadFrames( "images/menu/fond2sel", 5 );
 
 	if( !menu->back || !menu->fore1.bmps || !menu->fore2.bmps || !menu->col1 || !menu->col2 ) {
@@ -243,10 +240,6 @@ void Menu_options( Menu* menu, GeneralConfig* config ) {
 	enable_hardware_cursor();
 	select_mouse_cursor( 2 );
 	show_mouse( screen );
-}
-
-void Menu_rules( Menu* menu ) {
-
 }
 
 void Menu_launch( FMod* fmod, GeneralConfig* config ) {
@@ -311,8 +304,8 @@ void Menu_launch( FMod* fmod, GeneralConfig* config ) {
 
 				case 3:
 					if( menu.submenu == MENU_MAIN ) {
-						// Règles
-						Menu_rules( &menu );
+						// Options
+						Menu_options( &menu, config );
 					} else if( menu.submenu == MENU_NEW ) {
 						// Créer une partie sur la sauvegarde 3
 						Menu_newGame( fmod, 3 );
@@ -325,20 +318,12 @@ void Menu_launch( FMod* fmod, GeneralConfig* config ) {
 					break;
 
 				case 4:
-					if( menu.submenu == MENU_MAIN ) {
-						// Options
-						Menu_options( &menu, config );
+					if( menu.submenu == MENU_MAIN ) {// Quitter
+						quit = 1;
 					} else {
 						// Retour au menu principal
 						menu.submenu = MENU_MAIN;
 						Menu_transition( &menu, MENU_MAIN );
-					}
-					break;
-
-				case 5:
-					if( menu.submenu == MENU_MAIN ) {
-						// Quitter
-						quit = 1;
 					}
 					break;
 			}
