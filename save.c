@@ -28,7 +28,7 @@ Save Save_load( unsigned char id ) {
 
 	file = fopen( path, "r" );
 	if( !file ) {
-		save.standard_level = 0;
+		save.standard_level = LEVEL_MINSTANDARD;
 		Save_save( &save );
 		return save;
 	}

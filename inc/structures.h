@@ -95,6 +95,9 @@
 #define UI_BUTTON_Y 33
 #define UI_FONT_SIZE 16
 
+#define LEVEL_MINSTANDARD 1
+#define LEVEL_MAXSTANDARD 3
+
 typedef struct MenuItem MenuItem;
 typedef struct CircularMenu CircularMenu;
 
@@ -272,6 +275,12 @@ struct CircularMenu {
 	BITMAP *bmp;
 	MenuItem *items;
 	FONT *font;
+};
+
+typedef struct Save Save;
+struct Save {
+	unsigned char id;
+	unsigned char standard_level;
 };
 
 #endif //_ECE_SPRITS_STRUCTURES_H_
