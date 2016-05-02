@@ -5,7 +5,7 @@
 #ifdef __WIN32
 #include "fmodex/fmod.h"
 #else
-#include <fmodex/fmod.h>
+#include <fmod/fmod.h>
 #endif
 
 #ifdef __WIN32
