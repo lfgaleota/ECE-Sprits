@@ -5,7 +5,7 @@ slow_dt:1
 fast_dt:2
 start_direction:1
 start:(337.0,721.0)
-exit:(1366.0,166.0)
+exit:(1167.0,385.0)
 gravity:(0.0,4.0)
 movement:(1.0,0.0)
 capacities:(255,255,255)
