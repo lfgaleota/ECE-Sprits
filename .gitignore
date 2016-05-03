@@ -92,12 +92,6 @@ install_manifest.txt
 *.gch
 *.pch
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
 # Executables
 *.exe
 *.out
