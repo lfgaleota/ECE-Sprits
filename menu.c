@@ -70,6 +70,10 @@ void Menu_launchGame( FMod* fmod, unsigned char id ) {
 					case QUIT_WIN: // S'il a réussi le niveau
 						save.standard_level++; // On passe au niveau suivant au niveau de la sauvegarde
 						// On sauvegarde
+						if( save.standard_level > LEVEL_MAXSTANDARD ) {
+							return;
+						}
+
 						if( !Save_save( &save ) )
 							allegro_message( "Erreur lors de la sauvegarde!" );
 						break;
