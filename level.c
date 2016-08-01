@@ -45,14 +45,14 @@ void Level_freeBitmap( BITMAP* bmp ) {
 
 void Level_freeBitmaps( BITMAP** bmps, unsigned short count ) {
 	int i;
-	
+
 	if( !bmps )
 		return;
-	
+
 	for( i = 0; i < count; i++ ) {
 		Level_freeBitmap( bmps[ i ] );
 	}
-	
+
 	free( bmps );
 }
 
@@ -197,7 +197,7 @@ char Level_loadProperties( char* path, Level* level ) {
 
 Level* Level_load( char* path ) {
 	Level* level = malloc( sizeof( Level ) );
-	
+
 	if( !level ) {
 		allegro_message( "Allocation du niveau échouée!" );
 		return NULL;
@@ -212,7 +212,7 @@ Level* Level_load( char* path ) {
 		free( level );
 		return NULL;
 	}
-	
+
 	return level;
 }
 
