@@ -111,11 +111,11 @@ char Level_loadImages( char* path, Level* level ) {
 	level->bmps.stick_fire = Level_loadBitmaps( "images/capacites/flamme", 3 );
 	level->bmps.blow = load_png( "images/capacites/souffle.png", NULL );
 
-	level->bmps.ui_accelerate = load_png( "images/acc.png", NULL );
-	level->bmps.ui_pause = load_png( "images/pause.png", NULL );
-	level->bmps.ui_menu = load_png( "images/menu.png", NULL );
+	level->bmps.ui_accelerate = Level_loadFrames( "images/acc", 2 );
+	level->bmps.ui_pause = Level_loadFrames( "images/pause", 2 );
+	level->bmps.ui_menu = Level_loadFrames( "images/menu", 2 );
 
-	if( !level->bmps.stickmen_walking.bmps || !level->bmps.stickmen_falling.bmps || !level->bmps.stickmen_dying.bmps || !level->bmps.stickmen_falldying.bmps || !level->bmps.stickmen_starting.bmps || !level->bmps.stickmen_exiting.bmps || !level->bmps.stickmen_digging.bmps || !level->bmps.stickmen_building.bmps || !level->bmps.stickmen_blowing.bmps || !level->bmps.start.bmps || !level->bmps.exit.bmps || !level->bmps.arrow || !level->bmps.capacity_build || !level->bmps.capacity_dig || !level->bmps.capacity_blow || !level->bmps.branch || !level->bmps.stick_fire || !level->bmps.blow || !level->bmps.ui_accelerate || !level->bmps.ui_pause || !level->bmps.ui_menu ) {
+	if( !level->bmps.stickmen_walking.bmps || !level->bmps.stickmen_falling.bmps || !level->bmps.stickmen_dying.bmps || !level->bmps.stickmen_falldying.bmps || !level->bmps.stickmen_starting.bmps || !level->bmps.stickmen_exiting.bmps || !level->bmps.stickmen_digging.bmps || !level->bmps.stickmen_building.bmps || !level->bmps.stickmen_blowing.bmps || !level->bmps.start.bmps || !level->bmps.exit.bmps || !level->bmps.arrow || !level->bmps.capacity_build || !level->bmps.capacity_dig || !level->bmps.capacity_blow || !level->bmps.branch || !level->bmps.stick_fire || !level->bmps.blow || !level->bmps.ui_accelerate.bmps || !level->bmps.ui_pause.bmps || !level->bmps.ui_menu.bmps ) {
 		allegro_message( "Impossible de charger les images" );
 		return 0;
 	}
@@ -248,9 +248,9 @@ void Level_free( Level* level ) {
 		Level_freeBitmap( level->bmps.branch );
 		Level_freeBitmaps( level->bmps.stick_fire, 3 );
 		Level_freeBitmap( level->bmps.blow );
-		Level_freeBitmap( level->bmps.ui_accelerate );
-		Level_freeBitmap( level->bmps.ui_pause );
-		Level_freeBitmap( level->bmps.ui_menu );
+		Level_freeFrames( &level->bmps.ui_accelerate );
+		Level_freeFrames( &level->bmps.ui_pause );
+		Level_freeFrames( &level->bmps.ui_menu );
 
 		if( level->bmps.droidsans_14_mono )
 			destroy_font( level->bmps.droidsans_14_mono );
