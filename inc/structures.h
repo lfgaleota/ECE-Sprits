@@ -97,13 +97,18 @@
 #define UI_WIDTH 56
 #define UI_PADDING_Y 5
 #define UI_BUTTON_X 34
-#define UI_BUTTON_Y 33
+#define UI_BUTTON_Y 34
 #define UI_FONT_SIZE 16
 #define UI_SCROLL 20
 #define UI_SCROLL_SPEED 5
+#define UI_COUNTER_MAX 10
 
 #define LEVEL_MINSTANDARD 1
 #define LEVEL_MAXSTANDARD 3
+
+#define LEVEL_SPEED_NONE 0
+#define LEVEL_SPEED_SLOW 1
+#define LEVEL_SPEED_FAST 2
 
 typedef struct MenuItem MenuItem;
 typedef struct CircularMenu CircularMenu;
@@ -214,9 +219,9 @@ struct Bitmaps {
 	BITMAP* branch;
 	BITMAP** stick_fire;
 	BITMAP* blow;
-	BITMAP* ui_accelerate;
-	BITMAP* ui_pause;
-	BITMAP* ui_menu;
+	Frames ui_accelerate;
+	Frames ui_pause;
+	Frames ui_menu;
 	Frames start;
 	Frames exit;
 	Frames stickmen_walking;
@@ -228,6 +233,7 @@ struct Bitmaps {
 	Frames stickmen_digging;
 	Frames stickmen_building;
 	Frames stickmen_blowing;
+	BITMAP* wave;
 };
 
 typedef struct FMod FMod;
@@ -257,6 +263,7 @@ struct Level {
 	char path[ 255 ];
 	Bitmaps bmps;
 	ObjectM* stickmen;
+	clock_t before;
 	float dt;
 	float slow_dt;
 	float fast_dt;
@@ -268,6 +275,8 @@ struct Level {
 	char start_direction;
 	char quit;
 	char win;
+	char speed;
+	float counter;
 	unsigned short nb_stickmen_max;
 	unsigned short nb_stickmen_added;
 	unsigned short nb_stickmen_arrived;
@@ -275,6 +284,8 @@ struct Level {
 	unsigned short nb_stickmen_dead;
 	unsigned short counter_stickmen_arrival;
 	unsigned short counter_stickmen_arrival_max;
+	unsigned short ui_counter;
+	unsigned short ui_frames;
 	CapacitiesNumber capacities;
 	CircularMenu* capacities_menu;
 	CircularMenu* directions_menu;

@@ -1,5 +1,27 @@
 #include "inc/game.h"
 
+int fps, fixedfps;
+
+void fpser() {
+	fixedfps = fps;
+	fps = 0;
+}
+END_OF_FUNCTION( fpser )
+
+void FMod_generateWave( FMod* fmod, BITMAP* dest ) {
+	int i;
+	const int numberOfSamples = 16384;
+	float wave[ numberOfSamples ];
+	FMOD_System_GetWaveData( fmod->sys, &wave[ 0 ], numberOfSamples, 0 );
+
+	clear_to_color( dest, makecol( 255, 0, 255 ) );
+
+	for( i = 0; i < numberOfSamples; ++i ) {
+		if( i > 0 )
+			line( dest, (float) SCREEN_W / numberOfSamples * ( i - 1 ), SCREEN_H / 2 + SCREEN_H / 3 * wave[ i - 1 ], (float) SCREEN_W / numberOfSamples * i, SCREEN_H / 2 + SCREEN_H / 3 * wave[ i ], makecol( 255, 255, 255 ) );
+	}
+}
+
 void Game_pauseMenu( Level* level ) {
 	int choice = 0;
 
@@ -49,6 +71,8 @@ void Game_pauseMenu( Level* level ) {
 		default:
 			break;
 	}
+
+	level->before = clock();
 }
 
 void Game_showFlame( Level* level, Object* obj ) {
@@ -80,15 +104,42 @@ void Game_showBlow( Level* level, Object* obj ) {
 }
 
 void Game_showUI( Level* level ) {
+	BITMAP* current;
+	if( level->counter > 1 )
+		level->ui_counter++;
+
+	if( level->ui_counter > UI_COUNTER_MAX ) {
+		level->ui_counter = 0;
+		level->ui_frames++;
+
+		if( level->ui_frames >= level->bmps.ui_accelerate.count )
+			level->ui_frames = 0;
+	}
+
 	rectfill( level->bmps.page, 0, 0, UI_WIDTH, SCREEN_H, makecol( 255, 255, 255 ) );
 	rectfill( level->bmps.page, UI_WIDTH, 0, UI_WIDTH + 1, SCREEN_H, makecol( 0, 0, 0 ) );
 
-	blit( level->bmps.ui_accelerate, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, UI_PADDING_Y, UI_BUTTON_X, UI_BUTTON_Y );
-	blit( level->bmps.ui_pause, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, 2 * UI_PADDING_Y + UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
+	if( level->speed == LEVEL_SPEED_FAST )
+		current = level->bmps.ui_accelerate.bmps[ level->ui_frames ];
+	else
+		current = level->bmps.ui_accelerate.bmps[ 0 ];
+	blit( current, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, UI_PADDING_Y, UI_BUTTON_X, UI_BUTTON_Y );
 
-	blit( level->bmps.ui_menu, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, SCREEN_H - UI_PADDING_Y - UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
+	if( level->speed == LEVEL_SPEED_NONE )
+		current = level->bmps.ui_pause.bmps[ 1 ];
+	else
+		current = level->bmps.ui_pause.bmps[ 0 ];
+	blit( current, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, 2 * UI_PADDING_Y + UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
+
+	if( level->win )
+		current = level->bmps.ui_menu.bmps[ level->ui_frames ];
+	else
+		current = level->bmps.ui_menu.bmps[ 0 ];
+	blit( current, level->bmps.page, 0, 0, ( UI_WIDTH - UI_BUTTON_X ) / 2, SCREEN_H - UI_PADDING_Y - UI_BUTTON_Y, UI_BUTTON_X, UI_BUTTON_Y );
 
 	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, 3 * UI_PADDING_Y + 2 * UI_BUTTON_Y, makecol( 0, 0, 0 ), -1, "V: %0.1f", level->dt );
+	
+	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, 3 * UI_PADDING_Y + 2 * UI_BUTTON_Y + font->height + 10, makecol( 0, 0, 0 ), -1, "FPS: %d", fixedfps );
 
 	draw_trans_sprite( level->bmps.page, level->bmps.stickmen_walking.bmps[ 0 ], ( UI_WIDTH - level->bmps.stickmen_walking.bmps[ 0 ]->w ) / 2, SCREEN_H / 4 );
 	textprintf_centre_ex( level->bmps.page, level->bmps.droidsans_14_mono, UI_WIDTH / 2, SCREEN_H / 4 + UI_PADDING_Y + level->bmps.stickmen_walking.bmps[ 0 ]->h, makecol( 0, 0, 0 ), -1, "%d", level->nb_stickmen_arrived );
@@ -143,7 +194,13 @@ void Game_show( Level* level ) {
 
 	CircularMenu_show( level->capacities_menu, level->bmps.scrolling_page, level->inputs.scrolling_mouse.x, level->inputs.scrolling_mouse.y );
 
+	/*FMod_generateWave( level->fmod, level->bmps.wave );
+
+	masked_blit( level->bmps.wave, level->bmps.page, 0, 0, 0, 0, SCREEN_W, SCREEN_H );*/
+
 	blit( level->bmps.scrolling_page, level->bmps.page, level->scrolling.x, level->scrolling.y, UI_WIDTH, 0, SCREEN_W, SCREEN_H );
+
+	//fblend_trans( level->bmps.wave, level->bmps.page, 0, 0, 255 * 0.3 );
 
 	Game_showUI( level );
 
@@ -183,7 +240,9 @@ void Game_updateObjectProperties( Level* level, Object* obj ) {
 		}
 	}
 
-	obj->counter++;
+	if( level->counter > 1 )
+		obj->counter++;
+
 	switch( obj->state ) {
 
 		case STATE_FALLDYING:
@@ -251,7 +310,8 @@ void Game_addStickmen( Level* level ) {
 	Object* obj;
 
 	if( level->nb_stickmen_added < level->nb_stickmen_max ) {
-		level->counter_stickmen_arrival++;
+		if( level->counter > 1 )
+			level->counter_stickmen_arrival++;
 
 		if( level->counter_stickmen_arrival > level->counter_stickmen_arrival_max ) {
 			obj = Object_allocate();
@@ -297,6 +357,8 @@ void Game_handleObjectClick( Level* level, Object* obj ) {
 	ObjectM *maillon;
 	char ret = 0;
 
+	int oldfixedfps = fixedfps, oldfps = fps;
+
 	if( key[ KEY_ESC ] ) {
 		Game_pauseMenu( level );
 	}
@@ -325,6 +387,9 @@ void Game_handleObjectClick( Level* level, Object* obj ) {
 			}
 		}
 	}
+
+	fixedfps = oldfixedfps;
+	fps = oldfps;
 }
 
 void Game_handleInputs( Level* level ) {
@@ -357,17 +422,17 @@ void Game_handleInputs( Level* level ) {
 
 	if( !level->inputs.prev_mouse_l && level->inputs.mouse_l ) {
 		if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y >= 0 && mouse_y <= UI_PADDING_Y + UI_BUTTON_Y ) {
-			if( level->dt == level->fast_dt ) {
-				level->dt = level->slow_dt;
+			if( level->speed == LEVEL_SPEED_SLOW ) {
+				level->speed = LEVEL_SPEED_FAST;
 			} else {
-				level->dt = level->fast_dt;
+				level->speed = LEVEL_SPEED_SLOW;
 			}
 		} else if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y > UI_PADDING_Y + UI_BUTTON_Y &&
 		           mouse_y <= 2 * UI_PADDING_Y + 2 * UI_BUTTON_Y ) {
-			if( level->dt == 0 ) {
-				level->dt = level->slow_dt;
+			if( level->speed == LEVEL_SPEED_NONE ) {
+				level->speed = LEVEL_SPEED_SLOW;
 			} else {
-				level->dt = 0;
+				level->speed = LEVEL_SPEED_NONE;
 				Game_show( level );
 			}
 		} else if( mouse_x >= 0 && mouse_x <= UI_WIDTH && mouse_y >= SCREEN_H - UI_BUTTON_Y - UI_PADDING_Y &&
@@ -479,6 +544,12 @@ char Game_createBitmaps( Level* level ) {
 		return 0;
 	}
 
+	level->bmps.wave = create_bitmap( SCREEN_W, SCREEN_H );
+	if( !level->bmps.wave ) {
+		allegro_message( "Erreur creation bitmap" );
+		return 0;
+	}
+
 	level->bmps.scrolling_page = create_bitmap( level->bmps.col->w, level->bmps.col->h );
 	if( !level->bmps.scrolling_page ) {
 		allegro_message( "Erreur creation bitmap" );
@@ -549,6 +620,14 @@ char Game_levelInit( Level* level ) {
 	level->win = 0;
 	level->quit = 0;
 
+	level->speed = LEVEL_SPEED_SLOW;
+
+	level->before = clock();
+	level->counter = 0;
+
+	level->ui_counter = 0;
+	level->ui_frames = 0;
+
 	level->inputs.prev_mouse_l = 0;
 	level->inputs.mouse_l = 0;
 
@@ -572,38 +651,61 @@ void Game_free( Level* level ) {
 	ObjectM_freeAll( level->stickmen, 1 );
 
 	destroy_bitmap( level->bmps.page );
+	destroy_bitmap( level->bmps.wave );
 	destroy_bitmap( level->bmps.scrolling_page );
 	destroy_bitmap( level->bmps.stick_col );
 	destroy_bitmap( level->bmps.wind_col );
 }
 
 char Game_launch( Level* level ) {
+	float dt;
+
 	if( !Game_levelInit( level ) ) {
 		allegro_message( "Impossible de lancer le niveau!" );
 		return QUIT_DELIBERATE;
 	}
 
 	FMod_playMusic( level->fmod, level->fmod->music );
+	
+	fps = 0;
+	fixedfps = 30;
+	
+	LOCK_VARIABLE( fps );
+	LOCK_VARIABLE( fixedfps );
+	LOCK_FUNCTION( fpser );
+	
+	install_int( fpser, 10 );
+	install_int_ex( fpser, SECS_TO_TIMER( 1 ) );
 
 	while( !level->quit ) {
+		dt = (float) ( clock() - level->before ) / 30;
 
-		if( key[ KEY_SPACE ] ) {
-			if( level->dt == level->slow_dt ) {
-				level->dt = level->fast_dt;
-			} else if( level->dt == level->fast_dt ) {
-				level->dt = 0;
-			} else {
-				level->dt = level->slow_dt;
-			}
+		level->counter += dt;
+
+		if( level->speed == LEVEL_SPEED_NONE ) {
+			level->dt = 0;
+		} else if( level->speed == LEVEL_SPEED_FAST ) {
+			level->dt = level->fast_dt * dt;
+		} else {
+			level->dt = level->slow_dt * dt;
 		}
+
+		level->before = clock();
 
 		Game_update( level );
 
 		if( level->dt > 0 )
 			Game_show( level );
 
-		SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
+		if( level->counter > 1 )
+			level->counter = 0;
+
+		fps++;
+
+		//SLEEP( 1 / 30.0 * 1000 ); // 30 FPS idéalement
 	}
+	
+	remove_int( fpser );
 
 	FMod_stopMusic( level->fmod );
 

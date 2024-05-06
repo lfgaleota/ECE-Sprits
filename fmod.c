@@ -7,6 +7,7 @@ void FMod_init( FMod* fmod ) {
 	FMOD_System_GetMasterChannelGroup( fmod->sys, &fmod->channel_master );
 	FMOD_System_GetChannel( fmod->sys, 1, &fmod->channel_1 );
 	FMOD_System_GetChannel( fmod->sys, 2, &fmod->channel_2 );
+	//FMOD_ChannelGroup_SetVolume( fmod->channel_master, 0 );
 }
 
 char FMod_load( FMod* fmod ) {

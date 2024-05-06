@@ -7,4 +7,4 @@ set(SOURCE_FILES main.c init.c inc/init.h circular_menu.c inc/circular_menu.h in
 add_executable(ECE-Sprits ${SOURCE_FILES})
 
 find_library(fmodex fmodex lib/fmodex)
-target_link_libraries(ECE-Sprits m z png loadpng jpgalleg alleg44 ${fmodex})
+target_link_libraries(ECE-Sprits m z png loadpng jpgalleg fblend alleg44 ${fmodex})

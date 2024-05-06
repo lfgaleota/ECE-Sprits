@@ -2,6 +2,7 @@
 #define _ECE_SPRITS_GAME_H_
 
 #include <allegro.h>
+#include <fblend.h>
 #include <math.h>
 #include "structures.h"
 #include "objects.h"

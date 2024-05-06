@@ -173,6 +173,8 @@ char Capacities_setDirection( Level* level, Object* obj ) {
 		blit( level->bmps.page, screen, 0, 0, 0, 0, level->bmps.page->w, level->bmps.page->h );
 	}
 
+	level->before = clock();
+
 	return done - 1;
 }
 
